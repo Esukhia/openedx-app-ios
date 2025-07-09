@@ -29,7 +29,7 @@ public struct StartupView: View {
                 ThemeAssets.appLogo.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 189, maxHeight: 89)
+                    .frame(maxWidth: 250, maxHeight: 120)
                     .padding(.top, isHorizontal ? 20 : 40)
                     .padding(.bottom, isHorizontal ? 0 : 20)
                     .padding(.horizontal, isHorizontal ? 10 : 24)
