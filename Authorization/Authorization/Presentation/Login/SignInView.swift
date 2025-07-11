@@ -59,6 +59,15 @@ public struct SignInView: View {
                     .resizable()
                     .edgesIgnoringSafeArea(.top)
                     .accessibilityIdentifier("auth_bg_image")
+                    .overlay(
+                        VStack {
+                            Spacer()
+                            Text("Welcome to your learning space.")
+                                .font(Theme.Fonts.titleMedium)
+                                .foregroundColor(.white)
+                                .padding(.bottom, 40)
+                        }
+                    )
             }.frame(maxWidth: .infinity, maxHeight: 200)
             if viewModel.config.features.startupScreenEnabled {
                 VStack {
@@ -272,13 +281,14 @@ public struct SignInView: View {
                                                         .font(Theme.Fonts.labelLarge)
                                                         .foregroundColor(Color.gray)
                                                 }
-                                                .frame(maxWidth: .infinity)
-                                                .padding(.vertical, 12)
+                                                .frame(width: 250)
+                                                .padding(.vertical, 10)
                                                 .background(Color.white)
                                                 .overlay(
-                                                    RoundedRectangle(cornerRadius: 8)
+                                                    RoundedRectangle(cornerRadius: 20)
                                                         .stroke(Color(hex: "#FFAF66"), lineWidth: 1)
                                                 )
+                                                .clipShape(RoundedRectangle(cornerRadius: 20))
                                             }
                                             .buttonStyle(PlainButtonStyle())
                                             .frame(maxWidth: .infinity)
@@ -294,7 +304,9 @@ public struct SignInView: View {
                         .padding(.top, 50)
                         .frameLimit(width: proxy.size.width)
                     }
-                    .roundedBackground(Theme.Colors.loginBackground)
+                    .background(Theme.Colors.loginBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .padding(.top, -20)
                     .scrollAvoidKeyboard(dismissKeyboardByTap: true)
                 }
             }
