@@ -11,6 +11,33 @@ import OEXFoundation
 import Theme
 import Swinject
 
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
+
 public struct SignInView: View {
     
     @State private var email: String = ""
@@ -162,14 +189,35 @@ public struct SignInView: View {
                                                 .accessibilityIdentifier("progress_bar")
                                         }.frame(maxWidth: .infinity)
                                     } else {
-                                        StyledButton(CoreLocalization.SignIn.logInBtn) {
-                                            Task {
-                                                await viewModel.login(username: email, password: password)
-                                            }
-                                        }
+                                        StyledButton(
+                                            CoreLocalization.SignIn.logInBtn,
+                                            action: {
+                                                Task {
+                                                    await viewModel.login(username: email, password: password)
+                                                }
+                                            },
+                                            color: Color(hex: "#FFAF66")
+                                        )
                                         .frame(maxWidth: .infinity)
-                                        .padding(.top, 40)
+                                        .padding(.top, 20)
                                         .accessibilityIdentifier("signin_button")
+                                        
+                                        // Divider with "or" text
+                                        HStack {
+                                            Rectangle()
+                                                .frame(height: 1)
+                                                .foregroundColor(Theme.Colors.textInputStroke)
+                                            
+                                            Text("or")
+                                                .font(Theme.Fonts.labelLarge)
+                                                .foregroundColor(Theme.Colors.textSecondary)
+                                                .padding(.horizontal, 16)
+                                            
+                                            Rectangle()
+                                                .frame(height: 1)
+                                                .foregroundColor(Theme.Colors.textInputStroke)
+                                        }
+                                        .padding(.vertical, 10)
                                     }
                                 }
                                 if viewModel.config.uiComponents.samlSSOLoginEnabled {
@@ -214,31 +262,27 @@ public struct SignInView: View {
                                             }.frame(maxWidth: .infinity)
                                         } else {
                                             let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
-                                            if viewModel.config.uiComponents.samlSSODefaultLoginButton {
-                                                StyledButton(
-                                                    viewModel.config.ssoButtonTitle[languageCode] as! String,
-                                                    action: {
-                                                        viewModel.router
-                                                            .showSSOWebBrowser(title: CoreLocalization.SignIn.logInBtn)
-                                                    }
+                                            // Google sign-in button styled to match the design
+                                            Button(action: {
+                                                viewModel.router
+                                                    .showSSOWebBrowser(title: CoreLocalization.SignIn.logInBtn)
+                                            }) {
+                                                HStack {
+                                                    Text("Continue with Google")
+                                                        .font(Theme.Fonts.labelLarge)
+                                                        .foregroundColor(Color.gray)
+                                                }
+                                                .frame(maxWidth: .infinity)
+                                                .padding(.vertical, 12)
+                                                .background(Color.white)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color(hex: "#FFAF66"), lineWidth: 1)
                                                 )
-                                                .frame(maxWidth: .infinity)
-                                                .padding(.top, 20)
-                                                .accessibilityIdentifier("signin_SSO_button")
-                                            } else {
-                                                StyledButton(
-                                                    viewModel.config.ssoButtonTitle[languageCode] as! String,
-                                                    action: {
-                                                        viewModel.router
-                                                            .showSSOWebBrowser(title: CoreLocalization.SignIn.logInBtn)
-                                                    },
-                                                    color: .white,
-                                                    textColor: Theme.Colors.accentColor,
-                                                    borderColor: Theme.Colors.accentColor)
-                                                .frame(maxWidth: .infinity)
-                                                .padding(.top, 20)
-                                                .accessibilityIdentifier("signin_SSO_button")
                                             }
+                                            .buttonStyle(PlainButtonStyle())
+                                            .frame(maxWidth: .infinity)
+                                            .accessibilityIdentifier("signin_SSO_button")
                                         }
                                     }
                                 }

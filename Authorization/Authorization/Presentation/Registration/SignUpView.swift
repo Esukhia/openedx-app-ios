@@ -153,13 +153,17 @@ public struct SignUpView: View {
                                             .accessibilityLabel("progressbar")
                                     }.frame(maxWidth: .infinity)
                                 } else {
-                                    StyledButton(AuthLocalization.SignUp.createAccountBtn) {
-                                        viewModel.thirdPartyAuthSuccess = false
-                                        Task {
-                                            await viewModel.registerUser(authMetod: viewModel.authMethod)
-                                        }
-                                        viewModel.trackCreateAccountClicked()
-                                    }
+                                    StyledButton(
+                                        AuthLocalization.SignUp.createAccountBtn,
+                                        action: {
+                                            viewModel.thirdPartyAuthSuccess = false
+                                            Task {
+                                                await viewModel.registerUser(authMetod: viewModel.authMethod)
+                                            }
+                                            viewModel.trackCreateAccountClicked()
+                                        },
+                                        color: Color(hex: "#FFAF66")
+                                    )
                                     .padding(.top, 30)
                                     .frame(maxWidth: .infinity)
                                     .accessibilityLabel("signup_button")
