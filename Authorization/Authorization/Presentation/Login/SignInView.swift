@@ -62,10 +62,7 @@ public struct SignInView: View {
                     .overlay(
                         VStack {
                             Spacer()
-                            Text("Welcome to your learning space.")
-                                .font(Theme.Fonts.titleMedium)
-                                .foregroundColor(.white)
-                                .padding(.bottom, 40)
+                            
                         }
                     )
             }.frame(maxWidth: .infinity, maxHeight: 200)
@@ -211,22 +208,7 @@ public struct SignInView: View {
                                         .padding(.top, 20)
                                         .accessibilityIdentifier("signin_button")
                                         
-                                        // Divider with "or" text
-                                        HStack {
-                                            Rectangle()
-                                                .frame(height: 1)
-                                                .foregroundColor(Theme.Colors.textInputStroke)
-                                            
-                                            Text("or")
-                                                .font(Theme.Fonts.labelLarge)
-                                                .foregroundColor(Theme.Colors.textSecondary)
-                                                .padding(.horizontal, 16)
-                                            
-                                            Rectangle()
-                                                .frame(height: 1)
-                                                .foregroundColor(Theme.Colors.textInputStroke)
-                                        }
-                                        .padding(.vertical, 10)
+                                       
                                     }
                                 }
                                 if viewModel.config.uiComponents.samlSSOLoginEnabled {

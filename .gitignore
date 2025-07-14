@@ -48,6 +48,9 @@ R.generated.swift
 
 ## Playgrounds
 timeline.xctimeline
+
+## Sensitive configuration files
+OpenEdX/Info.plist
 playground.xcworkspace
 
 # Swift Package Manager
