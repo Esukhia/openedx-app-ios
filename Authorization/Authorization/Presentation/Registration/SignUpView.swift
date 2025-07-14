@@ -73,7 +73,7 @@ public struct SignUpView: View {
                                 Text(AuthLocalization.SignUp.subtitle)
                                     .font(Theme.Fonts.titleSmall)
                                     .foregroundColor(Theme.Colors.textPrimary)
-                                    .padding(.bottom, 20)
+                                    .padding(.bottom, 10)
                                     .accessibilityIdentifier("signup_subtitle_text")
                                 
                                 if viewModel.thirdPartyAuthSuccess {
@@ -102,7 +102,7 @@ public struct SignUpView: View {
                                             Task { await viewModel.register(with: result) }
                                         }
                                     )
-                                    .padding(.top, 22)
+                                    .padding(.top, 10)
                                     .padding(.bottom, -2)
                                 }
 

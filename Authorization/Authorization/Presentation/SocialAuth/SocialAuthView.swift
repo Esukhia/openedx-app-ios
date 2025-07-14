@@ -45,14 +45,18 @@ struct SocialAuthView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            headerView
-            buttonsView
-            // bottomView removed
+            if authType == .register {
+                buttonsView
+                dividerView
+            } else {
+                dividerView
+                buttonsView
+            }
         }
         .frame(maxWidth: .infinity)
     }
     
-    private var headerView: some View {
+    private var dividerView: some View {
         HStack {
             Rectangle()
                 .frame(height: 1)
