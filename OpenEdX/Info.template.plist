@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- 
+  INFO.TEMPLATE.PLIST - TEMPLATE FILE FOR INFO.PLIST
+  
+  HOW TO USE THIS TEMPLATE:
+  1. Copy this file to Info.plist: cp Info.template.plist Info.plist
+  2. Replace the placeholder values below with your actual Google OAuth credentials
+  3. Make sure your Info.plist is properly configured before building the app
+  
+  IMPORTANT: Never commit your actual Info.plist with real credentials to version control
+-->
+<plist version="1.0">
+	<dict>
+		<key>BGTaskSchedulerPermittedIdentifiers</key>
+		<array>
+			<string>openEdx.offlineProgressSync</string>
+		</array>
+		<key>Configuration</key>
+		<string>$(CONFIGURATION)</string>
+		<key>FirebaseAppDelegateProxyEnabled</key>
+		<false/>
+		<key>FirebaseAutomaticScreenReportingEnabled</key>
+		<false/>
+		<key>FirebaseCrashlyticsCollectionEnabled</key>
+		<true/>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>googlegmail</string>
+			<string>readdle-spark</string>
+			<string>airmail</string>
+			<string>ms-outlook</string>
+			<string>ymail</string>
+			<string>fastmail</string>
+			<string>protonmail</string>
+		</array>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSAllowsArbitraryLoadsInWebContent</key>
+			<true/>
+		</dict>
+		<key>NSCalendarsFullAccessUsageDescription</key>
+		<string>We would like to utilize your calendar list to subscribe you to your personalized calendar for this course.</string>
+		<key>UIAppFonts</key>
+		<array/>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<!-- REPLACE WITH YOUR GOOGLE URL SCHEME: format should be com.googleusercontent.apps.[YOUR-CLIENT-ID-WITHOUT-DOMAIN] -->
+					<string>YOUR_GOOGLE_URL_SCHEME_HERE</string>
+				</array>
+			</dict>
+		</array>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>audio</string>
+			<string>fetch</string>
+			<string>processing</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<true/>
+		<key>GIDClientID</key>
+		<!-- REPLACE WITH YOUR GOOGLE CLIENT ID: format should be [YOUR-CLIENT-ID].apps.googleusercontent.com -->
+		<string>YOUR_GOOGLE_CLIENT_ID_HERE</string>
+	</dict>
+</plist>
