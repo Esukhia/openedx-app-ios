@@ -62,7 +62,7 @@ public struct SignInView: View {
                     .overlay(
                         VStack {
                             Spacer()
-                            // Welcome text removed
+                        
                         }
                     )
             }.frame(maxWidth: .infinity, maxHeight: 200)
@@ -104,20 +104,8 @@ public struct SignInView: View {
                                     Text(AuthLocalization.SignIn.welcomeBack)
                                         .font(Theme.Fonts.titleSmall)
                                         .foregroundColor(Theme.Colors.textPrimary)
-                                        .padding(.bottom, 20)
+                                        .padding(.bottom, 8)
                                         .accessibilityIdentifier("welcome_back_text")
-                                    if viewModel.socialAuthEnabled {
-                                        SocialAuthView(
-                                            viewModel: .init(
-                                                config: viewModel.config,
-                                                lastUsedOption: viewModel.storage.lastUsedSocialAuth
-                                            ) { result in
-                                                Task { await viewModel.login(with: result) }
-                                            }
-                                        )
-                                        .padding(.top, 22)
-                                        .padding(.bottom, 16)
-                                    }
                                     Text(AuthLocalization.SignIn.emailOrUsername)
                                         .font(Theme.Fonts.labelLarge)
                                         .foregroundColor(Theme.Colors.textPrimary)
@@ -202,13 +190,26 @@ public struct SignInView: View {
                                                     await viewModel.login(username: email, password: password)
                                                 }
                                             },
-                                            color: Color(hex: "#FFAF66")
+                                            color: Color(hex: "#FC7F44")
                                         )
                                         .frame(maxWidth: .infinity)
                                         .padding(.top, 20)
                                         .accessibilityIdentifier("signin_button")
                                         
-                                        // "or" divider removed
+                                        if viewModel.socialAuthEnabled {
+                                            Spacer()
+                                                .frame(height: 20)
+                                            
+                                            SocialAuthView(
+                                                viewModel: .init(
+                                                    config: viewModel.config,
+                                                    lastUsedOption: viewModel.storage.lastUsedSocialAuth
+                                                ) { result in
+                                                    Task { await viewModel.login(with: result) }
+                                                }
+                                            )
+                                            .padding(.bottom, 16)
+                                        }
                                     }
                                 }
                                 if viewModel.config.uiComponents.samlSSOLoginEnabled {
@@ -268,7 +269,7 @@ public struct SignInView: View {
                                                 .background(Color.white)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 20)
-                                                        .stroke(Color(hex: "#FFAF66"), lineWidth: 1)
+                                                        .stroke(Color(hex: "#FC7F44"), lineWidth: 1)
                                                 )
                                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                             }
@@ -288,7 +289,7 @@ public struct SignInView: View {
                     }
                     .background(Theme.Colors.loginBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .padding(.top, -20)
+                    .padding(.top, -40)
                     .scrollAvoidKeyboard(dismissKeyboardByTap: true)
                 }
             }

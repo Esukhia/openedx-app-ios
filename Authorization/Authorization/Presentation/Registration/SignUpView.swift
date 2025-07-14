@@ -162,7 +162,7 @@ public struct SignUpView: View {
                                             }
                                             viewModel.trackCreateAccountClicked()
                                         },
-                                        color: Color(hex: "#FFAF66")
+                                        color: Color(hex: "#FC7F44")
                                     )
                                     .padding(.top, 30)
                                     .frame(maxWidth: .infinity)

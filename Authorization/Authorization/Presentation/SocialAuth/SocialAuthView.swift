@@ -29,7 +29,7 @@ struct SocialAuthView: View {
     var authType: SocialAuthType = .signIn
     
     private var title: String {
-        AuthLocalization.continueWith
+        "or"
     }
     
     private var bottomViewText: String {
@@ -47,51 +47,53 @@ struct SocialAuthView: View {
         VStack(spacing: 16) {
             headerView
             buttonsView
-            bottomView
+            // bottomView removed
         }
         .frame(maxWidth: .infinity)
     }
     
     private var headerView: some View {
         HStack {
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Theme.Colors.textInputStroke)
+            
             Text(title)
-                .font(Theme.Fonts.bodyMedium)
+                .font(Theme.Fonts.labelLarge)
+                .foregroundColor(Theme.Colors.textSecondary)
+                .padding(.horizontal, 16)
                 .accessibilityIdentifier("social_auth_title_text")
-            Spacer()
+            
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Theme.Colors.textInputStroke)
         }
     }
     
     private var buttonsView: some View {
-        HStack {
+        VStack(spacing: 12) {
             if let lastOption = viewModel.lastUsedOption,
                authType == .signIn {
-                Text(AuthLocalization.lastSignIn)
-                    .font(Theme.Fonts.bodySmall)
-                    .foregroundStyle(Theme.Colors.textPrimary)
-                
-                socialAuthButton(lastOption)
-                    .padding(.leading, 10)
-                
-                Divider()
-                    .frame(width: 1)
-                    .overlay(Theme.Colors.socialAuthColor)
-                    .padding(.horizontal, 16)
-                    .opacity(viewModel.enabledOptions.count == 1 ? 0 : 1)
-                
-                Spacer()
+                VStack(alignment: .center, spacing: 8) {
+                    Text(AuthLocalization.lastSignIn)
+                        .font(Theme.Fonts.bodySmall)
+                        .foregroundStyle(Theme.Colors.textPrimary)
+                    
+                    socialAuthButton(lastOption)
+                }
+                .frame(maxWidth: .infinity)
             }
             
-            HStack {
+            VStack(spacing: 12) {
                 ForEach(viewModel.enabledOptions, id: \.self) { option in
                     if option != viewModel.lastUsedOption || authType != .signIn {
                         socialAuthButton(option)
-                            .padding(.trailing, option == viewModel.enabledOptions.last ? 0 : 12)
                     }
                 }
-                Spacer()
             }
+            .frame(maxWidth: .infinity)
         }
-        .frame(height: 42)
+        .frame(maxWidth: .infinity)
     }
     
     private func socialAuthButton(
@@ -101,6 +103,7 @@ struct SocialAuthView: View {
         case .google:
             return SocialAuthButton(
                 image: CoreAssets.iconGoogleWhite.swiftUIImage,
+                text: "Continue with Google",
                 accessibilityLabel: "\(title) \(AuthLocalization.google)",
                 accessibilityIdentifier: "social_auth_google_button",
                 action: { Task { await viewModel.signInWithGoogle() }}
@@ -108,6 +111,7 @@ struct SocialAuthView: View {
         case .apple:
             return SocialAuthButton(
                 image: CoreAssets.iconApple.swiftUIImage,
+                text: "Continue with Apple",
                 accessibilityLabel: "\(title) \(AuthLocalization.apple)",
                 accessibilityIdentifier: "social_auth_apple_button",
                 action: { Task { viewModel.signInWithApple() }}
@@ -115,6 +119,7 @@ struct SocialAuthView: View {
         case .facebook:
             return SocialAuthButton(
                 image: CoreAssets.iconFacebook.swiftUIImage,
+                text: "Continue with Facebook",
                 accessibilityLabel: "\(title) \(AuthLocalization.facebook)",
                 accessibilityIdentifier: "social_auth_facebook_button",
                 action: { Task { await viewModel.signInWithFacebook() }}
@@ -122,6 +127,7 @@ struct SocialAuthView: View {
         case .microsoft:
             return SocialAuthButton(
                 image: CoreAssets.iconMicrosoftWhite.swiftUIImage,
+                text: "Continue with Microsoft",
                 accessibilityLabel: "\(title) \(AuthLocalization.microsoft)",
                 accessibilityIdentifier: "social_auth_microsoft_button",
                 action: { Task { await viewModel.signInWithMicrosoft() }}
