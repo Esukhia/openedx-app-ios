@@ -62,7 +62,7 @@ public struct SignInView: View {
                     .overlay(
                         VStack {
                             Spacer()
-                            
+                            // Welcome text removed
                         }
                     )
             }.frame(maxWidth: .infinity, maxHeight: 200)
@@ -208,7 +208,7 @@ public struct SignInView: View {
                                         .padding(.top, 20)
                                         .accessibilityIdentifier("signin_button")
                                         
-                                       
+                                        // "or" divider removed
                                     }
                                 }
                                 if viewModel.config.uiComponents.samlSSOLoginEnabled {

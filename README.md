@@ -17,15 +17,7 @@ Modern vision of the mobile application for the Open edX platform from Raccoon G
 
 5. Configure `config_settings.yaml` inside `default_config` and `config.yaml` inside sub direcroties to point to your OpenEdx configuration [Configuration Documentation](./Documentation/CONFIGURATION_MANAGEMENT.md)
 
-6. Set up Google Sign-In (if needed):
-
-   - Copy `OpenEdX/Info.plist.template` to `OpenEdX/Info.plist` (if it doesn't exist)
-   - Replace the placeholder values:
-     - `YOUR_GOOGLE_CLIENT_ID_HERE`: Your Google OAuth client ID
-     - `YOUR_GOOGLE_URL_SCHEME_HERE`: URL scheme in format `com.googleusercontent.apps.YOUR_CLIENT_ID`
-   - Note: The `Info.plist` file is gitignored to keep sensitive credentials out of the repository
-
-7. Click the **Run** button.
+6. Click the **Run** button.
 
 ## Translations
 ### Getting translations for the app
