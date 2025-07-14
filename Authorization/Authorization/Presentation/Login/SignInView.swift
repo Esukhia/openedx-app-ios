@@ -87,7 +87,7 @@ public struct SignInView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 250, maxHeight: 120)
-                    .padding(.top, isHorizontal ? 20 : 40)
+                    .padding(.top, isHorizontal ? 10 : 20)
                     .padding(.bottom, isHorizontal ? 10 : 40)
                     .accessibilityIdentifier("logo_image")
                 
@@ -104,7 +104,7 @@ public struct SignInView: View {
                                     Text(AuthLocalization.SignIn.welcomeBack)
                                         .font(Theme.Fonts.titleSmall)
                                         .foregroundColor(Theme.Colors.textPrimary)
-                                        .padding(.bottom, 8)
+                                        .padding(.bottom, 24)
                                         .accessibilityIdentifier("welcome_back_text")
                                     Text(AuthLocalization.SignIn.emailOrUsername)
                                         .font(Theme.Fonts.labelLarge)
