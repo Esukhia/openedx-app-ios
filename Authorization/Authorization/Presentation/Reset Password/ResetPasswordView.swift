@@ -121,11 +121,13 @@ public struct ResetPasswordView: View {
                                                 .accessibilityIdentifier("progress_bar")
                                         }.frame(maxWidth: .infinity)
                                     } else {
-                                        StyledButton(AuthLocalization.Forgot.request) {
+                                        StyledButton(AuthLocalization.Forgot.request,
+                                                   action: {
                                             Task {
                                                 await viewModel.resetPassword(email: email, isRecovered: $isRecovered)
                                             }
-                                        }
+                                        },
+                                                   color: Color(hex: "#FC7F44"))
                                         .padding(.top, 30)
                                         .frame(maxWidth: .infinity)
                                         .accessibilityIdentifier("reset_password_button")

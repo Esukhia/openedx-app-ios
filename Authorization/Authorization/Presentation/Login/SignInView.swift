@@ -87,8 +87,8 @@ public struct SignInView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 250, maxHeight: 120)
-                    .padding(.top, isHorizontal ? 10 : 20)
-                    .padding(.bottom, isHorizontal ? 10 : 40)
+                    .padding(.top, isHorizontal ? 5 : 10)
+                    .padding(.bottom, isHorizontal ? 5 : 20)
                     .accessibilityIdentifier("logo_image")
                 
                 GeometryReader { proxy in
@@ -154,24 +154,14 @@ public struct SignInView: View {
                                         )
                                         .accessibilityIdentifier("password_textfield")
                                     HStack {
-                                        if !viewModel.config.features.startupScreenEnabled {
-                                            Button(CoreLocalization.SignIn.registerBtn) {
-                                                viewModel.router.showRegisterScreen(
-                                                    sourceScreen: viewModel.sourceScreen
-                                                )
-                                            }
-                                            .foregroundColor(Theme.Colors.accentColor)
-                                            .accessibilityIdentifier("register_button")
-                                            
-                                            Spacer()
-                                        }
+                                        Spacer()
                                         
                                         Button(AuthLocalization.SignIn.forgotPassBtn) {
                                             viewModel.trackForgotPasswordClicked()
                                             viewModel.router.showForgotPasswordScreen()
                                         }
                                         .font(Theme.Fonts.bodyLarge)
-                                        .foregroundColor(Theme.Colors.infoColor)
+                                        .foregroundColor(Color(hex: "#FC7F44"))
                                         .padding(.top, 0)
                                         .accessibilityIdentifier("forgot_password_button")
                                     }
@@ -209,6 +199,25 @@ public struct SignInView: View {
                                                 }
                                             )
                                             .padding(.bottom, 16)
+                                            
+                                            if !viewModel.config.features.startupScreenEnabled {
+                                                HStack(alignment: .center) {
+                                                    Text("Don't have an account?")
+                                                        .font(Theme.Fonts.bodyLarge)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                    
+                                                    Button(CoreLocalization.SignIn.registerBtn) {
+                                                        viewModel.router.showRegisterScreen(
+                                                            sourceScreen: viewModel.sourceScreen
+                                                        )
+                                                    }
+                                                    .foregroundColor(Color(hex: "#FC7F44"))
+                                                    .font(Theme.Fonts.bodyLarge)
+                                                    .accessibilityIdentifier("register_button")
+                                                }
+                                                .frame(maxWidth: .infinity, alignment: .center)
+                                                .padding(.bottom, 16)
+                                            }
                                         }
                                     }
                                 }
@@ -284,12 +293,12 @@ public struct SignInView: View {
                             Spacer()
                         }
                         .padding(.horizontal, 24)
-                        .padding(.top, 50)
+                        .padding(.top, 20)
                         .frameLimit(width: proxy.size.width)
                     }
                     .background(Theme.Colors.loginBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .padding(.top, -40)
+                    .padding(.top, -20)
                     .scrollAvoidKeyboard(dismissKeyboardByTap: true)
                 }
             }

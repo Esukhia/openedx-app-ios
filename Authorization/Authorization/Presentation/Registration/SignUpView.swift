@@ -132,7 +132,7 @@ public struct SignUpView: View {
                                     }
                                     .accessibilityLabel("optional_fields_text")
                                     .padding(.top, 10)
-                                    .foregroundColor(Theme.Colors.accentXColor)
+                                    .foregroundColor(Color(hex: "#FC7F44"))
                                 }
 
                                 FieldsView(
