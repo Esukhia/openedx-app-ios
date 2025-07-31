@@ -70,39 +70,7 @@ public struct PartnerFilterSheet: View {
                         GridItem(.flexible()),
                         GridItem(.flexible())
                     ], spacing: 16) {
-                        // All Organizations option
-                        VStack(spacing: 8) {
-                            ZStack {
-                                Circle()
-                                    .fill(
-                                        selectedPartner == nil ?
-                                        Color(hex: "FC8044") : Theme.Colors.cardViewBackground
-                                    )
-                                    .frame(width: 70, height: 70)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Theme.Colors.cardViewStroke, lineWidth: 1)
-                                    )
-                                
-                                Image(systemName: "globe")
-                                    .font(.system(size: 28))
-                                    .foregroundColor(selectedPartner == nil ? .white : Theme.Colors.textSecondary)
-                            }
-                            .scaleEffect(selectedPartner == nil ? 1.0 : 0.95)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    selectedPartner = nil
-                                }
-                            }
-                            
-                            Text("All")
-                                .font(Theme.Fonts.labelMedium)
-                                .foregroundColor(Theme.Colors.textPrimary)
-                                .multilineTextAlignment(.center)
-                        }
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel("All Organizations")
-                        .accessibilityAddTraits(selectedPartner == nil ? .isSelected : [])
+                        // Partner options start here
                         
                         // Partner options
                         ForEach(partners) { partner in

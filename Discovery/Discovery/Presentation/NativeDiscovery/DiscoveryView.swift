@@ -55,8 +55,9 @@ public struct DiscoveryView: View {
                 // MARK: - Page name
                 VStack(alignment: .center) {
                     
-                    // MARK: - Search fake field with filter
-                    HStack(spacing: 0) {
+                    // MARK: - Search field and filter button
+                    HStack(spacing: 12) {
+                        // Search box
                         HStack(spacing: 11) {
                             Image(systemName: "magnifyingglass")
                                 .foregroundColor(Theme.Colors.textSecondary)
@@ -68,56 +69,89 @@ public struct DiscoveryView: View {
                                 .accessibilityIdentifier("search_text")
                             Spacer()
                         }
+                        .frame(minHeight: 48)
+                        .background(
+                            RoundedRectangle(cornerRadius: 24) // More rounded corners for search bar
+                                .fill(Theme.Colors.textInputUnfocusedBackground)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24) // Matching corner radius for border
+                                .stroke(lineWidth: 1)
+                                .fill(Theme.Colors.textInputUnfocusedStroke)
+                        )
                         .onTapGesture {
                             router.showDiscoverySearch(searchQuery: searchQuery)
                             viewModel.discoverySearchBarClicked()
                         }
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(DiscoveryLocalization.search)
                         
-                        // Filter button
+                        // Filter button (outside search box)
                         Button(action: {
                             viewModel.showPartnerFilterSheet()
                         }) {
-                            HStack(spacing: 4) {
-                                Image(systemName: "line.3.horizontal.decrease.circle")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(
-                                        viewModel.selectedPartner != nil ?
-                                        Theme.Colors.accentColor : Theme.Colors.textSecondary
-                                    )
-                                
-                                if let selectedPartner = viewModel.selectedPartner {
-                                    Text(selectedPartner.organization)
-                                        .font(Theme.Fonts.labelSmall)
-                                        .foregroundColor(Theme.Colors.accentColor)
-                                        .lineLimit(1)
-                                }
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
+                            Image(systemName: "line.3.horizontal.decrease.circle")
+                                .font(.system(size: 24))
+                                .foregroundColor(
+                                    viewModel.selectedPartner != nil ?
+                                    Theme.Colors.accentColor : Theme.Colors.textSecondary
+                                )
+                                .padding(.horizontal, 8)
                         }
                         .accessibilityIdentifier("filter_button")
                         .accessibilityLabel("Filter by organization")
                     }
-                    .frame(minHeight: 48)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        Theme.Shapes.textInputShape
-                            .fill(Theme.Colors.textInputUnfocusedBackground)
-                    )
-                    .overlay(
-                        Theme.Shapes.textInputShape
-                            .stroke(lineWidth: 1)
-                            .fill(Theme.Colors.textInputUnfocusedStroke)
-                    ).onTapGesture {
-                        router.showDiscoverySearch(searchQuery: searchQuery)
-                        viewModel.discoverySearchBarClicked()
-                    }
                     .padding(.top, 11.5)
                     .padding(.horizontal, 24)
-                    .padding(.bottom, 20)
                     .frameLimit(width: proxy.size.width)
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel(DiscoveryLocalization.search)
+                    
+                    // Selected organization pill and clear button
+                    if let selectedPartner = viewModel.selectedPartner {
+                        HStack {
+                            // Organization pill
+                            Text(selectedPartner.organization)
+                                .font(Theme.Fonts.labelMedium)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(
+                                    Capsule()
+                                        .fill(Color(hex: "FC8044"))
+                                )
+                            
+                            Spacer()
+                            
+                            // Clear button
+                            Button(action: {
+                                viewModel.clearPartnerFilter()
+                            }) {
+                                Text("Clear")
+                                    .font(Theme.Fonts.labelMedium)
+                                    .foregroundColor(Theme.Colors.textSecondary)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(
+                                        Capsule()
+                                            .fill(Theme.Colors.textInputUnfocusedBackground)
+                                    )
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(Theme.Colors.textInputUnfocusedStroke, lineWidth: 1)
+                                    )
+                            }
+                            .accessibilityIdentifier("clear_filter_button")
+                            .accessibilityLabel("Clear organization filter")
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 20)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                    } else {
+                        // Add bottom padding when no filter is selected
+                        Spacer()
+                            .frame(height: 20)
+                    }
                     
                     ZStack {
                         ScrollView {

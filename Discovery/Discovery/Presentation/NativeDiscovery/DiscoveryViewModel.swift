@@ -183,6 +183,16 @@ public final class DiscoveryViewModel: ObservableObject {
         }
     }
     
+    func clearPartnerFilter() {
+        selectedPartner = nil
+        // Reset pagination and reload all courses
+        totalPages = 1
+        nextPage = 1
+        Task {
+            await discovery(page: 1, withProgress: true)
+        }
+    }
+    
     private func compareVersions(_ version1: String, _ version2: String) -> ComparisonResult {
         let components1 = version1.components(separatedBy: ".").prefix(2)
         let components2 = version2.components(separatedBy: ".").prefix(2)
