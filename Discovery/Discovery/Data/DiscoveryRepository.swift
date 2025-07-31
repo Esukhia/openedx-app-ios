@@ -13,11 +13,13 @@ import Alamofire
 
 public protocol DiscoveryRepositoryProtocol: Sendable {
     func getDiscovery(page: Int) async throws -> [CourseItem]
+    func getDiscoveryByOrg(page: Int, organization: String) async throws -> [CourseItem]
     func searchCourses(page: Int, searchTerm: String) async throws -> [CourseItem]
     func getDiscoveryOffline() async throws -> [CourseItem]
     func getCourseDetails(courseID: String) async throws -> CourseDetails
     func getLoadedCourseDetails(courseID: String) async throws -> CourseDetails
     func enrollToCourse(courseID: String) async throws -> Bool
+    func getPartners() async throws -> [Partner]
 }
 
 public actor DiscoveryRepository: DiscoveryRepositoryProtocol {
@@ -44,6 +46,13 @@ public actor DiscoveryRepository: DiscoveryRepositoryProtocol {
             username: coreStorage.user?.username ?? "", page: page)
         ).mapResponse(DataLayer.DiscoveryResponce.self).domain
         await persistence.saveDiscovery(items: discoveryResponse)
+        return discoveryResponse
+    }
+    
+    public func getDiscoveryByOrg(page: Int, organization: String) async throws -> [CourseItem] {
+        let discoveryResponse = try await api.requestData(DiscoveryEndpoint.getDiscoveryByOrg(
+            username: coreStorage.user?.username ?? "", page: page, organization: organization)
+        ).mapResponse(DataLayer.DiscoveryResponce.self).domain
         return discoveryResponse
     }
     
@@ -77,6 +86,12 @@ public actor DiscoveryRepository: DiscoveryRepositoryProtocol {
     public func enrollToCourse(courseID: String) async throws -> Bool {
         let enroll = try await api.request(DiscoveryEndpoint.enrollToCourse(courseID: courseID))
         return enroll.statusCode == 200
+    }
+    
+    public func getPartners() async throws -> [Partner] {
+        let partnersResponse = try await api.requestData(DiscoveryEndpoint.getPartners)
+            .mapResponse([Partner].self)
+        return partnersResponse
     }
 }
 
@@ -198,6 +213,62 @@ final class DiscoveryRepositoryMock: DiscoveryRepositoryProtocol {
             )
         }
         return models
+    }
+    
+    func getDiscoveryByOrg(page: Int, organization: String) async throws -> [CourseItem] {
+        var models: [CourseItem] = []
+        for i in 0...5 {
+            models.append(
+                CourseItem(
+                    name: "\(organization) Course \(i)",
+                    org: organization,
+                    shortDescription: "Course from \(organization)",
+                    imageURL: "",
+                    hasAccess: true,
+                    courseStart: nil,
+                    courseEnd: nil,
+                    enrollmentStart: nil,
+                    enrollmentEnd: nil,
+                    courseID: "\(organization.lowercased())_course_\(i)",
+                    numPages: 1,
+                    coursesCount: 6,
+                    courseRawImage: nil,
+                    progressEarned: 0,
+                    progressPossible: 0
+                )
+            )
+        }
+        return models
+    }
+    
+    func getPartners() async throws -> [Partner] {
+        return [
+            Partner(
+                partnerName: "BDRC",
+                logo: "https://staging.sherab.org/media/partner/BDRC_Logo.png",
+                organization: "BDRC"
+            ),
+            Partner(
+                partnerName: "Kumarajiva",
+                logo: "https://staging.sherab.org/media/partner/Kumarajiva_logo.png",
+                organization: "Kumarajiva"
+            ),
+            Partner(
+                partnerName: "Sherab",
+                logo: "https://staging.sherab.org/media/partner/sherab.jpeg",
+                organization: "Sherab"
+            ),
+            Partner(
+                partnerName: "Esukhia",
+                logo: "https://staging.sherab.org/media/partner/Esukhia_logo.png",
+                organization: "Esukhia"
+            ),
+            Partner(
+                partnerName: "Sarah College",
+                logo: "https://staging.sherab.org/media/partner/Sarah_college_logo.png",
+                organization: "Sarah"
+            )
+        ]
     }
 }
 #endif

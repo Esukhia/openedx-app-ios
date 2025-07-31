@@ -12,13 +12,15 @@ import Alamofire
 
 enum DiscoveryEndpoint: EndPointType {
     case getDiscovery(username: String, page: Int)
+    case getDiscoveryByOrg(username: String, page: Int, organization: String)
     case searchCourses(username: String, page: Int, searchTerm: String)
     case getCourseDetail(courseID: String, username: String)
     case enrollToCourse(courseID: String)
+    case getPartners
     
     var path: String {
         switch self {
-        case .getDiscovery:
+        case .getDiscovery, .getDiscoveryByOrg:
             return "/api/courses/v1/courses/"
         case .searchCourses:
             return "/api/courses/v1/courses/"
@@ -26,12 +28,14 @@ enum DiscoveryEndpoint: EndPointType {
             return "/api/courses/v1/courses/\(courseID)"
         case .enrollToCourse:
             return "/api/enrollment/v1/enrollment"
+        case .getPartners:
+            return "/api/partners/"
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
-        case .getDiscovery, .searchCourses:
+        case .getDiscovery, .getDiscoveryByOrg, .searchCourses, .getPartners:
             return .get
         case .getCourseDetail:
             return .get
@@ -51,6 +55,15 @@ enum DiscoveryEndpoint: EndPointType {
                 "mobile": true,
                 "permissions": ["enroll", "see_about_page", "see_in_catalog"],
                 "page": page
+            ]
+            return .requestParameters(parameters: params, encoding: CustomGetEncoding())
+            
+        case let .getDiscoveryByOrg(_, page, organization):
+            let params: Parameters = [
+                "mobile": true,
+                "permissions": ["enroll", "see_about_page", "see_in_catalog"],
+                "page": page,
+                "org": organization
             ]
             return .requestParameters(parameters: params, encoding: CustomGetEncoding())
             
@@ -80,6 +93,9 @@ enum DiscoveryEndpoint: EndPointType {
         case let .getCourseDetail(_, username):
             let params: [String: Encodable & Sendable] = ["username": username]
             return .requestParameters(parameters: params, encoding: URLEncoding.queryString)
+            
+        case .getPartners:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.queryString)
         }
     }
 }

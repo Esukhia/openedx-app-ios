@@ -11,11 +11,13 @@ import Core
 //sourcery: AutoMockable
 public protocol DiscoveryInteractorProtocol: Sendable {
     func discovery(page: Int) async throws -> [CourseItem]
+    func discoveryByOrg(page: Int, organization: String) async throws -> [CourseItem]
     func discoveryOffline() async throws -> [CourseItem]
     func search(page: Int, searchTerm: String) async throws -> [CourseItem]
     func getLoadedCourseDetails(courseID: String) async throws -> CourseDetails
     func getCourseDetails(courseID: String) async throws -> CourseDetails
     func enrollToCourse(courseID: String) async throws -> Bool
+    func getPartners() async throws -> [Partner]
 }
 
 public actor DiscoveryInteractor: DiscoveryInteractorProtocol {
@@ -28,6 +30,10 @@ public actor DiscoveryInteractor: DiscoveryInteractorProtocol {
     
     public func discovery(page: Int) async throws -> [CourseItem] {
         return try await repository.getDiscovery(page: page)
+    }
+    
+    public func discoveryByOrg(page: Int, organization: String) async throws -> [CourseItem] {
+        return try await repository.getDiscoveryByOrg(page: page, organization: organization)
     }
     
     public func search(page: Int, searchTerm: String) async throws -> [CourseItem] {
@@ -48,6 +54,10 @@ public actor DiscoveryInteractor: DiscoveryInteractorProtocol {
     
     public func enrollToCourse(courseID: String) async throws -> Bool {
         return try await repository.enrollToCourse(courseID: courseID)
+    }
+    
+    public func getPartners() async throws -> [Partner] {
+        return try await repository.getPartners()
     }
 }
 

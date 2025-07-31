@@ -55,21 +55,48 @@ public struct DiscoveryView: View {
                 // MARK: - Page name
                 VStack(alignment: .center) {
                     
-                    // MARK: - Search fake field
-                    HStack(spacing: 11) {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(Theme.Colors.textSecondary)
-                            .padding(.leading, 16)
-                            .padding(.top, 1)
-                            .accessibilityIdentifier("search_image")
-                        Text(DiscoveryLocalization.search)
-                            .foregroundColor(Theme.Colors.textSecondary)
-                            .accessibilityIdentifier("search_text")
-                        Spacer()
-                    }
-                    .onTapGesture {
-                        router.showDiscoverySearch(searchQuery: searchQuery)
-                        viewModel.discoverySearchBarClicked()
+                    // MARK: - Search fake field with filter
+                    HStack(spacing: 0) {
+                        HStack(spacing: 11) {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(Theme.Colors.textSecondary)
+                                .padding(.leading, 16)
+                                .padding(.top, 1)
+                                .accessibilityIdentifier("search_image")
+                            Text(DiscoveryLocalization.search)
+                                .foregroundColor(Theme.Colors.textSecondary)
+                                .accessibilityIdentifier("search_text")
+                            Spacer()
+                        }
+                        .onTapGesture {
+                            router.showDiscoverySearch(searchQuery: searchQuery)
+                            viewModel.discoverySearchBarClicked()
+                        }
+                        
+                        // Filter button
+                        Button(action: {
+                            viewModel.showPartnerFilterSheet()
+                        }) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "line.3.horizontal.decrease.circle")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(
+                                        viewModel.selectedPartner != nil ?
+                                        Theme.Colors.accentColor : Theme.Colors.textSecondary
+                                    )
+                                
+                                if let selectedPartner = viewModel.selectedPartner {
+                                    Text(selectedPartner.organization)
+                                        .font(Theme.Fonts.labelSmall)
+                                        .foregroundColor(Theme.Colors.accentColor)
+                                        .lineLimit(1)
+                                }
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                        }
+                        .accessibilityIdentifier("filter_button")
+                        .accessibilityLabel("Filter by organization")
                     }
                     .frame(minHeight: 48)
                     .frame(maxWidth: .infinity)
@@ -194,12 +221,24 @@ public struct DiscoveryView: View {
                 searchQuery = ""
             }
             Task {
+                await viewModel.loadPartners()
                 await viewModel.discovery(page: 1)
                 if case let .courseDetail(courseID, courseTitle) = sourceScreen {
                     viewModel.router.showCourseDetais(courseID: courseID, title: courseTitle)
                 }
             }
             viewModel.setupNotifications()
+        }
+        .sheet(isPresented: $viewModel.showPartnerFilter) {
+            PartnerFilterSheet(
+                partners: viewModel.partners,
+                selectedPartner: viewModel.selectedPartner
+            ) { selectedPartner in
+                viewModel.selectPartner(selectedPartner)
+            }
+            .presentationDetents([.height(400), .medium])
+            .presentationDragIndicator(.visible)
+            .presentationCornerRadius(20)
         }
         .background(Theme.Colors.background.ignoresSafeArea())
     }

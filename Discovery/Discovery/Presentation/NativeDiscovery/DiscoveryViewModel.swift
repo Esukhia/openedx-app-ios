@@ -19,7 +19,10 @@ public final class DiscoveryViewModel: ObservableObject {
     private var updateShowedOnce: Bool = false
     
     @Published var courses: [CourseItem] = []
+    @Published var partners: [Partner] = []
+    @Published var selectedPartner: Partner?
     @Published var showError: Bool = false
+    @Published var showPartnerFilter: Bool = false
     
     var userloggedIn: Bool {
         return !(storage.user?.username?.isEmpty ?? true)
@@ -100,11 +103,25 @@ public final class DiscoveryViewModel: ObservableObject {
         do {
             if connectivity.isInternetAvaliable {
                 if page == 1 {
-                    await courses = try interactor.discovery(page: page)
+                    if let selectedPartner = selectedPartner {
+                        courses = try await interactor.discoveryByOrg(
+                            page: page,
+                            organization: selectedPartner.organization
+                        )
+                    } else {
+                        courses = try await interactor.discovery(page: page)
+                    }
                     self.totalPages = 1
                     self.nextPage = 1
                 } else {
-                    await courses += try interactor.discovery(page: page)
+                    if let selectedPartner = selectedPartner {
+                        courses += try await interactor.discoveryByOrg(
+                            page: page,
+                            organization: selectedPartner.organization
+                        )
+                    } else {
+                        courses += try await interactor.discovery(page: page)
+                    }
                 }
                 self.nextPage += 1
                 if !courses.isEmpty {
@@ -135,6 +152,35 @@ public final class DiscoveryViewModel: ObservableObject {
     
     func discoverySearchBarClicked() {
         analytics.discoverySearchBarClicked()
+    }
+    
+    @MainActor
+    func loadPartners() async {
+        do {
+            if connectivity.isInternetAvaliable {
+                partners = try await interactor.getPartners()
+            }
+        } catch let error {
+            if error.isInternetError {
+                errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
+            } else {
+                errorMessage = CoreLocalization.Error.unknownError
+            }
+        }
+    }
+    
+    func showPartnerFilterSheet() {
+        showPartnerFilter = true
+    }
+    
+    func selectPartner(_ partner: Partner?) {
+        selectedPartner = partner
+        // Reset pagination and reload courses
+        totalPages = 1
+        nextPage = 1
+        Task {
+            await discovery(page: 1, withProgress: true)
+        }
     }
     
     private func compareVersions(_ version1: String, _ version2: String) -> ComparisonResult {

@@ -39,6 +39,8 @@
 		E0B9F6A02B4D57F800168366 /* DiscoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9F69A2B4D57F800168366 /* DiscoveryView.swift */; };
 		E0B9F6A12B4D57F800168366 /* CourseDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9F69B2B4D57F800168366 /* CourseDetailsViewModel.swift */; };
 		E0B9F6A42B4D59E000168366 /* CourseDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9F6A32B4D59E000168366 /* CourseDetails.swift */; };
+		520329EC-D13E-4F6F-BB4C-3FA6F614AD4D /* Partner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5289297-6C9A-49CA-A3D6-FA4B74969ACD /* Partner.swift */; };
+		F11730BC-1A56-40C6-A455-6D24F776883E /* PartnerFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5515297-9549-4FDF-AA87-7829228B948D /* PartnerFilterSheet.swift */; };
 		E0B9F6A62B4D620100168366 /* Data_CourseDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9F6A52B4D620100168366 /* Data_CourseDetailsResponse.swift */; };
 		E0B9F6AB2B4E718F00168366 /* CourseDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9F6AA2B4E718F00168366 /* CourseDetailsViewModelTests.swift */; };
 		E0D586202B300095009B4BA7 /* DiscoveryWebviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D5861E2B300095009B4BA7 /* DiscoveryWebviewViewModel.swift */; };
@@ -117,6 +119,8 @@
 		E0B9F69A2B4D57F800168366 /* DiscoveryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryView.swift; sourceTree = "<group>"; };
 		E0B9F69B2B4D57F800168366 /* CourseDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewModel.swift; sourceTree = "<group>"; };
 		E0B9F6A32B4D59E000168366 /* CourseDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetails.swift; sourceTree = "<group>"; };
+		E5289297-6C9A-49CA-A3D6-FA4B74969ACD /* Partner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Partner.swift; sourceTree = "<group>"; };
+		B5515297-9549-4FDF-AA87-7829228B948D /* PartnerFilterSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerFilterSheet.swift; sourceTree = "<group>"; };
 		E0B9F6A52B4D620100168366 /* Data_CourseDetailsResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data_CourseDetailsResponse.swift; sourceTree = "<group>"; };
 		E0B9F6AA2B4E718F00168366 /* CourseDetailsViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		E0D586132B29F25A009B4BA7 /* Authorization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Authorization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +333,7 @@
 				E0B9F6992B4D57F800168366 /* SearchViewModel.swift */,
 				E0B9F69A2B4D57F800168366 /* DiscoveryView.swift */,
 				E0B9F69B2B4D57F800168366 /* CourseDetailsViewModel.swift */,
+				B5515297-9549-4FDF-AA87-7829228B948D /* PartnerFilterSheet.swift */,
 			);
 			path = NativeDiscovery;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 			children = (
 				E0B9F6A52B4D620100168366 /* Data_CourseDetailsResponse.swift */,
 				E0B9F6A32B4D59E000168366 /* CourseDetails.swift */,
+				E5289297-6C9A-49CA-A3D6-FA4B74969ACD /* Partner.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -483,6 +489,8 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/Discovery/SwiftGen/Strings.swift",
+				"$(SRCROOT)/Discovery/SwiftGen/Assets.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -569,6 +577,8 @@
 			files = (
 				029242E92AE6A3AB00A940EC /* UpdateRecommendedView.swift in Sources */,
 				E0B9F6A42B4D59E000168366 /* CourseDetails.swift in Sources */,
+				520329EC-D13E-4F6F-BB4C-3FA6F614AD4D /* Partner.swift in Sources */,
+				F11730BC-1A56-40C6-A455-6D24F776883E /* PartnerFilterSheet.swift in Sources */,
 				0284DBFC28D4856A00830893 /* DiscoveryEndpoint.swift in Sources */,
 				029737402949FB070051696B /* DiscoveryCoreModel.xcdatamodeld in Sources */,
 				029242E72AE6978400A940EC /* UpdateRequiredView.swift in Sources */,
