@@ -70,7 +70,15 @@ public struct PartnerFilterSheet: View {
                         GridItem(.flexible()),
                         GridItem(.flexible())
                     ], spacing: 16) {
-                        // Partner options start here
+                        // All option (hidden but functional for selection logic)
+                        EmptyView()
+                            .frame(width: 0, height: 0)
+                            .onAppear {
+                                // If no partner is selected initially, ensure it stays that way
+                                if selectedPartner == nil {
+                                    selectedPartner = nil
+                                }
+                            }
                         
                         // Partner options
                         ForEach(partners) { partner in
