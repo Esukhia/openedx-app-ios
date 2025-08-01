@@ -71,11 +71,11 @@ public struct DiscoveryView: View {
                         }
                         .frame(minHeight: 48)
                         .background(
-                            RoundedRectangle(cornerRadius: 24) // More rounded corners for search bar
+                            RoundedRectangle(cornerRadius: 13) // More rounded corners for search bar
                                 .fill(Theme.Colors.textInputUnfocusedBackground)
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: 24) // Matching corner radius for border
+                            RoundedRectangle(cornerRadius: 13) // Matching corner radius for border
                                 .stroke(lineWidth: 1)
                                 .fill(Theme.Colors.textInputUnfocusedStroke)
                         )
@@ -145,6 +145,7 @@ public struct DiscoveryView: View {
                             .accessibilityLabel("Clear organization filter")
                         }
                         .padding(.horizontal, 24)
+                        .padding(.top, 6) // Added top padding to increase space between search bar and pill
                         .padding(.bottom, 20)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                     } else {
