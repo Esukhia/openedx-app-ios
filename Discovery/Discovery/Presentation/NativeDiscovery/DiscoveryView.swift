@@ -23,18 +23,37 @@ public struct DiscoveryView: View {
     @Environment(\.isHorizontal) private var isHorizontal
     @Environment(\.presentationMode) private var presentationMode
     
-    private let discoveryNew: some View = VStack(alignment: .leading) {
-        Text(DiscoveryLocalization.Header.title1)
-            .font(Theme.Fonts.displaySmall)
-            .foregroundColor(Theme.Colors.textPrimary)
-            .accessibilityIdentifier("title_text")
-        Text(DiscoveryLocalization.Header.title2)
-            .font(Theme.Fonts.titleSmall)
-            .foregroundColor(Theme.Colors.textPrimary)
-            .accessibilityIdentifier("subtitle_text")
-    }.listRowBackground(Color.clear)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(DiscoveryLocalization.Header.title1 + DiscoveryLocalization.Header.title2)
+    private func discoveryHeader(_ viewModel: DiscoveryViewModel) -> some View {
+        Group {
+            if let selectedPartner = viewModel.selectedPartner, !viewModel.courses.isEmpty {
+                // Show course count when filter is active
+                VStack(alignment: .leading) {
+                    Text("Viewing \(viewModel.totalCourseCount) Courses")
+                        .font(Theme.Fonts.displaySmall)
+                        .foregroundColor(Theme.Colors.textPrimary)
+                        .accessibilityIdentifier("viewing_courses_text")
+                }
+                .listRowBackground(Color.clear)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Viewing \(viewModel.totalCourseCount) Courses")
+            } else {
+                // Default header
+                VStack(alignment: .leading) {
+                    Text(DiscoveryLocalization.Header.title1)
+                        .font(Theme.Fonts.displaySmall)
+                        .foregroundColor(Theme.Colors.textPrimary)
+                        .accessibilityIdentifier("title_text")
+                    Text(DiscoveryLocalization.Header.title2)
+                        .font(Theme.Fonts.titleSmall)
+                        .foregroundColor(Theme.Colors.textPrimary)
+                        .accessibilityIdentifier("subtitle_text")
+                }
+                .listRowBackground(Color.clear)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(DiscoveryLocalization.Header.title1 + DiscoveryLocalization.Header.title2)
+            }
+        }
+    }
     
     public init(
         viewModel: DiscoveryViewModel,
@@ -158,7 +177,7 @@ public struct DiscoveryView: View {
                         ScrollView {
                             LazyVStack(spacing: 0) {
                                 HStack {
-                                    discoveryNew
+                                    discoveryHeader(viewModel)
                                         .padding(.horizontal, 20)
                                         .padding(.bottom, 20)
                                     Spacer()

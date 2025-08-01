@@ -23,6 +23,7 @@ public final class DiscoveryViewModel: ObservableObject {
     @Published var selectedPartner: Partner?
     @Published var showError: Bool = false
     @Published var showPartnerFilter: Bool = false
+    @Published var totalCourseCount: Int = 0
     
     var userloggedIn: Bool {
         return !(storage.user?.username?.isEmpty ?? true)
@@ -126,6 +127,12 @@ public final class DiscoveryViewModel: ObservableObject {
                 self.nextPage += 1
                 if !courses.isEmpty {
                     totalPages = courses[0].numPages
+                    
+                    // Calculate total course count based on pagination info
+                    if let selectedPartner = selectedPartner {
+                        // For filtered courses, use the coursesCount property
+                        totalCourseCount = courses[0].coursesCount
+                    }
                 }
                 
                 fetchInProgress = false
