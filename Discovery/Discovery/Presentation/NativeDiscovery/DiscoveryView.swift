@@ -29,7 +29,7 @@ public struct DiscoveryView: View {
                 // Show course count when filter is active
                 VStack(alignment: .leading) {
                     Text("Viewing \(viewModel.totalCourseCount) Courses")
-                        .font(Theme.Fonts.displaySmall)
+                        .font(Theme.Fonts.titleLarge) // Smaller font size
                         .foregroundColor(Theme.Colors.textPrimary)
                         .accessibilityIdentifier("viewing_courses_text")
                 }
@@ -165,7 +165,7 @@ public struct DiscoveryView: View {
                         }
                         .padding(.horizontal, 24)
                         .padding(.top, 6) // Added top padding to increase space between search bar and pill
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 6) // Reduced bottom padding to decrease space between pill and count text
                         .transition(.opacity.combined(with: .move(edge: .top)))
                     } else {
                         // Add bottom padding when no filter is selected
