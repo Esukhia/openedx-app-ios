@@ -53,6 +53,7 @@ public actor DiscoveryRepository: DiscoveryRepositoryProtocol {
         let discoveryResponse = try await api.requestData(DiscoveryEndpoint.getDiscoveryByOrg(
             username: coreStorage.user?.username ?? "", page: page, organization: organization)
         ).mapResponse(DataLayer.DiscoveryResponce.self).domain
+        await persistence.saveDiscovery(items: discoveryResponse)
         return discoveryResponse
     }
     

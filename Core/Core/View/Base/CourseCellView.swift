@@ -15,7 +15,7 @@ public enum CellType {
 }
 
 public struct CourseCellView: View {
-    
+
     @State private var showView = false
     private var courseImage: String
     private var courseName: String
@@ -27,7 +27,7 @@ public struct CourseCellView: View {
     private var index: Double
     private var cellsCount: Int
     private var idiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    
+
     public init(model: CourseItem, type: CellType, index: Int, cellsCount: Int, useRelativeDates: Bool) {
         self.type = type
         self.courseImage = model.imageURL
@@ -45,7 +45,7 @@ public struct CourseCellView: View {
         self.index = Double(index) + 1
         self.cellsCount = cellsCount
     }
-    
+
     public var body: some View {
         VStack {
             HStack {
@@ -59,14 +59,14 @@ public struct CourseCellView: View {
                     .padding(.leading, 3)
                     .accessibilityElement(children: .ignore)
                     .accessibilityIdentifier("course_image")
-                
+
                 VStack(alignment: .leading) {
                     Text(courseOrg)
                         .font(Theme.Fonts.labelMedium)
                         .foregroundColor(Theme.Colors.textSecondary)
                         .multilineTextAlignment(.leading)
                         .accessibilityIdentifier("org_text")
-                    
+
                     Text(courseName)
                         .font(Theme.Fonts.titleSmall)
                         .foregroundColor(Theme.Colors.textPrimary)
@@ -74,14 +74,17 @@ public struct CourseCellView: View {
                         .multilineTextAlignment(.leading)
                         .padding(.top, 1)
                         .accessibilityIdentifier("course_name_text")
-                    
-                    Text("Course Duration: " + (courseDuration?.isEmpty == false ? courseDuration! : "Not specified"))
+
+                    let hasDuration = courseDuration?.isEmpty == false
+                    let durationText = hasDuration ? courseDuration ?? "" : "Not specified"
+                    let courseDurationText = "Course Duration: " + durationText
+                    Text(courseDurationText)
                         .font(Theme.Fonts.labelMedium)
                         .foregroundColor(Theme.Colors.textSecondary)
                         .multilineTextAlignment(.leading)
                         .padding(.top, 1)
                         .accessibilityIdentifier("course_duration_text")
-                    
+
                     Spacer()
                     if type == .dashboard {
                         HStack {
@@ -109,7 +112,7 @@ public struct CourseCellView: View {
                     .padding(.vertical, type == .discovery ? 10 : 0)
                 Spacer()
             }
-            
+        
         }.frame(height: 105)
             .background(Theme.Colors.background)
             .opacity(showView ? 1 : 0)
@@ -124,13 +127,14 @@ public struct CourseCellView: View {
             )
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    withAnimation(.easeInOut(duration: (index <= 5 ? 0.3 : 0.1))
-                        .delay((index <= 5 ? index : 0) * 0.05)) {
-                            showView = true
-                        }
+                    let duration = index <= 5 ? 0.3 : 0.1
+                    let delay = (index <= 5 ? index : 0) * 0.05
+                    withAnimation(.easeInOut(duration: duration).delay(delay)) {
+                        showView = true
+                    }
                 }
             }
-        
+
         VStack {
             if Int(index) != cellsCount {
                 Divider()
@@ -146,12 +150,12 @@ public struct CourseCellView: View {
 
 // swiftlint:disable all
 struct CourseCellView_Previews: PreviewProvider {
-    
+
     private static let course = CourseItem(
         name: "Demonstration Course with extra long name who contains tree lines",
         org: "Edx",
         shortDescription: "",
-        imageURL: "https://thumbs.dreamstime.com/b/logo-edx-samsung-tablet-edx-massive-open-online-course-mooc-provider-hosts-online-university-level-courses-wide-117763805.jpg",
+        imageURL: "https://example.com/edx-logo.jpg",
         hasAccess: true,
         courseStart: Date(iso8601: "2032-05-26T12:13:14Z"),
         courseEnd: Date(iso8601: "2033-05-26T12:13:14Z"),
@@ -165,7 +169,7 @@ struct CourseCellView_Previews: PreviewProvider {
         progressPossible: 10,
         duration: "8 weeks"
     )
-    
+
     static var previews: some View {
         ZStack {
             Color.red
