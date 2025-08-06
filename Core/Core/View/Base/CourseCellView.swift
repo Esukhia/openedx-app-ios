@@ -22,6 +22,7 @@ public struct CourseCellView: View {
     private var courseOrg: String
     private var courseStart: String
     private var courseEnd: String
+    private var courseDuration: String?
     private var type: CellType
     private var index: Double
     private var cellsCount: Int
@@ -40,6 +41,7 @@ public struct CourseCellView: View {
             useRelativeDates: useRelativeDates
         ) ?? ""
         self.courseOrg =  model.org
+        self.courseDuration = model.duration
         self.index = Double(index) + 1
         self.cellsCount = cellsCount
     }
@@ -72,6 +74,14 @@ public struct CourseCellView: View {
                         .multilineTextAlignment(.leading)
                         .padding(.top, 1)
                         .accessibilityIdentifier("course_name_text")
+                    
+                    Text("Course Duration: " + (courseDuration?.isEmpty == false ? courseDuration! : "Not specified"))
+                        .font(Theme.Fonts.labelMedium)
+                        .foregroundColor(Theme.Colors.textSecondary)
+                        .multilineTextAlignment(.leading)
+                        .padding(.top, 1)
+                        .accessibilityIdentifier("course_duration_text")
+                    
                     Spacer()
                     if type == .dashboard {
                         HStack {
@@ -152,7 +162,8 @@ struct CourseCellView_Previews: PreviewProvider {
         coursesCount: 10,
         courseRawImage: nil,
         progressEarned: 4,
-        progressPossible: 10
+        progressPossible: 10,
+        duration: "8 weeks"
     )
     
     static var previews: some View {

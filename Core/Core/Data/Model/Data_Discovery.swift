@@ -43,6 +43,7 @@ public extension DataLayer {
     struct Course: Codable {
         public let blocksURL: String?
         public let effort: String?
+        public let duration: String?
         public let end: String?
         public let enrollmentStart: String?
         public let enrollmentEnd: String?
@@ -64,6 +65,7 @@ public extension DataLayer {
         enum CodingKeys: String, CodingKey {
             case blocksURL = "blocks_url"
             case effort = "effort"
+            case duration = "duration"
             case end = "end"
             case enrollmentStart = "enrollment_start"
             case enrollmentEnd = "enrollment_end"
@@ -118,7 +120,8 @@ public extension DataLayer.DiscoveryResponce {
                        coursesCount: pagination.count,
                        courseRawImage: $0.media.image?.raw,
                        progressEarned: 0,
-                       progressPossible: 0)
+                       progressPossible: 0,
+                       duration: $0.duration)
         })
         return listReady
     }

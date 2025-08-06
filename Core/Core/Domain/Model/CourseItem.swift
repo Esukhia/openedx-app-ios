@@ -23,6 +23,7 @@ public struct CourseItem: Hashable, Sendable {
     public let courseRawImage: String?
     public let progressEarned: Int
     public let progressPossible: Int
+    public let duration: String?
     
     public init(name: String,
                 org: String,
@@ -38,7 +39,8 @@ public struct CourseItem: Hashable, Sendable {
                 coursesCount: Int,
                 courseRawImage: String?,
                 progressEarned: Int,
-                progressPossible: Int) {
+                progressPossible: Int,
+                duration: String? = nil) {
         self.name = name
         self.org = org
         self.shortDescription = shortDescription
@@ -54,5 +56,6 @@ public struct CourseItem: Hashable, Sendable {
         self.courseRawImage = courseRawImage
         self.progressEarned = progressEarned
         self.progressPossible = progressPossible
+        self.duration = duration
     }
 }
