@@ -48,13 +48,13 @@ public struct SocialAuthButton: View {
                 
                 Text(text)
                     .font(Theme.Fonts.labelLarge)
-                    .foregroundColor(Color.black.opacity(0.8))
+                    .foregroundColor(Color.primary)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .frame(width: 280)
         }
-        .background(Color.white)
+        .background(Color(UIColor.systemBackground))
         .cornerRadius(28)
         .overlay(
             RoundedRectangle(cornerRadius: 28)
