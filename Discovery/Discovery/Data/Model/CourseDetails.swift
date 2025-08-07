@@ -21,6 +21,7 @@ public struct CourseDetails: Sendable {
     public let courseBannerURL: String
     public let courseVideoURL: String?
     public let courseRawImage: String?
+    public let duration: String?
     
     public init(courseID: String,
                 org: String,
@@ -34,7 +35,8 @@ public struct CourseDetails: Sendable {
                 overviewHTML: String,
                 courseBannerURL: String,
                 courseVideoURL: String?,
-                courseRawImage: String?
+                courseRawImage: String?,
+                duration: String? = nil
     ) {
         self.courseID = courseID
         self.org = org
@@ -49,5 +51,6 @@ public struct CourseDetails: Sendable {
         self.courseBannerURL = courseBannerURL
         self.courseVideoURL = courseVideoURL
         self.courseRawImage = courseRawImage
+        self.duration = duration
     }
 }

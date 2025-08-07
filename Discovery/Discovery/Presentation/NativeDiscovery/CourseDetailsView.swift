@@ -13,7 +13,7 @@ import WebKit
 import Theme
 
 public struct CourseDetailsView: View {
-    
+
     @ObservedObject private var viewModel: CourseDetailsViewModel
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.isHorizontal) var isHorizontal
@@ -21,13 +21,13 @@ public struct CourseDetailsView: View {
     private var title: String
     private var idiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     private var courseID: String
-    
+
     private func updateOrientation() {
         viewModel.isHorisontal =
         UIDevice.current.orientation == .landscapeLeft
         || UIDevice.current.orientation == .landscapeRight
     }
-    
+
     public init(viewModel: CourseDetailsViewModel, courseID: String, title: String) {
         self.viewModel = viewModel
         self.title = title
@@ -37,7 +37,7 @@ public struct CourseDetailsView: View {
         }
         self.updateOrientation()
     }
-    
+
     public var body: some View {
         ZStack(alignment: .top) {
             VStack(alignment: .center) {
@@ -54,16 +54,16 @@ public struct CourseDetailsView: View {
                         ScrollView {
                             VStack(alignment: .leading) {
                                 if let courseDetails = viewModel.courseDetails {
-                                    
+                                
                                     // MARK: - iPad
                                     if viewModel.isHorisontal {
                                         HStack(alignment: .top) {
                                             VStack(alignment: .leading) {
-                                                
+                                            
                                                 // MARK: - Title and description
                                                 CourseTitleView(courseDetails: courseDetails)
                                                 Spacer()
-                                                
+                                            
                                                 // MARK: - Course state button
                                                 CourseStateView(title: title,
                                                                 courseDetails: courseDetails,
@@ -84,7 +84,7 @@ public struct CourseDetailsView: View {
                                                 .cornerRadius(12)
                                                 .padding(.horizontal, 6)
                                                 .padding(.top, 7)
-                                            
+                                        
                                         }
                                     } else {
                                         // MARK: - iPhone
@@ -102,17 +102,17 @@ public struct CourseDetailsView: View {
                                             .padding(.horizontal, 6)
                                             .padding(.top, 7)
                                             .fixedSize(horizontal: false, vertical: true)
-                                        
+                                    
                                         // MARK: - Course state button
                                         CourseStateView(title: title,
                                                         courseDetails: courseDetails,
                                                         viewModel: viewModel)
                                         .padding(.top, 24)
-                                        
+                                    
                                         // MARK: - Title and description
                                         CourseTitleView(courseDetails: courseDetails)
                                     }
-                                    
+                                
                                     // MARK: - HTML Embed
                                     ZStack(alignment: .topLeading) {
                                         HTMLFormattedText(
@@ -126,7 +126,7 @@ public struct CourseDetailsView: View {
                                             }
                                         )
                                         .padding(.horizontal, 16)
-                                        
+                                    
                                         if isOverviewRendering {
                                             ProgressBar(size: 40, lineWidth: 8)
                                                 .padding(.top, 20)
@@ -182,13 +182,13 @@ public struct CourseDetailsView: View {
             .navigationBarHidden(false)
             .navigationBarBackButtonHidden(false)
             .navigationTitle(DiscoveryLocalization.Details.title)
-            
+        
             .onReceive(NotificationCenter
                 .Publisher(center: .default,
                            name: UIDevice.orientationDidChangeNotification)) { _ in
                 updateOrientation()
             }
-            
+        
             // MARK: - Offline mode SnackBar
             if viewModel.courseState() != .enrollOpen {
                 OfflineSnackBarView(connectivity: viewModel.connectivity,
@@ -196,7 +196,7 @@ public struct CourseDetailsView: View {
                     await viewModel.getCourseDetail(courseID: courseID, withProgress: false)
                 })
             }
-            
+        
             // MARK: - Error Alert
             if viewModel.showError {
                 VStack {
@@ -221,11 +221,11 @@ public struct CourseDetailsView: View {
 }
 
 private struct CourseStateView: View {
-    
+
     let title: String
     let courseDetails: CourseDetails
     let viewModel: CourseDetailsViewModel
-    
+
     init(title: String,
          courseDetails: CourseDetails,
          viewModel: CourseDetailsViewModel) {
@@ -233,82 +233,128 @@ private struct CourseStateView: View {
         self.courseDetails = courseDetails
         self.viewModel = viewModel
     }
-    
+
     var body: some View {
+        let hasDuration = courseDetails.duration?.isEmpty == false
+        let durationText = hasDuration ? courseDetails.duration ?? "" : "Not specified"
+        let courseDurationText = "Course Duration: " + durationText
+    
         switch viewModel.courseState() {
         case .enrollOpen:
-            Group {
-            if viewModel.connectivity.isInternetAvaliable {
-                    StyledButton(DiscoveryLocalization.Details.enrollNow, action: {
-                        if !viewModel.userloggedIn {
-                            viewModel.router.showRegisterScreen(
-                                sourceScreen: .courseDetail(
-                                    courseDetails.courseID,
-                                    courseDetails.courseTitle)
-                            )
-                        } else {
-                            Task {
-                                await viewModel.enrollToCourse(id: courseDetails.courseID)
+            VStack(spacing: 8) {
+                Group {
+                if viewModel.connectivity.isInternetAvaliable {
+                        StyledButton(DiscoveryLocalization.Details.enrollNow, action: {
+                            if !viewModel.userloggedIn {
+                                viewModel.router.showRegisterScreen(
+                                    sourceScreen: .courseDetail(
+                                        courseDetails.courseID,
+                                        courseDetails.courseTitle)
+                                )
+                            } else {
+                                Task {
+                                    await viewModel.enrollToCourse(id: courseDetails.courseID)
+                                }
                             }
-                        }
-                    })
-                    .padding(16)
-                } else {
-                    HStack(alignment: .center, spacing: 10) {
-                        CoreAssets.noWifiMini.swiftUIImage
-                            .renderingMode(.template)
-                            .foregroundStyle(Theme.Colors.warning)
-                        Text(DiscoveryLocalization.Details.enrollmentNoInternet)
-                            .multilineTextAlignment(.leading)
-                            .font(Theme.Fonts.titleSmall)
-                        Spacer()
-                    }.cardStyle(paddingAll: 12, bgColor: Theme.Colors.textInputUnfocusedBackground, strokeColor: .clear)
+                        })
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                    } else {
+                        HStack(alignment: .center, spacing: 10) {
+                            CoreAssets.noWifiMini.swiftUIImage
+                                .renderingMode(.template)
+                                .foregroundStyle(Theme.Colors.warning)
+                            Text(DiscoveryLocalization.Details.enrollmentNoInternet)
+                                .multilineTextAlignment(.leading)
+                                .font(Theme.Fonts.titleSmall)
+                            Spacer()
+                        }.cardStyle(
+                            paddingAll: 12,
+                            bgColor: Theme.Colors.textInputUnfocusedBackground,
+                            strokeColor: .clear
+                        )
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                    }
                 }
+                .accessibilityIdentifier("enroll_button")
+
+                Text(courseDurationText)
+                    .font(Theme.Fonts.titleSmall)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    .accessibilityIdentifier("course_duration_text")
             }
-            .accessibilityIdentifier("enroll_button")
         case .enrollClose:
-            Text(DiscoveryLocalization.Details.enrollmentDateIsOver)
-                .multilineTextAlignment(.center)
-                .font(Theme.Fonts.titleSmall)
-                .cardStyle()
-                .padding(.vertical, 24)
-                .accessibilityIdentifier("date_over_text")
+            VStack(spacing: 8) {
+                Text(DiscoveryLocalization.Details.enrollmentDateIsOver)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(Theme.Fonts.titleSmall)
+                    .cardStyle()
+                    .padding(.top, 24)
+                    .accessibilityIdentifier("date_over_text")
+            
+                Text(courseDurationText)
+                    .font(Theme.Fonts.titleSmall)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    .accessibilityIdentifier("course_duration_text")
+            }
         case .alreadyEnrolled:
-            StyledButton(DiscoveryLocalization.Details.viewCourse, action: {
-                if !viewModel.userloggedIn {
-                    viewModel.router.showRegisterScreen(
-                        sourceScreen: .courseDetail(
-                            courseDetails.courseID,
-                            courseDetails.courseTitle)
-                    )
-                } else {
-                    viewModel.viewCourseClicked(
-                        courseId: courseDetails.courseID,
-                        courseName: courseDetails.courseTitle
-                    )
-                    viewModel.router.showCourseScreens(
-                        courseID: courseDetails.courseID,
-                        hasAccess: nil,
-                        courseStart: courseDetails.courseStart,
-                        courseEnd: courseDetails.courseEnd,
-                        enrollmentStart: courseDetails.enrollmentStart,
-                        enrollmentEnd: courseDetails.enrollmentEnd,
-                        title: title,
-                        courseRawImage: courseDetails.courseRawImage,
-                        showDates: false,
-                        lastVisitedBlockID: nil
-                    )
-                }
-            })
-            .padding(16)
-            .accessibilityIdentifier("view_course_button")
+            VStack(spacing: 8) {
+                StyledButton(DiscoveryLocalization.Details.viewCourse, action: {
+                    if !viewModel.userloggedIn {
+                        viewModel.router.showRegisterScreen(
+                            sourceScreen: .courseDetail(
+                                courseDetails.courseID,
+                                courseDetails.courseTitle)
+                        )
+                    } else {
+                        viewModel.viewCourseClicked(
+                            courseId: courseDetails.courseID,
+                            courseName: courseDetails.courseTitle
+                        )
+                        viewModel.router.showCourseScreens(
+                            courseID: courseDetails.courseID,
+                            hasAccess: nil,
+                            courseStart: courseDetails.courseStart,
+                            courseEnd: courseDetails.courseEnd,
+                            enrollmentStart: courseDetails.enrollmentStart,
+                            enrollmentEnd: courseDetails.enrollmentEnd,
+                            title: title,
+                            courseRawImage: courseDetails.courseRawImage,
+                            showDates: false,
+                            lastVisitedBlockID: nil
+                        )
+                    }
+                })
+                .padding(.horizontal, 16)
+                .padding(.top, 16)
+                .accessibilityIdentifier("view_course_button")
+            
+                Text(courseDurationText)
+                    .font(Theme.Fonts.titleSmall)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
+                    .accessibilityIdentifier("course_duration_text")
+            }
         }
     }
 }
 
 private struct PlayButton: View {
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action, label: {
             CoreAssets.playVideo.swiftUIImage
@@ -321,19 +367,19 @@ private struct PlayButton: View {
 
 private struct CourseTitleView: View {
     let courseDetails: CourseDetails
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(courseDetails.courseDescription ?? "")
                 .font(Theme.Fonts.labelSmall)
                 .padding(.horizontal, 26)
                 .accessibilityIdentifier("description_text")
-            
+        
             Text(courseDetails.courseTitle)
                 .font(Theme.Fonts.titleLarge)
                 .padding(.horizontal, 26)
                 .accessibilityIdentifier("title_text")
-            
+        
             Text(courseDetails.org)
                 .font(Theme.Fonts.labelMedium)
                 .foregroundColor(Theme.Colors.accentColor)
@@ -351,7 +397,7 @@ private struct CourseBannerView: View {
     private let idiom: UIUserInterfaceIdiom
     private let proxy: GeometryProxy
     private let onPlayButtonTap: () -> Void
-    
+
     init(courseDetails: CourseDetails,
          proxy: GeometryProxy,
          isHorisontal: Bool,
@@ -362,7 +408,7 @@ private struct CourseBannerView: View {
         self.proxy = proxy
         self.onPlayButtonTap = onPlayButtonTap
     }
-    
+
     var body: some View {
         ZStack(alignment: .center) {
             if !isHorisontal {
@@ -415,7 +461,7 @@ struct CourseDetailsView_Previews: PreviewProvider {
             connectivity: Connectivity(),
             storage: CoreStorageMock()
         )
-        
+    
         CourseDetailsView(
             viewModel: vm,
             courseID: "courseID",
@@ -423,7 +469,7 @@ struct CourseDetailsView_Previews: PreviewProvider {
         )
         .preferredColorScheme(.light)
         .previewDisplayName("CourseDetailsView Light")
-        
+    
         CourseDetailsView(
             viewModel: vm,
             courseID: "courseID",
