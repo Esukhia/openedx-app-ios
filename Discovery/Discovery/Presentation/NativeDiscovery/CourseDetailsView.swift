@@ -281,7 +281,7 @@ private struct CourseStateView: View {
 
                 Text(courseDurationText)
                     .font(Theme.Fonts.titleSmall)
-                    .foregroundColor(Theme.Colors.textPrimary)
+                    .foregroundColor(Theme.Colors.textSecondary)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
@@ -300,7 +300,7 @@ private struct CourseStateView: View {
             
                 Text(courseDurationText)
                     .font(Theme.Fonts.titleSmall)
-                    .foregroundColor(Theme.Colors.textPrimary)
+                    .foregroundColor(Theme.Colors.textSecondary)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
@@ -341,7 +341,7 @@ private struct CourseStateView: View {
             
                 Text(courseDurationText)
                     .font(Theme.Fonts.titleSmall)
-                    .foregroundColor(Theme.Colors.textPrimary)
+                    .foregroundColor(Theme.Colors.textSecondary)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 16)
