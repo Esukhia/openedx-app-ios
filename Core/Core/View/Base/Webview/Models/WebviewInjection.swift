@@ -66,4 +66,57 @@ public extension WebviewInjection {
         AccessibilityInjection()
             .webviewInjection()
     }
+
+    // Hide common headers/footers in external pages (e.g., policy pages)
+    static var hideHeaderFooter: WebviewInjection {
+        let css = """
+            /* Hide common site headers/footers */
+            header, footer,
+            [role=\"banner\"], [role=\"contentinfo\"],
+            .site-header, .site-footer,
+            .global-header, .global-footer,
+            .header, .footer,
+            .navbar-fixed-top, .navbar, .topbar,
+            .bottom-bar, .cookie-banner, .gdpr-banner,
+            #header, #footer, #masthead, #site-footer, #site-header {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                min-height: 0 !important;
+                max-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: 0 !important;
+            }
+
+            /* Remove empty space created by fixed headers */
+            body {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+            }
+        """
+        let script = """
+        window.addEventListener("load", () => {
+            var css = `\(css)`,
+                head = document.head || document.getElementsByTagName('head')[0],
+                style = document.createElement('style');
+            head.appendChild(style);
+            style.type = 'text/css';
+            if (style.styleSheet) {
+                style.styleSheet.cssText = css;
+            } else {
+                style.appendChild(document.createTextNode(css));
+            }
+        })
+        """
+        return WebviewInjection(
+            id: "HideHeaderFooterInlineInjection",
+            script: script,
+            messages: nil,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+    }
 }
