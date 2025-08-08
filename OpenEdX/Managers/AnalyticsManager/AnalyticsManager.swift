@@ -958,7 +958,7 @@ class AnalyticsManager: AuthorizationAnalytics,
         author: String,
         follow: Bool
     ) {
-        var parameters: [String: Any] = [
+        let parameters: [String: Any] = [
             EventParamKey.courseID: courseID,
             EventParamKey.threadID: threadID,
             EventParamKey.author: author,
