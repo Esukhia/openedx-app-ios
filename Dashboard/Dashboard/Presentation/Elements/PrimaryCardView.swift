@@ -251,7 +251,7 @@ public struct PrimaryCardView: View {
                         .foregroundStyle(foregroundColor(selected))
                         .padding(8)
                 }
-                .padding(.top, 8)
+                .padding(.top, selected ? 15 : 8)
                 .padding(.bottom, selected ? 10 : 0)
             }.background(bgColor)
         })

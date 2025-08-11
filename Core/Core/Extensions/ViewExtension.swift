@@ -98,15 +98,22 @@ public extension View {
         maxIpadWidth: CGFloat = 420
     ) -> some View {
         return ZStack {
+            // Single rounded background fill (no stroke) to avoid any corner artifacts
             RoundedCorners(tl: 24, tr: 24)
-                .offset(y: 1)
-                .stroke(style: StrokeStyle(lineWidth: 1))
-                .foregroundColor(strokeColor)
-            RoundedCorners(tl: 24, tr: 24)
-                .offset(y: 2)
                 .foregroundColor(color)
+            // Subtle top-only separator (non-aliased) for visual separation under the header
+            VStack(spacing: 0) {
+                LinearGradient(
+                    colors: [strokeColor.opacity(0.14), strokeColor.opacity(0.0)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 2)
+                Spacer(minLength: 0)
+            }
+            .clipShape(RoundedCorners(tl: 24, tr: 24))
             self
-                .offset(y: 2)
+                .clipShape(RoundedCorners(tl: 24, tr: 24))
         }
     }
     

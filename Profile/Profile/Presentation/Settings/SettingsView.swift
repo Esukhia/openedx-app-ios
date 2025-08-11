@@ -30,7 +30,7 @@ public struct SettingsView: View {
                         .resizable()
                         .edgesIgnoringSafeArea(.top)
                 }
-                .frame(maxWidth: .infinity, maxHeight: 50)
+                .frame(maxWidth: .infinity, maxHeight: 110)
                 .accessibilityIdentifier("auth_bg_image")
                 
                 // MARK: - Page name
