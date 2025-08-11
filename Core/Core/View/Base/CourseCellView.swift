@@ -72,6 +72,7 @@ public struct CourseCellView: View {
                         .foregroundColor(Theme.Colors.textPrimary)
                         .lineLimit(type == .discovery ? 3 : 2)
                         .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 1)
                         .accessibilityIdentifier("course_name_text")
 

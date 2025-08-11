@@ -65,17 +65,24 @@ public struct WebBrowser: View {
                     url: url,
                     baseURL: "",
                     openFile: {_ in},
-                    injections: [.colorInversionCss, .readability, .accessibility]
+                    injections: [
+                        .colorInversionCss,
+                        .readability,
+                        .accessibility,
+                        .hideHeaderFooter
+                    ]
                 ),
                 isLoading: $isLoading,
                 refreshCookies: {
                 },
-                connectivity: connectivity
+                connectivity: connectivity,
+                enableVerticalBounce: true,
+                contentInset: .zero
             )
             .accessibilityIdentifier("web_browser")
         }
         .padding(.top, proxy.safeAreaInsets.top)
-        .padding(.bottom, proxy.safeAreaInsets.bottom)
+        .padding(.bottom, 0)
     }
 }
 

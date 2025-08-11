@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import Theme
 import WebKit
+import UIKit
 
 @MainActor
 public protocol WebViewNavigationDelegate: AnyObject {
@@ -53,6 +54,8 @@ public struct WebView: UIViewRepresentable {
     var refreshCookies: () async -> Void
     var webViewType: String?
     private let userContentControllerName = "IOSBridge"
+    private let enableVerticalBounce: Bool
+    private let contentInset: UIEdgeInsets
 
     public init(
         viewModel: ViewModel,
@@ -61,7 +64,9 @@ public struct WebView: UIViewRepresentable {
         navigationDelegate: WebViewNavigationDelegate? = nil,
         connectivity: ConnectivityProtocol,
         message: @escaping ((WKScriptMessage) -> Void) = { _ in },
-        webViewType: String? = nil
+        webViewType: String? = nil,
+        enableVerticalBounce: Bool = false,
+        contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
     ) {
         self.viewModel = viewModel
         self._isLoading = isLoading
@@ -70,6 +75,8 @@ public struct WebView: UIViewRepresentable {
         self.connectivity = connectivity
         self.message = message
         self.webViewType = webViewType
+        self.enableVerticalBounce = enableVerticalBounce
+        self.contentInset = contentInset
     }
 
     public class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
@@ -294,7 +301,7 @@ public struct WebView: UIViewRepresentable {
         
         context.coordinator.webview = webView
         
-        webView.scrollView.bounces = false
+        webView.scrollView.bounces = enableVerticalBounce
         webView.scrollView.alwaysBounceHorizontal = false
         webView.scrollView.showsHorizontalScrollIndicator = false
         webView.scrollView.isScrollEnabled = true
@@ -302,8 +309,8 @@ public struct WebView: UIViewRepresentable {
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = Theme.Colors.background.uiColor()
-        webView.scrollView.alwaysBounceVertical = false
-        webView.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
+        webView.scrollView.alwaysBounceVertical = enableVerticalBounce
+        webView.scrollView.contentInset = contentInset
         webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
         webView.applyInjections(viewModel.injections, toHandler: context.coordinator)
         
