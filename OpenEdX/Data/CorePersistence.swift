@@ -110,7 +110,7 @@ public final class CorePersistence: CorePersistenceProtocol {
                 fileName = "\(block.id).\(fileExtension ?? "")"
             } else { return nil }
             
-            var dictionary = [
+            var dictionary: [String: Any] = [
                 "id": downloadDataId,
                 "blockId": block.id,
                 "userId": userId,
@@ -125,7 +125,7 @@ public final class CorePersistence: CorePersistenceProtocol {
                 "actualSize": 0
             ]
             if let lastModified = block.offlineDownload?.lastModified {
-                dictionary["lastModified"] = lastModified
+                dictionary["lastModified"] = lastModified as Any
             }
             return dictionary
         }
