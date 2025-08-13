@@ -38,14 +38,9 @@ public struct SearchView: View {
                     
                     HStack(spacing: 11) {
                         Image(systemName: "magnifyingglass")
-                            .foregroundColor(Theme.Colors.textPrimary)
                             .padding(.leading, 16)
                             .padding(.top, 1)
-                            .foregroundColor(
-                                viewModel.isSearchActive
-                                ? Theme.Colors.accentColor
-                                : Theme.Colors.textPrimary
-                            )
+                            .foregroundColor(Theme.Colors.accentColor)
                             .accessibilityHidden(true)
                             .accessibilityIdentifier("search_image")
                         
