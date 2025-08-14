@@ -192,6 +192,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "ReleaseProd"
+      customArchiveName = "SherabProd"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
