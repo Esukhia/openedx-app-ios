@@ -25,16 +25,16 @@ public struct StartupView: View {
     
     public var body: some View {
         ZStack(alignment: .top) {
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
                 ThemeAssets.appLogo.swiftUIImage
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 250, maxHeight: 120)
                     .padding(.top, isHorizontal ? 20 : 40)
                     .padding(.bottom, isHorizontal ? 0 : 20)
-                    .padding(.horizontal, isHorizontal ? 10 : 24)
                     .colorMultiply(Theme.Colors.accentColor)
                     .accessibilityIdentifier("logo_image")
+                    .frame(maxWidth: .infinity)
                 
                 VStack {
                     VStack(alignment: .leading) {
@@ -55,7 +55,7 @@ public struct StartupView: View {
                             Image(systemName: "magnifyingglass")
                                 .padding(.leading, 16)
                                 .padding(.top, 1)
-                                .foregroundColor(Theme.Colors.textInputTextColor)
+                                .foregroundColor(Theme.Colors.accentColor)
                             TextField("", text: $searchQuery, onCommit: {
                                 if searchQuery.isEmpty { return }
                                 viewModel.router.showDiscoveryScreen(
@@ -94,7 +94,7 @@ public struct StartupView: View {
                         } label: {
                             Text(AuthLocalization.Startup.exploreAllCourses)
                                 .underline()
-                                .foregroundColor(Theme.Colors.infoColor)
+                                .foregroundColor(Theme.Colors.accentColor)
                                 .font(Theme.Fonts.bodyLarge)
                         }
                         .padding(.top, isHorizontal ? 0 : 5)

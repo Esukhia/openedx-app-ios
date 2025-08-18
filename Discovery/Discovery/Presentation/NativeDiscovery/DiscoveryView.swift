@@ -216,7 +216,8 @@ public struct DiscoveryView: View {
                                     }.frame(maxWidth: .infinity,
                                             maxHeight: .infinity)
                                 }
-                                VStack {}.frame(height: 40)
+                                // Add extra padding at the bottom to prevent overlap with login buttons
+                                VStack {}.frame(height: viewModel.userloggedIn ? 40 : 100)
                             }
                             .frameLimit(width: proxy.size.width)
                         }.refreshable {
@@ -230,17 +231,37 @@ public struct DiscoveryView: View {
                 }.accessibilityAction {}
 
                 if !viewModel.userloggedIn {
-                    LogistrationBottomView(
-                        ssoEnabled: viewModel.config.uiComponents.samlSSOLoginEnabled
-                    ) { buttonAction in
-                        switch buttonAction {
-                        case .signIn:
-                            viewModel.router.showLoginScreen(sourceScreen: .discovery)
-                        case .register:
-                            viewModel.router.showRegisterScreen(sourceScreen: .discovery)
-                        case .signInWithSSO:
-                            viewModel.router.showLoginScreen(sourceScreen: .discovery)
+                    VStack(spacing: 0) {
+                        Spacer()
+                        // Gradient spacer above the buttons
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [
+                                    Theme.Colors.background.opacity(0.0),
+                                    Theme.Colors.background.opacity(0.5),
+                                    Theme.Colors.background.opacity(0.8),
+                                    Theme.Colors.background
+                                ]
+                            ),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 40)
+                        
+                        LogistrationBottomView(
+                            ssoEnabled: viewModel.config.uiComponents.samlSSOLoginEnabled
+                        ) { buttonAction in
+                            switch buttonAction {
+                            case .signIn:
+                                viewModel.router.showLoginScreen(sourceScreen: .discovery)
+                            case .register:
+                                viewModel.router.showRegisterScreen(sourceScreen: .discovery)
+                            case .signInWithSSO:
+                                viewModel.router.showLoginScreen(sourceScreen: .discovery)
+                            }
                         }
+                        .background(Theme.Colors.background)
+                        .zIndex(100)
                     }
                 }
             }.padding(.top, 8)
