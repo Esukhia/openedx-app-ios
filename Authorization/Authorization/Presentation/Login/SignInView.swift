@@ -199,26 +199,23 @@ public struct SignInView: View {
                                                 }
                                             )
                                             .padding(.bottom, 16)
-                                            
-                                            if !viewModel.config.features.startupScreenEnabled {
-                                                HStack(alignment: .center) {
-                                                    Text("Don't have an account?")
-                                                        .font(Theme.Fonts.bodyLarge)
-                                                        .foregroundColor(Theme.Colors.textSecondary)
-                                                    
-                                                    Button(CoreLocalization.SignIn.registerBtn) {
-                                                        viewModel.router.showRegisterScreen(
-                                                            sourceScreen: viewModel.sourceScreen
-                                                        )
-                                                    }
-                                                    .foregroundColor(Color(hex: "#FC7F44"))
-                                                    .font(Theme.Fonts.bodyLarge)
-                                                    .accessibilityIdentifier("register_button")
-                                                }
-                                                .frame(maxWidth: .infinity, alignment: .center)
-                                                .padding(.bottom, 16)
-                                            }
                                         }
+                                        HStack(alignment: .center) {
+                                            Text("Don't have an account?")
+                                                .font(Theme.Fonts.bodyLarge)
+                                                .foregroundColor(Theme.Colors.textSecondary)
+                                            
+                                            Button(CoreLocalization.SignIn.registerBtn) {
+                                                viewModel.router.showRegisterScreen(
+                                                    sourceScreen: viewModel.sourceScreen
+                                                )
+                                            }
+                                            .foregroundColor(Color(hex: "#FC7F44"))
+                                            .font(Theme.Fonts.bodyLarge)
+                                            .accessibilityIdentifier("register_button")
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .padding(.bottom, 16)
                                     }
                                 }
                                 if viewModel.config.uiComponents.samlSSOLoginEnabled {
