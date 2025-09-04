@@ -9,6 +9,87 @@ import SwiftUI
 import Core
 import OEXFoundation
 import Theme
+import UIKit
+import Kingfisher
+
+// Local implementation of course card to avoid module import issues
+private struct LocalCourseGridCardView: View {
+    private let imageURL: String
+    private let title: String
+    private let org: String
+    private let startDate: String
+    private let endDate: String
+    private let duration: String
+    
+    init(model: CourseItem, useRelativeDates: Bool) {
+        self.imageURL = model.imageURL
+        self.title = model.name
+        self.org = model.org
+        self.startDate = model.courseStart?.dateToString(
+            style: .courseStartsMonthDDYear,
+            useRelativeDates: useRelativeDates
+        ) ?? ""
+        self.endDate = model.courseEnd?.dateToString(
+            style: .courseEndsMonthDDYear,
+            useRelativeDates: useRelativeDates
+        ) ?? ""
+        self.duration = (model.duration?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false)
+            ? model.duration!.trimmingCharacters(in: .whitespacesAndNewlines)
+            : "Duration not specified"
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Course banner image
+            KFImage(URL(string: imageURL))
+                .onFailureImage(CoreAssets.noCourseImage.image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 120, minHeight: 90, maxHeight: 100)
+                .clipped()
+                .accessibilityIdentifier("course_card_image")
+            
+            // Course title and meta (org + duration)
+            VStack(alignment: .leading, spacing: 3) {
+                // Organization
+                if !org.isEmpty {
+                    Text(org)
+                        .font(Theme.Fonts.labelSmall)
+                        .foregroundColor(Theme.Colors.textPrimary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                        .accessibilityIdentifier("course_card_org")
+                }
+
+                // Duration
+                Text(duration)
+                    .font(Theme.Fonts.labelSmall)
+                    .foregroundColor(Theme.Colors.textSecondaryLight)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(1)
+                    .accessibilityIdentifier("course_card_duration")
+
+                // Course title
+                Text(title)
+                    .font(Theme.Fonts.labelMedium)
+                    .foregroundColor(Theme.Colors.textPrimary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .accessibilityIdentifier("course_card_title")
+            }
+            .frame(height: 51, alignment: .topLeading)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.top, 10)
+            .padding(.horizontal, 12)
+            .padding(.bottom, 16)
+        }
+        .background(Theme.Colors.courseCardBackground)
+        .cornerRadius(8)
+        .shadow(color: Theme.Colors.courseCardShadow, radius: 6, x: 2, y: 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("course_grid_card")
+    }
+}
 
 public struct DiscoveryView: View {
     
@@ -68,187 +149,43 @@ public struct DiscoveryView: View {
     }
     
     public var body: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .top) {
+        ZStack(alignment: .top) {
+            
+            // MARK: - Page name
+            VStack(alignment: .center) {
                 
-                // MARK: - Page name
-                VStack(alignment: .center) {
+                // MARK: - Search field and filter button
+                searchAndFilterBar
+                .padding(.top, 11.5)
+                .padding(.horizontal, 24)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(DiscoveryLocalization.search)
+                
+                // Selected organization pill and clear button
+                partnerFilterPill
+                
+                refreshableView
+            }.accessibilityAction {}
+            
+            if !viewModel.userloggedIn {
+                VStack(spacing: 0) {
+                    Spacer()
+                    // Gradient spacer above the buttons
+                    LinearGradient(
+                        gradient: Gradient(
+                            colors: [
+                                Theme.Colors.background.opacity(0.0),
+                                Theme.Colors.background.opacity(0.5),
+                                Theme.Colors.background.opacity(0.8),
+                                Theme.Colors.background
+                            ]
+                        ),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 40)
                     
-                    // MARK: - Search field and filter button
-                    HStack(spacing: 12) {
-                        // Search box
-                        HStack(spacing: 11) {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundColor(Theme.Colors.textSecondary)
-                                .padding(.leading, 16)
-                                .padding(.top, 1)
-                                .accessibilityIdentifier("search_image")
-                            Text(DiscoveryLocalization.search)
-                                .foregroundColor(Theme.Colors.textSecondary)
-                                .accessibilityIdentifier("search_text")
-                            Spacer()
-                        }
-                        .frame(minHeight: 48)
-                        .background(
-                            RoundedRectangle(cornerRadius: 13) // More rounded corners for search bar
-                                .fill(Theme.Colors.textInputUnfocusedBackground)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 13) // Matching corner radius for border
-                                .stroke(lineWidth: 1)
-                                .fill(Theme.Colors.textInputUnfocusedStroke)
-                        )
-                        .onTapGesture {
-                            router.showDiscoverySearch(searchQuery: searchQuery)
-                            viewModel.discoverySearchBarClicked()
-                        }
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityLabel(DiscoveryLocalization.search)
-                        
-                        // Filter button (outside search box)
-                        Button(action: {
-                            viewModel.showPartnerFilterSheet()
-                        }) {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                                .font(.system(size: 24))
-                                .foregroundColor(
-                                    viewModel.selectedPartner != nil ?
-                                    Theme.Colors.accentColor : Theme.Colors.textSecondary
-                                )
-                                .padding(.horizontal, 8)
-                        }
-                        .accessibilityIdentifier("filter_button")
-                        .accessibilityLabel("Filter by organization")
-                    }
-                    .padding(.top, 11.5)
-                    .padding(.horizontal, 24)
-                    .frameLimit(width: proxy.size.width)
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityLabel(DiscoveryLocalization.search)
-                    
-                    // Selected organization pill and clear button
-                    if let selectedPartner = viewModel.selectedPartner {
-                        HStack {
-                            // Organization pill
-                            Text(selectedPartner.organization)
-                                .font(Theme.Fonts.labelMedium)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(
-                                    Capsule()
-                                        .fill(Color(hex: "FC8044"))
-                                )
-                            
-                            Spacer()
-                            
-                            // Clear button
-                            Button(action: {
-                                viewModel.clearPartnerFilter()
-                            }) {
-                                Text("Clear")
-                                    .font(Theme.Fonts.labelMedium)
-                                    .foregroundColor(Theme.Colors.textSecondary)
-                                    .padding(.horizontal, 16)
-                                    .padding(.vertical, 8)
-                                    .background(
-                                        Capsule()
-                                            .fill(Theme.Colors.textInputUnfocusedBackground)
-                                    )
-                                    .overlay(
-                                        Capsule()
-                                            .stroke(Theme.Colors.textInputUnfocusedStroke, lineWidth: 1)
-                                    )
-                            }
-                            .accessibilityIdentifier("clear_filter_button")
-                            .accessibilityLabel("Clear organization filter")
-                        }
-                        .padding(.horizontal, 24)
-                        .padding(.top, 6) // Added top padding to increase space between search bar and pill
-                        .padding(.bottom, 6) // Reduced bottom padding to decrease space between pill and count text
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                    } else {
-                        // Add bottom padding when no filter is selected
-                        Spacer()
-                            .frame(height: 20)
-                    }
-                    
-                    ZStack {
-                        ScrollView {
-                            LazyVStack(spacing: 0) {
-                                HStack {
-                                    discoveryHeader(viewModel)
-                                        .padding(.horizontal, 20)
-                                        .padding(.bottom, 20)
-                                    Spacer()
-                                }.padding(.leading, 10)
-                                let useRelativeDates = viewModel.storage.useRelativeDates
-                                ForEach(Array(viewModel.courses.enumerated()), id: \.offset) { index, course in
-                                    CourseCellView(
-                                        model: course,
-                                        type: .discovery,
-                                        index: index,
-                                        cellsCount: viewModel.courses.count,
-                                        useRelativeDates: useRelativeDates
-                                    ).padding(.horizontal, 24)
-                                        .onAppear {
-                                            Task {
-                                                await viewModel.getDiscoveryCourses(index: index)
-                                            }
-                                        }
-                                        .onTapGesture {
-                                            viewModel.discoveryCourseClicked(
-                                                courseID: course.courseID,
-                                                courseName: course.name
-                                            )
-                                            viewModel.router.showCourseDetais(
-                                                courseID: course.courseID,
-                                                title: course.name
-                                            )
-                                        }
-                                }
-                                
-                                // MARK: - ProgressBar
-                                if viewModel.nextPage <= viewModel.totalPages {
-                                    VStack(alignment: .center) {
-                                        ProgressBar(size: 40, lineWidth: 8)
-                                            .padding(.top, 20)
-                                    }.frame(maxWidth: .infinity,
-                                            maxHeight: .infinity)
-                                }
-                                // Add extra padding at the bottom to prevent overlap with login buttons
-                                VStack {}.frame(height: viewModel.userloggedIn ? 40 : 100)
-                            }
-                            .frameLimit(width: proxy.size.width)
-                        }.refreshable {
-                            viewModel.totalPages = 1
-                            viewModel.nextPage = 1
-                            Task {
-                                await viewModel.discovery(page: 1, withProgress: false)
-                            }
-                        }
-                    }
-                }.accessibilityAction {}
-
-                if !viewModel.userloggedIn {
-                    VStack(spacing: 0) {
-                        Spacer()
-                        // Gradient spacer above the buttons
-                        LinearGradient(
-                            gradient: Gradient(
-                                colors: [
-                                    Theme.Colors.background.opacity(0.0),
-                                    Theme.Colors.background.opacity(0.5),
-                                    Theme.Colors.background.opacity(0.8),
-                                    Theme.Colors.background
-                                ]
-                            ),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .frame(height: 40)
-                        
-                        LogistrationBottomView(
+                    LogistrationBottomView(
                             ssoEnabled: viewModel.config.uiComponents.samlSSOLoginEnabled
                         ) { buttonAction in
                             switch buttonAction {
@@ -262,10 +199,9 @@ public struct DiscoveryView: View {
                         }
                         .background(Theme.Colors.background)
                         .zIndex(100)
-                    }
                 }
-            }.padding(.top, 8)
-
+            }
+            
             // MARK: - Offline mode SnackBar
             OfflineSnackBarView(
                 connectivity: viewModel.connectivity,
@@ -289,7 +225,6 @@ public struct DiscoveryView: View {
                 }
             }
         }
-        .navigationBarHidden(sourceScreen != .startup)
         .onFirstAppear {
             if !(searchQuery.isEmpty) {
                 router.showDiscoverySearch(searchQuery: searchQuery)
@@ -316,6 +251,236 @@ public struct DiscoveryView: View {
             .presentationCornerRadius(20)
         }
         .background(Theme.Colors.background.ignoresSafeArea())
+        .navigationBarHidden(sourceScreen != .startup)
+    }
+}
+
+// MARK: - Extracted subviews
+extension DiscoveryView {
+    private var searchAndFilterBar: some View {
+// ...
+        HStack(spacing: 12) {
+            // Search box
+            HStack(spacing: 11) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .padding(.leading, 16)
+                    .padding(.top, 1)
+                    .accessibilityIdentifier("search_image")
+                Text(DiscoveryLocalization.search)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .accessibilityIdentifier("search_text")
+                Spacer()
+            }
+            .frame(minHeight: 48)
+            .background(
+                RoundedRectangle(cornerRadius: 13)
+                    .fill(Theme.Colors.textInputUnfocusedBackground)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 13)
+                    .stroke(lineWidth: 1)
+                    .fill(Theme.Colors.textInputUnfocusedStroke)
+            )
+            .onTapGesture {
+                router.showDiscoverySearch(searchQuery: searchQuery)
+                viewModel.discoverySearchBarClicked()
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(DiscoveryLocalization.search)
+
+            // Filter button (outside search box)
+            Button(action: {
+                viewModel.showPartnerFilterSheet()
+            }) {
+                Image(systemName: "line.3.horizontal.decrease.circle")
+                    .font(.system(size: 24))
+                    .foregroundColor(
+                        viewModel.selectedPartner != nil ?
+                        Theme.Colors.accentColor : Theme.Colors.textSecondary
+                    )
+                    .padding(.horizontal, 8)
+            }
+            .accessibilityIdentifier("filter_button")
+            .accessibilityLabel("Filter by organization")
+        }
+    }
+
+    // MARK: - Grid Header
+    private func gridHeader() -> some View {
+        HStack {
+            discoveryHeader(viewModel)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 16)
+            Spacer()
+        }
+        .padding(.leading, 10)
+    }
+    
+    // MARK: - Course Card
+    private func courseCard(course: CourseItem, useRelativeDates: Bool) -> some View {
+        Button(
+            action: {
+                // Track course click
+                viewModel.discoveryCourseClicked(
+                    courseID: course.courseID,
+                    courseName: course.name
+                )
+                // Navigate to course details
+                viewModel.router.showCourseDetais(
+                    courseID: course.courseID,
+                    title: course.name
+                )
+            },
+            label: {
+                LocalCourseGridCardView(
+                    model: course,
+                    useRelativeDates: useRelativeDates
+                )
+            }
+        )
+        .buttonStyle(PlainButtonStyle())
+        .accessibilityIdentifier("course_card_button")
+    }
+    
+    // MARK: - Bottom Spacer
+    private func bottomSpacer() -> some View {
+        VStack {}
+            .frame(height: viewModel.userloggedIn ? 40 : 100)
+    }
+    
+    // MARK: - Main Grid Function
+    private func coursesGrid(_ proxy: GeometryProxy) -> some View {
+        ZStack {
+            // Grid view replacing list of course cells
+            ScrollView {
+                VStack(spacing: 0) {
+                    // Header
+                    gridHeader()
+                    
+                    // Dynamic column count (2 on iPhone, 3 on iPad)
+                    let isPad = UIDevice.current.userInterfaceIdiom == .pad
+                    let useRelativeDates = viewModel.storage.useRelativeDates
+                    
+                    // Grid content with columns
+                    let columns = isPad ? [
+                        GridItem(.flexible(), spacing: 0),
+                        GridItem(.flexible(), spacing: 0),
+                        GridItem(.flexible(), spacing: 0)
+                    ] : [
+                        GridItem(.flexible(), spacing: 0),
+                        GridItem(.flexible(), spacing: 0)
+                    ]
+                    
+                    gridContent(useRelativeDates: useRelativeDates, columns: columns)
+                    
+                    // Progress indicator
+                    progressIndicator()
+                    
+                    // Bottom padding
+                    bottomSpacer()
+                }
+                .frameLimit(width: proxy.size.width)
+            }
+        }
+    }
+    
+    // MARK: - Progress Indicator
+    private func progressIndicator() -> some View {
+        Group {
+            if viewModel.nextPage <= viewModel.totalPages {
+                VStack(alignment: .center) {
+                    ProgressBar(size: 40, lineWidth: 8)
+                        .padding(.top, 20)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Grid Content
+    private func gridContent(useRelativeDates: Bool, columns: [GridItem]) -> some View {
+        LazyVGrid(columns: columns, alignment: .center, spacing: 0) {
+            if !viewModel.courses.isEmpty {
+                ForEach(viewModel.courses) { course in
+                    courseCard(course: course, useRelativeDates: useRelativeDates)
+                        .padding(8) // Add padding around each card like in AllCoursesView
+                        .onAppear {
+                            // Pagination logic
+                            if let index = viewModel.courses.firstIndex(where: { $0.id == course.id }),
+                               index == viewModel.courses.count - 3 {
+                                Task {
+                                    await viewModel.discovery(page: viewModel.nextPage)
+                                }
+                            }
+                        }
+                }
+            }
+        }
+        .accessibilityIdentifier("discovery_courses_grid")
+        .padding(10) // Match AllCoursesView padding
+    }
+    
+    private var refreshableView: some View {
+        GeometryReader { proxy in
+            coursesGrid(proxy)
+        }
+        .refreshable {
+            viewModel.totalPages = 1
+            viewModel.nextPage = 1
+            Task {
+                await viewModel.discovery(page: 1, withProgress: false)
+            }
+        }
+    }
+
+    private var partnerFilterPill: some View {
+        Group {
+            if let selectedPartner = viewModel.selectedPartner {
+                HStack {
+                    // Organization pill
+                    Text(selectedPartner.organization)
+                        .font(Theme.Fonts.labelMedium)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color(hex: "FC8044"))
+                        )
+
+                    Spacer()
+
+                    // Clear button
+                    Button(action: {
+                        viewModel.clearPartnerFilter()
+                    }) {
+                        Text("Clear")
+                            .font(Theme.Fonts.labelMedium)
+                            .foregroundColor(Theme.Colors.textSecondary)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(Theme.Colors.textInputUnfocusedBackground)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Theme.Colors.textInputUnfocusedStroke, lineWidth: 1)
+                            )
+                    }
+                    .accessibilityIdentifier("clear_filter_button")
+                    .accessibilityLabel("Clear organization filter")
+                }
+                .padding(.top, 6)
+                .padding(.bottom, 6)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            } else {
+                // Add bottom padding when no filter is selected
+                Spacer()
+                    .frame(height: 20)
+            }
+        }
+        .padding(.horizontal, 24)
     }
 }
 
