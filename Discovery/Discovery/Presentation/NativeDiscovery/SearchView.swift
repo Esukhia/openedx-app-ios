@@ -9,7 +9,31 @@ import SwiftUI
 import Core
 import OEXFoundation
 import Theme
+import UIKit
+import Kingfisher
 
+// Helper to detect Tibetan script and apply Noto Sans Tibetan font when needed
+private func containsTibetan(_ text: String) -> Bool {
+    return text.unicodeScalars.contains { scalar in
+        return (0x0F00...0x0FFF).contains(Int(scalar.value))
+    }
+}
+
+@ViewBuilder
+private func tibetanAwareText(_ text: String, baseFont: Font, tibetanSize: CGFloat) -> some View {
+    if containsTibetan(text) {
+        if UIFont(name: "NotoSansTibetan-Regular", size: tibetanSize) != nil {
+            Text(text).font(.custom("NotoSansTibetan-Regular", size: tibetanSize))
+        } else {
+            Text(text).font(baseFont)
+        }
+    } else {
+        Text(text).font(baseFont)
+    }
+}
+
+// TODO (Tibetan): Bundle "NotoSansTibetan-Regular.ttf" and add under UIAppFonts in Info.plist;
+// then apply tibetanAwareText to Search headers/title, search placeholder/TextField display.
 public struct SearchView: View {
     
     @FocusState
@@ -23,6 +47,79 @@ public struct SearchView: View {
         self.viewModel = viewModel
         self.viewModel.searchText = searchQuery ?? ""
         self.viewModel.isSearchActive = !(searchQuery?.isEmpty ?? false)
+    }
+
+    // (Tibetan-aware helpers are at file scope to allow use within nested views.)
+
+    // MARK: - Local course card (identical styling to DiscoveryView)
+    private struct LocalCourseGridCardView: View {
+        private let imageURL: String
+        private let title: String
+        private let org: String
+        private let duration: String
+
+        init(model: CourseItem) {
+            self.imageURL = model.imageURL
+            self.title = model.name
+            self.org = model.org
+            self.duration = (model.duration?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false)
+                ? model.duration!.trimmingCharacters(in: .whitespacesAndNewlines)
+                : "Duration not specified"
+        }
+
+        var body: some View {
+            VStack(alignment: .leading, spacing: 0) {
+                // Course banner image
+                KFImage(URL(string: imageURL))
+                    .onFailureImage(CoreAssets.noCourseImage.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 120, minHeight: 100, maxHeight: 120)
+                    .clipped()
+                    .accessibilityIdentifier("course_card_image")
+
+                // Course title and meta (org, title, duration)
+                VStack(alignment: .leading, spacing: 2) {
+                    // Organization
+                    if !org.isEmpty {
+                        tibetanAwareText(org, baseFont: Theme.Fonts.labelMedium, tibetanSize: 14)
+                            .foregroundColor(Theme.Colors.textSecondaryLight)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                            .accessibilityIdentifier("course_card_org")
+                    }
+
+                    // Course title
+                    tibetanAwareText(title, baseFont: Theme.Fonts.titleSmall, tibetanSize: 24)
+                        .foregroundColor(Theme.Colors.textPrimary)
+                        .lineLimit(3)
+                        .multilineTextAlignment(.leading)
+                        .accessibilityIdentifier("course_card_title")
+
+                    // Push duration to bottom of the fixed container
+                    Spacer(minLength: 0)
+
+                    // Duration (fixed at bottom)
+                    tibetanAwareText(duration, baseFont: Theme.Fonts.labelMedium, tibetanSize: 14)
+                        .foregroundColor(Theme.Colors.textSecondaryLight)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
+                        .padding(.top, 2)
+                        .padding(.bottom, 8)
+                        .accessibilityIdentifier("course_card_duration")
+                }
+                .frame(height: 100, alignment: .topLeading)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 8)
+                .padding(.horizontal, 12)
+                .padding(.bottom, 2)
+            }
+            .background(Theme.Colors.courseCardBackground)
+            .cornerRadius(8)
+            .shadow(color: Theme.Colors.courseCardShadow, radius: 6, x: 2, y: 2)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("course_grid_card")
+        }
     }
     
     public var body: some View {
@@ -38,14 +135,9 @@ public struct SearchView: View {
                     
                     HStack(spacing: 11) {
                         Image(systemName: "magnifyingglass")
-                            .foregroundColor(Theme.Colors.textPrimary)
                             .padding(.leading, 16)
                             .padding(.top, 1)
-                            .foregroundColor(
-                                viewModel.isSearchActive
-                                ? Theme.Colors.accentColor
-                                : Theme.Colors.textPrimary
-                            )
+                            .foregroundColor(Theme.Colors.accentColor)
                             .accessibilityHidden(true)
                             .accessibilityIdentifier("search_image")
                         
@@ -98,56 +190,74 @@ public struct SearchView: View {
                     
                     ZStack {
                         ScrollView {
-                            HStack {
-                                searchHeader(viewModel: viewModel)
-                                    .padding(.horizontal, 24)
-                                    .padding(.bottom, 20)
-                                    .offset(y: animated ? 0 : 50)
-                                    .opacity(animated ? 1 : 0)
-                                Spacer()
-                            }
-                            .padding(.leading, 10)
-                            .frameLimit(width: proxy.size.width)
-                            
-                            LazyVStack {
-                                let searchResults = viewModel.searchResults.enumerated()
-                                let useRelativeDates = viewModel.storage.useRelativeDates
-                                ForEach(
-                                    Array(searchResults), id: \.offset) { index, course in
-                                        CourseCellView(
-                                            model: course,
-                                            type: .discovery,
-                                            index: index,
-                                            cellsCount: viewModel.searchResults.count,
-                                            useRelativeDates: useRelativeDates
-                                        )
+                            VStack(spacing: 0) {
+                                // Header
+                                HStack {
+                                    searchHeader(viewModel: viewModel)
                                         .padding(.horizontal, 24)
-                                        .onAppear {
-                                            Task {
-                                                await viewModel.searchCourses(
-                                                    index: index,
-                                                    searchTerm: viewModel.searchText
+                                        .padding(.bottom, 20)
+                                        .offset(y: animated ? 0 : 50)
+                                        .opacity(animated ? 1 : 0)
+                                    Spacer()
+                                }
+                                .padding(.leading, 10)
+                                .frameLimit(width: proxy.size.width)
+
+                                // Grid
+                                let isPad = UIDevice.current.userInterfaceIdiom == .pad
+                                let columns = isPad ? [
+                                    GridItem(.flexible(), spacing: 0),
+                                    GridItem(.flexible(), spacing: 0),
+                                    GridItem(.flexible(), spacing: 0)
+                                ] : [
+                                    GridItem(.flexible(), spacing: 0),
+                                    GridItem(.flexible(), spacing: 0)
+                                ]
+
+                                LazyVGrid(columns: columns, alignment: .center, spacing: 0) {
+                                    ForEach(viewModel.searchResults) { course in
+                                        Button(
+                                            action: {
+                                                viewModel.router.showCourseDetais(
+                                                    courseID: course.courseID,
+                                                    title: course.name
                                                 )
+                                            },
+                                            label: {
+                                                LocalCourseGridCardView(model: course)
+                                            }
+                                        )
+                                        .buttonStyle(PlainButtonStyle())
+                                        .padding(8)
+                                        .onAppear {
+                                            if let index = viewModel
+                                                .searchResults
+                                                .firstIndex(where: { $0.id == course.id }),
+                                               index == viewModel.searchResults.count - 3 {
+                                                Task {
+                                                    await viewModel.searchCourses(
+                                                        index: index,
+                                                        searchTerm: viewModel.searchText
+                                                    )
+                                                }
                                             }
                                         }
-                                        .onTapGesture {
-                                            viewModel.router.showCourseDetais(
-                                                courseID: course.courseID,
-                                                title: course.name
-                                            )
-                                        }
                                     }
-                                // MARK: - ProgressBar
+                                }
+                                .padding(10)
+                                .frameLimit(width: proxy.size.width)
+
+                                // Progress indicator
                                 if viewModel.fetchInProgress {
                                     VStack(alignment: .center) {
                                         ProgressBar(size: 40, lineWidth: 8)
                                             .padding(.top, 20)
-                                    }.frame(maxWidth: .infinity,
-                                            maxHeight: .infinity)
+                                    }
                                 }
+
+                                // Bottom spacer
+                                Spacer(minLength: 40)
                             }
-                            .frameLimit(width: proxy.size.width)
-                            Spacer(minLength: 40)
                         }
                     }
                 }

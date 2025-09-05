@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct CourseItem: Hashable, Sendable {
+public struct CourseItem: Hashable, Identifiable, Sendable {
+    public var id: String { courseID }
     public let name: String
     public let org: String
     public let shortDescription: String

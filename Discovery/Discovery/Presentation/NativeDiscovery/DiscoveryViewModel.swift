@@ -104,6 +104,7 @@ public final class DiscoveryViewModel: ObservableObject {
         do {
             if connectivity.isInternetAvaliable {
                 if page == 1 {
+                    // First page load - reset pagination state
                     if let selectedPartner = selectedPartner {
                         courses = try await interactor.discoveryByOrg(
                             page: page,
@@ -115,22 +116,51 @@ public final class DiscoveryViewModel: ObservableObject {
                     self.totalPages = 1
                     self.nextPage = 1
                 } else {
-                    if let selectedPartner = selectedPartner {
-                        courses += try await interactor.discoveryByOrg(
-                            page: page,
-                            organization: selectedPartner.organization
-                        )
-                    } else {
-                        courses += try await interactor.discovery(page: page)
+                    // Only attempt to fetch next page if we're within valid page range
+                    if page <= totalPages {
+                        do {
+                            let newCourses: [CourseItem]
+                            if let selectedPartner = selectedPartner {
+                                newCourses = try await interactor.discoveryByOrg(
+                                    page: page,
+                                    organization: selectedPartner.organization
+                                )
+                                courses += newCourses
+                            } else {
+                                newCourses = try await interactor.discovery(page: page)
+                                courses += newCourses
+                            }
+                        } catch let pageError {
+                            // Handle invalid page error by checking error description
+                            // This is a more general approach that doesn't rely on specific error types
+                            let errorString = String(describing: pageError)
+                            if errorString.contains("Invalid page") {
+                                // We've reached the end of available pages
+                                totalPages = page - 1
+                                // Don't show error for invalid page - just stop pagination
+                            } else {
+                                // Re-throw other errors to be caught by outer catch block
+                                throw pageError
+                            }
+                        }
                     }
                 }
-                self.nextPage += 1
+                
+                // Only increment nextPage if we're not at the end
+                if nextPage <= totalPages {
+                    self.nextPage += 1
+                }
+                
                 if !courses.isEmpty {
+                    // Update totalPages from API response
                     totalPages = courses[0].numPages
                     
                     // Calculate total course count based on pagination info
                     if let selectedPartner = selectedPartner {
                         // For filtered courses, use the coursesCount property
+                        totalCourseCount = courses[0].coursesCount
+                    } else {
+                        // For all courses, use the coursesCount property too
                         totalCourseCount = courses[0].coursesCount
                     }
                 }
@@ -143,7 +173,15 @@ public final class DiscoveryViewModel: ObservableObject {
             }
         } catch let error {
             fetchInProgress = false
-            if error.isInternetError || error is NoCachedDataError {
+            
+            // Check for "Invalid page" error in the error description
+            let errorString = String(describing: error)
+            if errorString.contains("Invalid page") {
+                // Don't show error for invalid page - just stop pagination
+                if page > 1 {
+                    totalPages = page - 1
+                }
+            } else if error.isInternetError || error is NoCachedDataError {
                 errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
             } else if error.isUpdateRequeiredError {
                 self.router.showUpdateRequiredView(showAccountLink: true)
@@ -185,6 +223,9 @@ public final class DiscoveryViewModel: ObservableObject {
         // Reset pagination and reload courses
         totalPages = 1
         nextPage = 1
+        // Clear current data to avoid showing stale counts/UI while loading
+        courses.removeAll()
+        totalCourseCount = 0
         Task {
             await discovery(page: 1, withProgress: true)
         }
@@ -195,6 +236,9 @@ public final class DiscoveryViewModel: ObservableObject {
         // Reset pagination and reload all courses
         totalPages = 1
         nextPage = 1
+        // Clear current data to avoid showing stale counts/UI while loading
+        courses.removeAll()
+        totalCourseCount = 0
         Task {
             await discovery(page: 1, withProgress: true)
         }

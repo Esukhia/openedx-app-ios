@@ -77,9 +77,8 @@ public struct CourseCellView: View {
                         .accessibilityIdentifier("course_name_text")
 
                     let hasDuration = courseDuration?.isEmpty == false
-                    let durationText = hasDuration ? courseDuration ?? "" : "Not specified"
-                    let courseDurationText = "Course Duration: " + durationText
-                    Text(courseDurationText)
+                    let durationText = hasDuration ? courseDuration ?? "" : "Duration not specified"
+                    Text(durationText)
                         .font(Theme.Fonts.labelMedium)
                         .foregroundColor(Theme.Colors.textSecondary)
                         .multilineTextAlignment(.leading)

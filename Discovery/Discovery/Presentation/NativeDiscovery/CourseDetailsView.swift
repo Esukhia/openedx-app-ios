@@ -246,7 +246,7 @@ private struct CourseStateView: View {
                 if viewModel.connectivity.isInternetAvaliable {
                         StyledButton(DiscoveryLocalization.Details.enrollNow, action: {
                             if !viewModel.userloggedIn {
-                                viewModel.router.showRegisterScreen(
+                                viewModel.router.showLoginScreen(
                                     sourceScreen: .courseDetail(
                                         courseDetails.courseID,
                                         courseDetails.courseTitle)
@@ -311,7 +311,7 @@ private struct CourseStateView: View {
             VStack(spacing: 8) {
                 StyledButton(DiscoveryLocalization.Details.viewCourse, action: {
                     if !viewModel.userloggedIn {
-                        viewModel.router.showRegisterScreen(
+                        viewModel.router.showLoginScreen(
                             sourceScreen: .courseDetail(
                                 courseDetails.courseID,
                                 courseDetails.courseTitle)

@@ -65,7 +65,7 @@ public final class DiscoveryWebviewViewModel: ObservableObject {
     func enrollTo(courseID: String) async {
         do {
             guard userloggedIn else {
-                router.showRegisterScreen(sourceScreen: .discovery)
+                router.showLoginScreen(sourceScreen: .discovery)
                 return
             }
             
