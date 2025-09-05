@@ -12,6 +12,27 @@ import Theme
 import UIKit
 import Kingfisher
 
+// Helper to detect Tibetan script and apply Noto Sans Tibetan font when needed
+private func containsTibetan(_ text: String) -> Bool {
+    return text.unicodeScalars.contains { scalar in
+        return (0x0F00...0x0FFF).contains(Int(scalar.value))
+    }
+}
+
+@ViewBuilder
+private func tibetanAwareText(_ text: String, baseFont: Font, tibetanSize: CGFloat) -> some View {
+    if containsTibetan(text) {
+        // Use custom font only if it's registered and available
+        if UIFont(name: "NotoSansTibetan-Regular", size: tibetanSize) != nil {
+            Text(text).font(.custom("NotoSansTibetan-Regular", size: tibetanSize))
+        } else {
+            Text(text).font(baseFont)
+        }
+    } else {
+        Text(text).font(baseFont)
+    }
+}
+
 // Local implementation of course card to avoid module import issues
 private struct LocalCourseGridCardView: View {
     private let imageURL: String
@@ -45,43 +66,45 @@ private struct LocalCourseGridCardView: View {
                 .onFailureImage(CoreAssets.noCourseImage.image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 120, minHeight: 90, maxHeight: 100)
+                .frame(minWidth: 120, minHeight: 80, maxHeight: 90)
                 .clipped()
                 .accessibilityIdentifier("course_card_image")
             
-            // Course title and meta (org + duration)
-            VStack(alignment: .leading, spacing: 3) {
+            // Course title and meta (org, title, duration)
+            VStack(alignment: .leading, spacing: 2) {
                 // Organization
                 if !org.isEmpty {
-                    Text(org)
-                        .font(Theme.Fonts.labelSmall)
-                        .foregroundColor(Theme.Colors.textPrimary)
+                    tibetanAwareText(org, baseFont: Theme.Fonts.labelMedium, tibetanSize: 14)
+                        .foregroundColor(Theme.Colors.textSecondaryLight)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .accessibilityIdentifier("course_card_org")
                 }
 
-                // Duration
-                Text(duration)
-                    .font(Theme.Fonts.labelSmall)
+                // Course title
+                tibetanAwareText(title, baseFont: Theme.Fonts.titleSmall, tibetanSize: 24)
+                    .foregroundColor(Theme.Colors.textPrimary)
+                    .lineLimit(3)
+                    .multilineTextAlignment(.leading)
+                    .accessibilityIdentifier("course_card_title")
+                
+                // Push duration to bottom of the fixed container
+                Spacer(minLength: 0)
+
+                // Duration (fixed at bottom)
+                tibetanAwareText(duration, baseFont: Theme.Fonts.labelMedium, tibetanSize: 14)
                     .foregroundColor(Theme.Colors.textSecondaryLight)
                     .multilineTextAlignment(.leading)
                     .lineLimit(1)
+                    .padding(.top, 2)
+                    .padding(.bottom, 8)
                     .accessibilityIdentifier("course_card_duration")
-
-                // Course title
-                Text(title)
-                    .font(Theme.Fonts.labelMedium)
-                    .foregroundColor(Theme.Colors.textPrimary)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .accessibilityIdentifier("course_card_title")
             }
-            .frame(height: 51, alignment: .topLeading)
+            .frame(height: 100, alignment: .topLeading)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.top, 10)
+            .padding(.top, 8)
             .padding(.horizontal, 12)
-            .padding(.bottom, 16)
+            .padding(.bottom, 2)
         }
         .background(Theme.Colors.courseCardBackground)
         .cornerRadius(8)

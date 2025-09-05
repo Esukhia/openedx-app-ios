@@ -223,6 +223,9 @@ public final class DiscoveryViewModel: ObservableObject {
         // Reset pagination and reload courses
         totalPages = 1
         nextPage = 1
+        // Clear current data to avoid showing stale counts/UI while loading
+        courses.removeAll()
+        totalCourseCount = 0
         Task {
             await discovery(page: 1, withProgress: true)
         }
@@ -233,6 +236,9 @@ public final class DiscoveryViewModel: ObservableObject {
         // Reset pagination and reload all courses
         totalPages = 1
         nextPage = 1
+        // Clear current data to avoid showing stale counts/UI while loading
+        courses.removeAll()
+        totalCourseCount = 0
         Task {
             await discovery(page: 1, withProgress: true)
         }
