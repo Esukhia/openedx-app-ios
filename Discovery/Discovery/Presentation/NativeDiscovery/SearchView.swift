@@ -32,6 +32,8 @@ private func tibetanAwareText(_ text: String, baseFont: Font, tibetanSize: CGFlo
     }
 }
 
+// TODO (Tibetan): Bundle "NotoSansTibetan-Regular.ttf" and add under UIAppFonts in Info.plist;
+// then apply tibetanAwareText to Search headers/title, search placeholder/TextField display.
 public struct SearchView: View {
     
     @FocusState
