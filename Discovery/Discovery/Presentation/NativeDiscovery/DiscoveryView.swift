@@ -66,7 +66,7 @@ private struct LocalCourseGridCardView: View {
                 .onFailureImage(CoreAssets.noCourseImage.image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 120, minHeight: 80, maxHeight: 90)
+                .frame(minWidth: 120, minHeight: 100, maxHeight: 120)
                 .clipped()
                 .accessibilityIdentifier("course_card_image")
             
