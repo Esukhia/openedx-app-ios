@@ -35,7 +35,7 @@ public class PrimaryCourseDashboardViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private let ipadPageSize = 6
-    private let iphonePageSize = 4
+    private let iphonePageSize = 3
     
     public init(
         interactor: DashboardInteractorProtocol,
