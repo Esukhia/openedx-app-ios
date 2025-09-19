@@ -487,28 +487,6 @@ public struct CourseUnitView: View {
     private var courseNavigation: some View {
         VStack(spacing: 0) {
             ZStack {
-                if !isDropdownActive {
-                    GeometryReader { reader in
-                        VStack {
-                            HStack {
-                                let currentBlock = viewModel.verticals[viewModel.verticalIndex]
-                                    .childs[viewModel.index]
-                                if currentBlock.type == .video {
-                                    let title = currentBlock.displayName
-                                    Text(title)
-                                        .lineLimit(1)
-                                        .font(Theme.Fonts.titleLarge)
-                                        .foregroundStyle(Theme.Colors.textPrimary)
-                                        .padding(.leading, isHorizontal ? 30 : 42)
-                                        .padding(.top, isHorizontal ? 14 : 2)
-                                    Spacer()
-                                }
-                            }
-                            .frame(maxWidth: isHorizontal ? reader.size.width * 0.5 : nil)
-                            Spacer()
-                        }
-                    }
-                }
                 navigationBar
                 courseNavigationView
             }
@@ -520,7 +498,7 @@ public struct CourseUnitView: View {
         VStack(spacing: 0) {
             ZStack(alignment: .bottom) {
                 NavigationBar(
-                    title: isDropdownActive ? sequenceTitle : "",
+                    title: isDropdownActive ? sequenceTitle : unitTitle,
                     leftButtonAction: {
                         viewModel.router.back()
                         playerStateSubject.send(VideoPlayerState.kill)
@@ -541,11 +519,6 @@ public struct CourseUnitView: View {
             }
             .background(Theme.Colors.background)
             .padding(.trailing, isHorizontal ? 215 : 0)
-
-            if viewModel.courseUnitProgressEnabled {
-                LessonLineProgressView(viewModel: viewModel)
-                    .padding(.top, 4)
-            }
             Spacer()
         }
     }
