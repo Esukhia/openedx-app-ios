@@ -125,11 +125,11 @@ public struct CourseDetailsView: View {
                                                         .font(.system(size: 16))
                                                     Text("About this Course")
                                                         .font(Theme.Fonts.titleSmall)
-                                                        .foregroundColor(Theme.Colors.textPrimary)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
                                                 }
                                                 Text(shortDesc)
                                                     .font(Theme.Fonts.bodyMedium)
-                                                    .foregroundColor(Theme.Colors.textSecondary)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
                                                     .multilineTextAlignment(.leading)
                                                     .lineSpacing(4)
                                             }
@@ -145,11 +145,11 @@ public struct CourseDetailsView: View {
                                                         .font(.system(size: 16))
                                                     Text("Course Description")
                                                         .font(Theme.Fonts.titleSmall)
-                                                        .foregroundColor(Theme.Colors.textPrimary)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
                                                 }
                                                 Text(longDesc)
                                                     .font(Theme.Fonts.bodyMedium)
-                                                    .foregroundColor(Theme.Colors.textSecondary)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
                                                     .multilineTextAlignment(.leading)
                                                     .lineSpacing(4)
                                             }
@@ -164,7 +164,7 @@ public struct CourseDetailsView: View {
                                                     .font(.system(size: 16))
                                                 Text("Course Overview")
                                                     .font(Theme.Fonts.titleSmall)
-                                                    .foregroundColor(Theme.Colors.textPrimary)
+                                                    .foregroundColor(Theme.Colors.textSecondary)
                                             }
                                             .padding(.horizontal, 16)
 
@@ -176,7 +176,7 @@ public struct CourseDetailsView: View {
                                                         type: .discovery,
                                                         fontSize: 120,
                                                         screenWidth: proxy.size.width - 48,
-                                                        textColor: Theme.UIColors.textSecondary.cgColor.hexString
+                                                        textColor: Theme.UIColors.textPrimary.cgColor.hexString
                                                     ),
                                                     processing: { rendering in
                                                         isOverviewRendering = rendering
@@ -202,11 +202,11 @@ public struct CourseDetailsView: View {
                                                         .font(.system(size: 16))
                                                     Text("Course Requirements")
                                                         .font(Theme.Fonts.titleSmall)
-                                                        .foregroundColor(Theme.Colors.textPrimary)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
                                                 }
                                                 Text(requirement)
                                                     .font(Theme.Fonts.bodyMedium)
-                                                    .foregroundColor(Theme.Colors.textSecondary)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
                                                     .multilineTextAlignment(.leading)
                                                     .lineSpacing(4)
                                             }
@@ -222,7 +222,7 @@ public struct CourseDetailsView: View {
                                                         .font(.system(size: 16))
                                                     Text("Learning Outcomes")
                                                         .font(Theme.Fonts.titleSmall)
-                                                        .foregroundColor(Theme.Colors.textPrimary)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
                                                 }
                                                 VStack(alignment: .leading, spacing: 6) {
                                                     ForEach(
@@ -232,10 +232,10 @@ public struct CourseDetailsView: View {
                                                         HStack(alignment: .top, spacing: 8) {
                                                             Text("•")
                                                                 .font(Theme.Fonts.bodyMedium)
-                                                                .foregroundColor(Theme.Colors.textSecondary)
+                                                                .foregroundColor(Theme.Colors.textPrimary)
                                                             Text(item)
                                                                 .font(Theme.Fonts.bodyMedium)
-                                                                .foregroundColor(Theme.Colors.textSecondary)
+                                                                .foregroundColor(Theme.Colors.textPrimary)
                                                                 .multilineTextAlignment(.leading)
                                                         }
                                                     }
@@ -598,7 +598,7 @@ private struct InstructorCardView: View {
     let instructor: CourseInstructor
 
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
+        HStack(alignment: .top, spacing: 12) {
             // Instructor Avatar
             if let imageUrl = instructor.image, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
                 KFImage(url)
@@ -613,7 +613,7 @@ private struct InstructorCardView: View {
                     .onFailureImage(CoreAssets.noCourseImage.image)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 60, height: 60)
+                    .frame(width: 72, height: 72)
                     .clipShape(Circle())
                     .overlay(
                         Circle()
@@ -623,7 +623,7 @@ private struct InstructorCardView: View {
             } else {
                 Circle()
                     .fill(Theme.Colors.textInputUnfocusedBackground)
-                    .frame(width: 60, height: 60)
+                    .frame(width: 72, height: 72)
                     .overlay(
                         Image(systemName: "person.fill")
                             .foregroundColor(Theme.Colors.textSecondary)
@@ -632,7 +632,7 @@ private struct InstructorCardView: View {
             }
             
             // Instructor Info
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 4) {
                 if let name = instructor.name, !name.isEmpty {
                     Text(name)
                         .font(Theme.Fonts.titleMedium)
@@ -660,14 +660,12 @@ private struct InstructorCardView: View {
                         .font(Theme.Fonts.bodySmall)
                         .foregroundColor(Theme.Colors.textSecondary)
                         .multilineTextAlignment(.leading)
-                        .lineLimit(3)
-                        .padding(.top, 4)
                         .accessibilityIdentifier("instructor_bio")
                 }
             }
             Spacer(minLength: 0)
         }
-        .padding(16)
+        .padding(12)
         .cardStyle(bgColor: Theme.Colors.background, strokeColor: Theme.Colors.cardViewStroke)
     }
 }
