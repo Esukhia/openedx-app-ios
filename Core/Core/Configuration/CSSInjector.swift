@@ -75,7 +75,8 @@ public class CSSInjector {
         html: String,
         type: CssType,
         fontSize: Int = 150,
-        screenWidth: CGFloat
+        screenWidth: CGFloat,
+        textColor: String? = nil
     ) -> String {
         let meadiaReplace = html.replacingOccurrences(
             of: "/media/",
@@ -109,6 +110,9 @@ public class CSSInjector {
         }
         
         func currentColor() -> String {
+            if let textColor = textColor {
+                return textColor
+            }
             switch colorScheme {
             case .light:
                 return "black"
