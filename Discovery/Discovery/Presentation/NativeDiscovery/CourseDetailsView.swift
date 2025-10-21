@@ -253,7 +253,7 @@ public struct CourseDetailsView: View {
                                                         .font(.system(size: 16))
                                                     Text("Instructors")
                                                         .font(Theme.Fonts.titleSmall)
-                                                        .foregroundColor(Theme.Colors.textPrimary)
+                                                        .foregroundColor(Theme.Colors.textSecondaryLight)
                                                 }
                                                 .padding(.horizontal, 16)
 
@@ -598,75 +598,83 @@ private struct InstructorCardView: View {
     let instructor: CourseInstructor
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            // Instructor Avatar
-            if let imageUrl = instructor.image, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
-                KFImage(url)
-                    .placeholder {
-                        Circle()
-                            .fill(Theme.Colors.textInputUnfocusedBackground)
-                            .overlay(
-                                Image(systemName: "person.fill")
-                                    .foregroundColor(Theme.Colors.textSecondary)
-                            )
+        VStack(alignment: .leading, spacing: 12) {
+            // Top section: Avatar and Info side by side
+            HStack(alignment: .top, spacing: 12) {
+                // Instructor Avatar
+                if let imageUrl = instructor.image, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
+                    KFImage(url)
+                        .placeholder {
+                            Circle()
+                                .fill(Theme.Colors.textInputUnfocusedBackground)
+                                .overlay(
+                                    Image(systemName: "person.fill")
+                                        .foregroundColor(Theme.Colors.textSecondary)
+                                )
+                        }
+                        .onFailureImage(CoreAssets.noCourseImage.image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 88, height: 88)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Theme.Colors.cardViewStroke, lineWidth: 1)
+                        )
+                        .accessibilityIdentifier("instructor_avatar")
+                } else {
+                    Circle()
+                        .fill(Theme.Colors.textInputUnfocusedBackground)
+                        .frame(width: 88, height: 88)
+                        .overlay(
+                            Image(systemName: "person.fill")
+                                .foregroundColor(Theme.Colors.textSecondary)
+                                .font(.system(size: 24))
+                        )
+                }
+                
+                // Instructor Info (Name, Title, Organization)
+                VStack(alignment: .leading, spacing: 4) {
+                    if let name = instructor.name, !name.isEmpty {
+                        Text(name)
+                            .font(Theme.Fonts.titleMedium)
+                            .foregroundColor(Theme.Colors.textPrimary)
+                            .accessibilityIdentifier("instructor_name")
                     }
-                    .onFailureImage(CoreAssets.noCourseImage.image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 72, height: 72)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Theme.Colors.cardViewStroke, lineWidth: 1)
-                    )
-                    .accessibilityIdentifier("instructor_avatar")
-            } else {
-                Circle()
-                    .fill(Theme.Colors.textInputUnfocusedBackground)
-                    .frame(width: 72, height: 72)
-                    .overlay(
-                        Image(systemName: "person.fill")
+                    if let title = instructor.title, !title.isEmpty {
+                        Text(title)
+                            .font(Theme.Fonts.titleSmall)
                             .foregroundColor(Theme.Colors.textSecondary)
-                            .font(.system(size: 24))
-                    )
+                            .accessibilityIdentifier("instructor_title")
+                    }
+                    if let org = instructor.organization, !org.isEmpty {
+                        HStack(spacing: 4) {
+                            Image(systemName: "building.2")
+                                .font(.system(size: 14))
+                            Text(org)
+                                .font(Theme.Fonts.titleSmall)
+                        }
+                        .foregroundColor(Theme.Colors.accentColor)
+                        .accessibilityIdentifier("instructor_org")
+                    }
+                }
+                Spacer(minLength: 0)
             }
             
-            // Instructor Info
-            VStack(alignment: .leading, spacing: 4) {
-                if let name = instructor.name, !name.isEmpty {
-                    Text(name)
-                        .font(Theme.Fonts.titleMedium)
-                        .foregroundColor(Theme.Colors.textPrimary)
-                        .accessibilityIdentifier("instructor_name")
-                }
-                if let title = instructor.title, !title.isEmpty {
-                    Text(title)
-                        .font(Theme.Fonts.labelMedium)
-                        .foregroundColor(Theme.Colors.textSecondary)
-                        .accessibilityIdentifier("instructor_title")
-                }
-                if let org = instructor.organization, !org.isEmpty {
-                    HStack(spacing: 4) {
-                        Image(systemName: "building.2")
-                            .font(.system(size: 12))
-                        Text(org)
-                            .font(Theme.Fonts.labelMedium)
-                    }
-                    .foregroundColor(Theme.Colors.accentColor)
-                    .accessibilityIdentifier("instructor_org")
-                }
-                if let bio = instructor.bio, !bio.isEmpty {
-                    Text(bio)
-                        .font(Theme.Fonts.bodySmall)
-                        .foregroundColor(Theme.Colors.textSecondary)
-                        .multilineTextAlignment(.leading)
-                        .accessibilityIdentifier("instructor_bio")
-                }
+            // Bottom section: Bio spanning full width
+            if let bio = instructor.bio, !bio.isEmpty {
+                Text(bio)
+                    .font(Theme.Fonts.bodyMedium)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .lineSpacing(2)
+                    .accessibilityIdentifier("instructor_bio")
             }
-            Spacer(minLength: 0)
         }
         .padding(12)
-        .cardStyle(bgColor: Theme.Colors.background, strokeColor: Theme.Colors.cardViewStroke)
+        .cardStyle(bgColor: Theme.Colors.background,
+                   strokeColor: Theme.Colors.cardViewStroke,
+                   outerHorizontalPadding: 8)
     }
 }
 

@@ -19,7 +19,8 @@ public extension View {
         leftLineEnabled: Bool = false,
         bgColor: Color = Theme.Colors.background,
         strokeColor: Color = Theme.Colors.cardViewStroke,
-        textColor: Color = Theme.Colors.textPrimary
+        textColor: Color = Theme.Colors.textPrimary,
+        outerHorizontalPadding: CGFloat = 24
     ) -> some View {
         return self
             .padding(.all, paddingAll)
@@ -47,7 +48,7 @@ public extension View {
                 }
             )
             .foregroundColor(textColor)
-            .padding(.horizontal, 24)
+            .padding(.horizontal, outerHorizontalPadding)
             .padding(.top, top)
             .padding(.bottom, bottom)
     }
