@@ -28,6 +28,10 @@ public struct PrimaryCardView: View {
     private var openCourseAction: () -> Void
     private var resumeAction: () -> Void
     @Environment(\.isHorizontal) var isHorizontal
+    // Dynamically track the loaded image aspect ratio (width / height)
+    @State private var bannerAspectRatio: CGFloat?
+    // Cap for banner height when using aspect-fit (tweak as needed)
+    private let bannerMaxHeight: CGFloat = 260
     
     public init(
         courseName: String,
@@ -82,8 +86,6 @@ public struct PrimaryCardView: View {
         VStack(alignment: .leading, spacing: 0) {
             Group {
                 courseBanner
-                    .frame(height: 140)
-                    .clipped()
                 ProgressLineView(progressEarned: progressEarned, progressPossible: progressPossible)
                 courseTitle
             }
@@ -98,11 +100,7 @@ public struct PrimaryCardView: View {
     var horizontalLayout: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                GeometryReader { proxy in
-                    courseBanner
-                        .frame(width: proxy.size.width)
-                        .clipped()
-                }
+                courseBanner
                 ProgressLineView(progressEarned: progressEarned, progressPossible: progressPossible)
             }
             .onTapGesture {
@@ -263,9 +261,20 @@ public struct PrimaryCardView: View {
     
     private var courseBanner: some View {
         return KFImage(URL(string: courseImage))
+            .onSuccess { result in
+                // Capture the actual image aspect ratio to size height appropriately
+                let size = result.image.size
+                if size.width > 0 && size.height > 0 {
+                    bannerAspectRatio = size.width / size.height
+                }
+            }
             .onFailureImage(CoreAssets.noCourseImage.image)
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            // Make banner fill the card width and fit vertically; fallback to 16:9 if ratio unknown
+            .aspectRatio(bannerAspectRatio ?? (16.0 / 9.0), contentMode: .fit)
+            .frame(maxWidth: .infinity)
+            // Keep the banner from growing too tall; this effectively "reduces" height when needed
+            .frame(maxHeight: bannerMaxHeight)
             .accessibilityElement(children: .ignore)
             .accessibilityIdentifier("course_image")
     }

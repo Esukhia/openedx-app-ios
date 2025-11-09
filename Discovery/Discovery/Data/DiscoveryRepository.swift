@@ -106,6 +106,18 @@ final class DiscoveryRepositoryMock: DiscoveryRepositoryProtocol {
             org: "Organization",
             courseTitle: "Course title",
             courseDescription: "Course description",
+            longDescription: "Long description",
+            courseRequirement: "Some requirements",
+            learningOutcomes: ["Outcome 1", "Outcome 2"],
+            instructors: [
+                CourseInstructor(
+                    name: "Instructor Name",
+                    title: "Professor",
+                    organization: "Org",
+                    bio: "Bio",
+                    image: nil
+                )
+            ],
             courseStart: Date(iso8601: "2021-05-26T12:13:14Z"),
             courseEnd: Date(iso8601: "2022-05-26T12:13:14Z"),
             enrollmentStart: nil,
@@ -124,6 +136,10 @@ final class DiscoveryRepositoryMock: DiscoveryRepositoryProtocol {
             org: "Organization",
             courseTitle: "Course title",
             courseDescription: "Course description",
+            longDescription: nil,
+            courseRequirement: nil,
+            learningOutcomes: nil,
+            instructors: nil,
             courseStart: Date(iso8601: "2021-05-26T12:13:14Z"),
             courseEnd: Date(iso8601: "2022-05-26T12:13:14Z"),
             enrollmentStart: nil,

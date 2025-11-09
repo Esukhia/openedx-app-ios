@@ -181,6 +181,7 @@ public struct Theme: Sendable {
     // Use this structure where the computed Color.uiColor() extension is not appropriate.
     public struct UIColors {
         nonisolated(unsafe) public private(set) static var textPrimary = ThemeAssets.textPrimary.color
+        nonisolated(unsafe) public private(set) static var textSecondary = ThemeAssets.textSecondary.color
         nonisolated(unsafe) public private(set) static var accentColor = ThemeAssets.accentColor.color
         nonisolated(unsafe) public private(set) static var accentXColor = ThemeAssets.accentXColor.color
         nonisolated(unsafe) public private(set) static var navigationBarTintColor =

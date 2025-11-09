@@ -12,6 +12,10 @@ public struct CourseDetails: Sendable {
     public let org: String
     public let courseTitle: String
     public let courseDescription: String?
+    public let longDescription: String?
+    public let courseRequirement: String?
+    public let learningOutcomes: [String]?
+    public let instructors: [CourseInstructor]?
     public let courseStart: Date?
     public let courseEnd: Date?
     public let enrollmentStart: Date?
@@ -27,6 +31,10 @@ public struct CourseDetails: Sendable {
                 org: String,
                 courseTitle: String,
                 courseDescription: String?,
+                longDescription: String?,
+                courseRequirement: String?,
+                learningOutcomes: [String]?,
+                instructors: [CourseInstructor]?,
                 courseStart: Date?,
                 courseEnd: Date?,
                 enrollmentStart: Date?,
@@ -42,6 +50,10 @@ public struct CourseDetails: Sendable {
         self.org = org
         self.courseTitle = courseTitle
         self.courseDescription = courseDescription
+        self.longDescription = longDescription
+        self.courseRequirement = courseRequirement
+        self.learningOutcomes = learningOutcomes
+        self.instructors = instructors
         self.courseStart = courseStart
         self.courseEnd = courseEnd
         self.enrollmentStart = enrollmentStart
@@ -53,4 +65,12 @@ public struct CourseDetails: Sendable {
         self.courseRawImage = courseRawImage
         self.duration = duration
     }
+}
+
+public struct CourseInstructor: Sendable, Codable {
+    public let name: String?
+    public let title: String?
+    public let organization: String?
+    public let bio: String?
+    public let image: String?
 }

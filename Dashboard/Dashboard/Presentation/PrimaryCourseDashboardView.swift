@@ -237,7 +237,7 @@ public struct PrimaryCourseDashboardView<ProgramView: View>: View {
                     hasAccess: course.hasAccess,
                     showProgress: false,
                     useRelativeDates: useRelativeDates
-                ).frame(width: idiom == .pad ? nil : 120)
+                ).frame(width: idiom == .pad ? nil : 170)
             }
             )
             .accessibilityIdentifier("course_item")

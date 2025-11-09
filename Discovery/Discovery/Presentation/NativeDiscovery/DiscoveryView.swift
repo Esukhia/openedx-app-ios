@@ -32,8 +32,9 @@ private func tibetanAwareText(_ text: String, baseFont: Font, tibetanSize: CGFlo
         Text(text).font(baseFont)
     }
 }
-// TODO (Tibetan): Bundle "NotoSansTibetan-Regular.ttf" and add under UIAppFonts in Info.plist;
-// then apply tibetanAwareText to Discovery headers, Search headers/placeholder, and partner filter pill labels.
+// NOTE (Tibetan): Consider bundling "NotoSansTibetan-Regular.ttf" and adding it under UIAppFonts
+// in Info.plist. After bundling, apply tibetanAwareText to Discovery headers,
+// Search headers/placeholder, and partner filter pill labels.
 // Local implementation of course card to avoid module import issues
 private struct LocalCourseGridCardView: View {
     private let imageURL: String

@@ -103,35 +103,180 @@ public struct CourseDetailsView: View {
                                             .padding(.top, 7)
                                             .fixedSize(horizontal: false, vertical: true)
                                     
+                                        // MARK: - Title and description
+                                        CourseTitleView(courseDetails: courseDetails)
+                                            .padding(.top, 16)
+
                                         // MARK: - Course state button
                                         CourseStateView(title: title,
                                                         courseDetails: courseDetails,
                                                         viewModel: viewModel)
-                                        .padding(.top, 24)
-                                    
-                                        // MARK: - Title and description
-                                        CourseTitleView(courseDetails: courseDetails)
+                                        .padding(.top, 4)
                                     }
                                 
-                                    // MARK: - HTML Embed
-                                    ZStack(alignment: .topLeading) {
-                                        HTMLFormattedText(
-                                            viewModel.cssInjector.injectCSS(
-                                                colorScheme: colorScheme,
-                                                html: courseDetails.overviewHTML,
-                                                type: .discovery,
-                                                screenWidth: proxy.size.width - 48),
-                                            processing: { rendering in
-                                                isOverviewRendering = rendering
+                                    // Info sections
+                                    VStack(alignment: .leading, spacing: 24) {
+                                        // About this Course (Short description)
+                                        if let shortDesc = courseDetails.courseDescription, !shortDesc.isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "info.circle.fill")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("About this Course")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                }
+                                                Text(shortDesc)
+                                                    .font(Theme.Fonts.bodyMedium)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
+                                                    .multilineTextAlignment(.leading)
+                                                    .lineSpacing(4)
                                             }
-                                        )
-                                        .padding(.horizontal, 16)
-                                    
-                                        if isOverviewRendering {
-                                            ProgressBar(size: 40, lineWidth: 8)
-                                                .padding(.top, 20)
-                                                .frame(maxWidth: .infinity)
-                                                .accessibilityIdentifier("progress_bar")
+                                            .padding(.horizontal, 16)
+                                        }
+
+                                        // Long Description
+                                        if let longDesc = courseDetails.longDescription, !longDesc.isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "doc.text.fill")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("Course Description")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                }
+                                                Text(longDesc)
+                                                    .font(Theme.Fonts.bodyMedium)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
+                                                    .multilineTextAlignment(.leading)
+                                                    .lineSpacing(4)
+                                            }
+                                            .padding(.horizontal, 16)
+                                        }
+
+                                        // Course Overview (HTML)
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            HStack {
+                                                Image(systemName: "list.bullet.clipboard.fill")
+                                                    .foregroundColor(Theme.Colors.accentColor)
+                                                    .font(.system(size: 16))
+                                                Text("Course Overview")
+                                                    .font(Theme.Fonts.titleSmall)
+                                                    .foregroundColor(Theme.Colors.textSecondary)
+                                            }
+                                            .padding(.horizontal, 16)
+
+                                            ZStack(alignment: .topLeading) {
+                                                HTMLFormattedText(
+                                                    viewModel.cssInjector.injectCSS(
+                                                        colorScheme: colorScheme,
+                                                        html: courseDetails.overviewHTML,
+                                                        type: .discovery,
+                                                        fontSize: 120,
+                                                        screenWidth: proxy.size.width - 48,
+                                                        textColor: Theme.UIColors.textPrimary.cgColor.hexString
+                                                    ),
+                                                    processing: { rendering in
+                                                        isOverviewRendering = rendering
+                                                    }
+                                                )
+                                                .padding(.horizontal, 16)
+
+                                                if isOverviewRendering {
+                                                    ProgressBar(size: 40, lineWidth: 8)
+                                                        .padding(.top, 20)
+                                                        .frame(maxWidth: .infinity)
+                                                        .accessibilityIdentifier("progress_bar")
+                                                }
+                                            }
+                                        }
+
+                                        // Course Requirement
+                                        if let requirement = courseDetails.courseRequirement, !requirement.isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "checklist")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("Course Requirements")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                }
+                                                Text(requirement)
+                                                    .font(Theme.Fonts.bodyMedium)
+                                                    .foregroundColor(Theme.Colors.textPrimary)
+                                                    .multilineTextAlignment(.leading)
+                                                    .lineSpacing(4)
+                                            }
+                                            .padding(.horizontal, 16)
+                                        }
+
+                                        // Learning Outcomes
+                                        if let outcomes = courseDetails.learningOutcomes, !outcomes.isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "target")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("Learning Outcomes")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                }
+                                                VStack(alignment: .leading, spacing: 6) {
+                                                    ForEach(
+                                                        Array(outcomes.enumerated()),
+                                                        id: \.offset
+                                                    ) { _, item in
+                                                        HStack(alignment: .top, spacing: 8) {
+                                                            Text("•")
+                                                                .font(Theme.Fonts.bodyMedium)
+                                                                .foregroundColor(Theme.Colors.textPrimary)
+                                                            Text(item)
+                                                                .font(Theme.Fonts.bodyMedium)
+                                                                .foregroundColor(Theme.Colors.textPrimary)
+                                                                .multilineTextAlignment(.leading)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            .padding(.horizontal, 16)
+                                        }
+
+                                        // Instructors
+                                        if let instructors = courseDetails.instructors, !instructors.isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "person.2.fill")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("Instructors")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondaryLight)
+                                                }
+                                                .padding(.horizontal, 16)
+
+                                                let isPad = UIDevice.current.userInterfaceIdiom == .pad
+                                                let columns: [GridItem] = isPad
+                                                ? [
+                                                    GridItem(.flexible()),
+                                                    GridItem(.flexible())
+                                                ]
+                                                : [
+                                                    GridItem(.flexible())
+                                                ]
+
+                                                LazyVGrid(columns: columns, spacing: 12) {
+                                                    ForEach(
+                                                        Array(instructors.enumerated()),
+                                                        id: \.offset
+                                                    ) { _, instructor in
+                                                        InstructorCardView(instructor: instructor)
+                                                    }
+                                                }
+                                            }
+                                            .padding(.horizontal, 16)
                                         }
                                     }
                                 }
@@ -369,24 +514,25 @@ private struct CourseTitleView: View {
     let courseDetails: CourseDetails
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(courseDetails.courseDescription ?? "")
-                .font(Theme.Fonts.labelSmall)
-                .padding(.horizontal, 26)
-                .accessibilityIdentifier("description_text")
-        
+        VStack(alignment: .leading, spacing: 14) {
             Text(courseDetails.courseTitle)
-                .font(Theme.Fonts.titleLarge)
-                .padding(.horizontal, 26)
+                .font(Theme.Fonts.headlineMedium)
+                .foregroundColor(Theme.Colors.textPrimary)
+                .lineSpacing(2)
                 .accessibilityIdentifier("title_text")
-        
-            Text(courseDetails.org)
-                .font(Theme.Fonts.labelMedium)
-                .foregroundColor(Theme.Colors.accentColor)
-                .padding(.horizontal, 26)
-                .padding(.top, 10)
-                .accessibilityIdentifier("org_text")
+
+            HStack(spacing: 6) {
+                Text("Organisation:")
+                    .font(Theme.Fonts.titleSmall)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                Text(courseDetails.org)
+                    .font(Theme.Fonts.titleSmall)
+                    .foregroundColor(Theme.Colors.accentColor)
+                    .accessibilityIdentifier("org_text")
+            }
         }
+        .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -445,6 +591,90 @@ private struct CourseBannerView: View {
                 }
             }
         }
+    }
+}
+
+private struct InstructorCardView: View {
+    let instructor: CourseInstructor
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            // Top section: Avatar and Info side by side
+            HStack(alignment: .top, spacing: 12) {
+                // Instructor Avatar
+                if let imageUrl = instructor.image, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
+                    KFImage(url)
+                        .placeholder {
+                            Circle()
+                                .fill(Theme.Colors.textInputUnfocusedBackground)
+                                .overlay(
+                                    Image(systemName: "person.fill")
+                                        .foregroundColor(Theme.Colors.textSecondary)
+                                )
+                        }
+                        .onFailureImage(CoreAssets.noCourseImage.image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 88, height: 88)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Theme.Colors.cardViewStroke, lineWidth: 1)
+                        )
+                        .accessibilityIdentifier("instructor_avatar")
+                } else {
+                    Circle()
+                        .fill(Theme.Colors.textInputUnfocusedBackground)
+                        .frame(width: 88, height: 88)
+                        .overlay(
+                            Image(systemName: "person.fill")
+                                .foregroundColor(Theme.Colors.textSecondary)
+                                .font(.system(size: 24))
+                        )
+                }
+                
+                // Instructor Info (Name, Title, Organization)
+                VStack(alignment: .leading, spacing: 4) {
+                    if let name = instructor.name, !name.isEmpty {
+                        Text(name)
+                            .font(Theme.Fonts.titleMedium)
+                            .foregroundColor(Theme.Colors.textPrimary)
+                            .accessibilityIdentifier("instructor_name")
+                    }
+                    if let title = instructor.title, !title.isEmpty {
+                        Text(title)
+                            .font(Theme.Fonts.titleSmall)
+                            .foregroundColor(Theme.Colors.textSecondary)
+                            .accessibilityIdentifier("instructor_title")
+                    }
+                    if let org = instructor.organization, !org.isEmpty {
+                        HStack(spacing: 4) {
+                            Image(systemName: "building.2")
+                                .font(.system(size: 14))
+                            Text(org)
+                                .font(Theme.Fonts.titleSmall)
+                        }
+                        .foregroundColor(Theme.Colors.accentColor)
+                        .accessibilityIdentifier("instructor_org")
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+            
+            // Bottom section: Bio spanning full width
+            if let bio = instructor.bio, !bio.isEmpty {
+                Text(bio)
+                    .font(Theme.Fonts.bodyMedium)
+                    .foregroundColor(Theme.Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
+                    .lineSpacing(2)
+                    .accessibilityIdentifier("instructor_bio")
+            }
+        }
+        .padding(12)
+        .cardStyle(bgColor: Theme.Colors.background,
+                   strokeColor: Theme.Colors.cardViewStroke,
+                   outerHorizontalPadding: 8)
     }
 }
 

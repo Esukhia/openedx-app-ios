@@ -24,6 +24,10 @@ public extension DataLayer {
         public let number: String
         public let org: String
         public let shortDescription: String?
+        public let description: String?
+        public let courseRequirement: String?
+        public let learningOutcomes: [String]?
+        public let instructors: [Instructor]?
         public let start: String?
         public let startDisplay: String?
         public let startType: String?
@@ -48,6 +52,10 @@ public extension DataLayer {
             case number
             case org
             case shortDescription = "short_description"
+            case description
+            case courseRequirement = "course_requirement"
+            case learningOutcomes = "learning_outcomes"
+            case instructors
             case start
             case startDisplay = "start_display"
             case startType = "start_type"
@@ -58,6 +66,14 @@ public extension DataLayer {
             case courseID = "course_id"
             case overview
         }
+    }
+    
+    struct Instructor: Codable {
+        public let name: String?
+        public let title: String?
+        public let organization: String?
+        public let bio: String?
+        public let image: String?
     }
 }
 
@@ -70,6 +86,18 @@ public extension DataLayer.CourseDetailsResponse {
             org: org,
             courseTitle: name,
             courseDescription: shortDescription,
+            longDescription: description,
+            courseRequirement: courseRequirement,
+            learningOutcomes: learningOutcomes,
+            instructors: instructors?.map {
+                CourseInstructor(
+                    name: $0.name,
+                    title: $0.title,
+                    organization: $0.organization,
+                    bio: $0.bio,
+                    image: $0.image
+                )
+            },
             courseStart: start != nil ? Date(iso8601: start!) : nil,
             courseEnd: end != nil ? Date(iso8601: end!) : nil,
             enrollmentStart: enrollmentStart != nil ? Date(iso8601: enrollmentStart!) : nil,
