@@ -44,6 +44,14 @@ public struct CourseVerticalView: View {
                                 HStack {
                                 Button(action: {
                                     let vertical = viewModel.verticals[index]
+                                    if let gatedContent = vertical.gatedContent, gatedContent.gated {
+                                        viewModel.router.showLockedContent(
+                                            gatedContent: gatedContent,
+                                            courseID: courseID,
+                                            chapters: viewModel.chapters
+                                        )
+                                        return
+                                    }
                                     if let block = vertical.childs.first {
                                         viewModel.trackVerticalClicked(
                                             courseId: courseID,
@@ -61,14 +69,22 @@ public struct CourseVerticalView: View {
                                         )
                                     }
                                 }, label: {
-                                        Group {
-                                            if vertical.completion == 1 {
-                                                CoreAssets.finished.swiftUIImage
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(.accentColor)
-                                            } else {
-                                                CourseVerticalImageView(blocks: vertical.childs)
+                                        HStack(alignment: .top, spacing: 16) {
+                                            Group {
+                                                if let gatedContent = vertical.gatedContent, gatedContent.gated {
+                                                    Image(systemName: "lock.fill")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                } else if vertical.completion == 1 {
+                                                    CoreAssets.finished.swiftUIImage
+                                                        .renderingMode(.template)
+                                                        .foregroundColor(.accentColor)
+                                                } else {
+                                                    CourseVerticalImageView(blocks: vertical.childs)
+                                                }
                                             }
+                                            .frame(width: 20, height: 20, alignment: .top)
                                             Text(vertical.displayName)
                                                 .font(Theme.Fonts.titleMedium)
                                                 .lineLimit(1)
@@ -78,7 +94,8 @@ public struct CourseVerticalView: View {
                                                        alignment: .leading)
                                                 .multilineTextAlignment(.leading)
                                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                        }.foregroundColor(Theme.Colors.textPrimary)
+                                        }
+                                        .foregroundColor(Theme.Colors.textPrimary)
                                     }).accessibilityElement(children: .ignore)
                                         .accessibilityLabel(vertical.displayName)
                                         Spacer()

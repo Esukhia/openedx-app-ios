@@ -302,7 +302,7 @@ public final class CourseUnitViewModel: ObservableObject {
         return chapters[data.chapterIndex]
     }
     
-    private func sequential(for data: VerticalData) -> CourseSequential? {
+    func sequential(for data: VerticalData) -> CourseSequential? {
         guard let chapter = chapter(for: data),
               data.sequentialIndex >= 0 && data.sequentialIndex < chapter.childs.count
         else { return nil }

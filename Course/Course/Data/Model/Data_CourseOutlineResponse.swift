@@ -85,6 +85,7 @@ public extension DataLayer {
         public let multiDevice: Bool?
         public let assignmentProgress: AssignmentProgress?
         public let offlineDownload: OfflineDownload?
+        public let gatedContent: GatedContent?
         
         public init(
             blockId: String,
@@ -101,7 +102,8 @@ public extension DataLayer {
             userViewData: CourseDetailUserViewData?,
             multiDevice: Bool?,
             assignmentProgress: AssignmentProgress?,
-            offlineDownload: OfflineDownload?
+            offlineDownload: OfflineDownload?,
+            gatedContent: GatedContent?
         ) {
             self.blockId = blockId
             self.id = id
@@ -118,6 +120,7 @@ public extension DataLayer {
             self.multiDevice = multiDevice
             self.assignmentProgress = assignmentProgress
             self.offlineDownload = offlineDownload
+            self.gatedContent = gatedContent
         }
         
         public enum CodingKeys: String, CodingKey {
@@ -131,6 +134,7 @@ public extension DataLayer {
             case multiDevice = "student_view_multi_device"
             case assignmentProgress = "assignment_progress"
             case offlineDownload = "offline_download"
+            case gatedContent = "gated_content"
         }
     }
     
@@ -167,6 +171,36 @@ public extension DataLayer {
             self.fileUrl = fileUrl
             self.lastModified = lastModified
             self.fileSize = fileSize
+        }
+    }
+    
+    struct GatedContent: Codable, Sendable {
+        public let prereqId: String?
+        public let prereqSectionName: String?
+        public let gated: Bool
+        public let gatedSectionName: String?
+        public let prereqUrl: String?
+        
+        public enum CodingKeys: String, CodingKey {
+            case prereqId = "prereq_id"
+            case prereqSectionName = "prereq_section_name"
+            case gated
+            case gatedSectionName = "gated_section_name"
+            case prereqUrl = "prereq_url"
+        }
+        
+        public init(
+            prereqId: String?,
+            prereqSectionName: String?,
+            gated: Bool,
+            gatedSectionName: String?,
+            prereqUrl: String?
+        ) {
+            self.prereqId = prereqId
+            self.prereqSectionName = prereqSectionName
+            self.gated = gated
+            self.gatedSectionName = gatedSectionName
+            self.prereqUrl = prereqUrl
         }
     }
 

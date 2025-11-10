@@ -121,16 +121,28 @@ struct CourseNavigationView: View {
                             )
                         
                         guard let data = viewModel.nextData else { return }
-                        viewModel.router.replaceCourseUnit(
-                            courseName: viewModel.courseName,
-                            blockId: viewModel.lessonID,
-                            courseID: viewModel.courseID,
-                            verticalIndex: data.verticalIndex,
-                            chapters: viewModel.chapters,
-                            chapterIndex: data.chapterIndex,
-                            sequentialIndex: data.sequentialIndex,
-                            animated: true
-                        )
+                        
+                        // Check if next vertical is locked
+                        if let nextVertical = viewModel.vertical(for: data),
+                           let gatedContent = nextVertical.gatedContent,
+                           gatedContent.gated {
+                            viewModel.router.showLockedContent(
+                                gatedContent: gatedContent,
+                                courseID: viewModel.courseID,
+                                chapters: viewModel.chapters
+                            )
+                        } else {
+                            viewModel.router.replaceCourseUnit(
+                                courseName: viewModel.courseName,
+                                blockId: viewModel.lessonID,
+                                courseID: viewModel.courseID,
+                                verticalIndex: data.verticalIndex,
+                                chapters: viewModel.chapters,
+                                chapterIndex: data.chapterIndex,
+                                sequentialIndex: data.sequentialIndex,
+                                animated: true
+                            )
+                        }
                     }
                 )
                 playerStateSubject.send(VideoPlayerState.pause)

@@ -152,6 +152,7 @@ public struct CourseSequential: Identifiable, Sendable, Equatable {
     public var childs: [CourseVertical]
     public let sequentialProgress: SequentialProgress?
     public let due: Date?
+    public let gatedContent: GatedContent?
 
     public var isDownloadable: Bool {
         return childs.first(where: { $0.isDownloadable }) != nil
@@ -169,7 +170,8 @@ public struct CourseSequential: Identifiable, Sendable, Equatable {
         completion: Double,
         childs: [CourseVertical],
         sequentialProgress: SequentialProgress?,
-        due: Date?
+        due: Date?,
+        gatedContent: GatedContent? = nil
     ) {
         self.blockId = blockId
         self.id = id
@@ -179,6 +181,7 @@ public struct CourseSequential: Identifiable, Sendable, Equatable {
         self.childs = childs
         self.sequentialProgress = sequentialProgress
         self.due = due
+        self.gatedContent = gatedContent
     }
 }
 
@@ -195,6 +198,7 @@ public struct CourseVertical: Identifiable, Hashable, Sendable, Equatable {
     public let completion: Double
     public var childs: [CourseBlock]
     public var webUrl: String
+    public let gatedContent: GatedContent?
     
     public var isDownloadable: Bool {
         return childs.first(where: { $0.isDownloadable }) != nil
@@ -208,7 +212,8 @@ public struct CourseVertical: Identifiable, Hashable, Sendable, Equatable {
         type: BlockType,
         completion: Double,
         childs: [CourseBlock],
-        webUrl: String
+        webUrl: String,
+        gatedContent: GatedContent? = nil
     ) {
         self.blockId = blockId
         self.id = id
@@ -218,6 +223,7 @@ public struct CourseVertical: Identifiable, Hashable, Sendable, Equatable {
         self.completion = completion
         self.childs = childs
         self.webUrl = webUrl
+        self.gatedContent = gatedContent
     }
 }
 
@@ -240,6 +246,28 @@ public struct SequentialProgress: Sendable {
         self.assignmentType = assignmentType
         self.numPointsEarned = numPointsEarned
         self.numPointsPossible = numPointsPossible
+    }
+}
+
+public struct GatedContent: Sendable, Equatable {
+    public let prereqId: String?
+    public let prereqSectionName: String?
+    public let gated: Bool
+    public let gatedSectionName: String?
+    public let prereqUrl: String?
+    
+    public init(
+        prereqId: String?,
+        prereqSectionName: String?,
+        gated: Bool,
+        gatedSectionName: String?,
+        prereqUrl: String?
+    ) {
+        self.prereqId = prereqId
+        self.prereqSectionName = prereqSectionName
+        self.gated = gated
+        self.gatedSectionName = gatedSectionName
+        self.prereqUrl = prereqUrl
     }
 }
 

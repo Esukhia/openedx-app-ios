@@ -172,3 +172,7 @@
 "CALENDAR_SYNC_STATUS.SYNCED" = "Synced to Calendar";
 "CALENDAR_SYNC_STATUS.FAILED" = "Calendar Sync Failed";
 "CALENDAR_SYNC_STATUS.OFFLINE" = "Offline";
+
+"LOCKED_CONTENT.TITLE" = "Content Locked";
+"LOCKED_CONTENT.DESCRIPTION" = "You must complete the prerequisite: \"%@\" to access this content.";
+"LOCKED_CONTENT.GO_TO_PREREQUISITE" = "Go To Prerequisite Section";

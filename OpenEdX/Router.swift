@@ -569,6 +569,22 @@ public class Router: AuthorizationRouter,
         navigationController.pushViewController(controller, animated: true)
     }
     
+    public func showLockedContent(
+        gatedContent: GatedContent,
+        courseID: String,
+        chapters: [CourseChapter]
+    ) {
+        let view = LockedContentView(
+            gatedContent: gatedContent,
+            courseID: courseID,
+            chapters: chapters,
+            router: self
+        )
+        
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
     private func openBlockInBrowser(blockURL: URL) {
         presentAlert(
             alertTitle: "",
