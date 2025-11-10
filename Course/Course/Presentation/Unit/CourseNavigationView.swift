@@ -122,15 +122,72 @@ struct CourseNavigationView: View {
                         
                         guard let data = viewModel.nextData else { return }
                         
-                        // Check if next vertical is locked
-                        if let nextVertical = viewModel.vertical(for: data),
-                           let gatedContent = nextVertical.gatedContent,
-                           gatedContent.gated {
-                            viewModel.router.showLockedContent(
-                                gatedContent: gatedContent,
+                        guard let nextVertical = viewModel.vertical(for: data) else {
+                            viewModel.router.replaceCourseUnit(
+                                courseName: viewModel.courseName,
+                                blockId: viewModel.lessonID,
                                 courseID: viewModel.courseID,
-                                chapters: viewModel.chapters
+                                verticalIndex: data.verticalIndex,
+                                chapters: viewModel.chapters,
+                                chapterIndex: data.chapterIndex,
+                                sequentialIndex: data.sequentialIndex,
+                                animated: true
                             )
+                            return
+                        }
+                        let nextSequential = viewModel.sequential(for: data)
+                        let verticalGatedContent = nextVertical.gatedContent
+                        let sequentialGatedContent = nextSequential?.gatedContent
+                        let isLocked = (verticalGatedContent?.gated ?? false) ||
+                            (sequentialGatedContent?.gated ?? false)
+                        if isLocked {
+                            let initialGatedContent = verticalGatedContent?.gated == true
+                                ? verticalGatedContent
+                                : sequentialGatedContent
+                            Task {
+                                if let result = await viewModel.refreshAndCheckVertical(for: data) {
+                                    let freshVertical = result.vertical
+                                    let freshSequential = result.sequential
+                                    if let freshGatedContent = freshVertical.gatedContent,
+                                       freshGatedContent.gated {
+                                        viewModel.router.showLockedContent(
+                                            gatedContent: freshGatedContent,
+                                            courseID: viewModel.courseID,
+                                            chapters: viewModel.chapters
+                                        )
+                                    } else if let freshSequentialGated = freshSequential.gatedContent,
+                                              freshSequentialGated.gated {
+                                        viewModel.router.showLockedContent(
+                                            gatedContent: freshSequentialGated,
+                                            courseID: viewModel.courseID,
+                                            chapters: viewModel.chapters
+                                        )
+                                    } else if let block = freshVertical.childs.first {
+                                        viewModel.router.replaceCourseUnit(
+                                            courseName: viewModel.courseName,
+                                            blockId: block.id,
+                                            courseID: viewModel.courseID,
+                                            verticalIndex: data.verticalIndex,
+                                            chapters: viewModel.chapters,
+                                            chapterIndex: data.chapterIndex,
+                                            sequentialIndex: data.sequentialIndex,
+                                            animated: true
+                                        )
+                                    } else if let fallbackGated = initialGatedContent {
+                                        viewModel.router.showLockedContent(
+                                            gatedContent: fallbackGated,
+                                            courseID: viewModel.courseID,
+                                            chapters: viewModel.chapters
+                                        )
+                                    }
+                                } else if let fallbackGated = initialGatedContent {
+                                    viewModel.router.showLockedContent(
+                                        gatedContent: fallbackGated,
+                                        courseID: viewModel.courseID,
+                                        chapters: viewModel.chapters
+                                    )
+                                }
+                            }
                         } else {
                             viewModel.router.replaceCourseUnit(
                                 courseName: viewModel.courseName,

@@ -13,11 +13,14 @@ public final class CourseVerticalViewModel: ObservableObject, @unchecked Sendabl
     let router: CourseRouter
     let analytics: CourseAnalytics
     let connectivity: ConnectivityProtocol
+    let interactor: CourseInteractorProtocol
     @Published var verticals: [CourseVertical]
     @Published var showError: Bool = false
-    let chapters: [CourseChapter]
+    @Published var isLoading: Bool = false
+    @Published var chapters: [CourseChapter]
     let chapterIndex: Int
     let sequentialIndex: Int
+    let courseID: String
     
     var errorMessage: String? {
         didSet {
@@ -31,16 +34,20 @@ public final class CourseVerticalViewModel: ObservableObject, @unchecked Sendabl
         chapters: [CourseChapter],
         chapterIndex: Int,
         sequentialIndex: Int,
+        courseID: String,
         router: CourseRouter,
         analytics: CourseAnalytics,
-        connectivity: ConnectivityProtocol
+        connectivity: ConnectivityProtocol,
+        interactor: CourseInteractorProtocol
     ) {
         self.chapters = chapters
         self.chapterIndex = chapterIndex
         self.sequentialIndex = sequentialIndex
+        self.courseID = courseID
         self.router = router
         self.analytics = analytics
         self.connectivity = connectivity
+        self.interactor = interactor
         self.verticals = chapters[chapterIndex].childs[sequentialIndex].childs
     }
     
@@ -55,5 +62,39 @@ public final class CourseVerticalViewModel: ObservableObject, @unchecked Sendabl
             blockId: vertical.blockId,
             blockName: vertical.displayName
         )
+    }
+    
+    @MainActor
+    func refreshAndCheckVertical(
+        verticalIndex: Int
+    ) async -> (vertical: CourseVertical, sequential: CourseSequential)? {
+        guard connectivity.isInternetAvaliable else { return nil }
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let freshStructure = try await interactor.getCourseBlocks(courseID: courseID)
+            self.chapters = freshStructure.childs
+            
+            // Notify that course structure has been updated
+            NotificationCenter.default.post(
+                name: .courseStructureUpdated,
+                object: nil,
+                userInfo: ["courseID": courseID, "chapters": freshStructure.childs]
+            )
+            
+            guard chapterIndex < chapters.count,
+                  sequentialIndex < chapters[chapterIndex].childs.count else {
+                return nil
+            }
+            
+            let freshSequential = chapters[chapterIndex].childs[sequentialIndex]
+            self.verticals = freshSequential.childs
+            
+            guard verticalIndex < verticals.count else { return nil }
+            return (verticals[verticalIndex], freshSequential)
+        } catch {
+            return nil
+        }
     }
 }

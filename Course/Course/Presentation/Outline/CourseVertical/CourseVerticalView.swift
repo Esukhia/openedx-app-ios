@@ -44,12 +44,66 @@ public struct CourseVerticalView: View {
                                 HStack {
                                 Button(action: {
                                     let vertical = viewModel.verticals[index]
-                                    if let gatedContent = vertical.gatedContent, gatedContent.gated {
-                                        viewModel.router.showLockedContent(
-                                            gatedContent: gatedContent,
-                                            courseID: courseID,
-                                            chapters: viewModel.chapters
-                                        )
+                                    let sequential = viewModel.chapters[viewModel.chapterIndex]
+                                        .childs[viewModel.sequentialIndex]
+                                    let verticalGatedContent = vertical.gatedContent
+                                    let sequentialGatedContent = sequential.gatedContent
+                                    let isLocked = (verticalGatedContent?.gated ?? false) ||
+                                        (sequentialGatedContent?.gated ?? false)
+                                    if isLocked {
+                                        let initialGatedContent = verticalGatedContent?.gated == true
+                                            ? verticalGatedContent
+                                            : sequentialGatedContent
+                                        Task {
+                                            if let result = await viewModel.refreshAndCheckVertical(
+                                                verticalIndex: index
+                                            ) {
+                                                let freshVertical = result.vertical
+                                                let freshSequential = result.sequential
+                                                if let freshGatedContent = freshVertical.gatedContent,
+                                                   freshGatedContent.gated {
+                                                    viewModel.router.showLockedContent(
+                                                        gatedContent: freshGatedContent,
+                                                        courseID: courseID,
+                                                        chapters: viewModel.chapters
+                                                    )
+                                                } else if let freshSequentialGated = freshSequential.gatedContent,
+                                                          freshSequentialGated.gated {
+                                                    viewModel.router.showLockedContent(
+                                                        gatedContent: freshSequentialGated,
+                                                        courseID: courseID,
+                                                        chapters: viewModel.chapters
+                                                    )
+                                                } else if let block = freshVertical.childs.first {
+                                                    viewModel.trackVerticalClicked(
+                                                        courseId: courseID,
+                                                        courseName: courseName,
+                                                        vertical: freshVertical
+                                                    )
+                                                    viewModel.router.showCourseUnit(
+                                                        courseName: courseName,
+                                                        blockId: block.id,
+                                                        courseID: courseID,
+                                                        verticalIndex: index,
+                                                        chapters: viewModel.chapters,
+                                                        chapterIndex: viewModel.chapterIndex,
+                                                        sequentialIndex: viewModel.sequentialIndex
+                                                    )
+                                                } else if let fallbackGated = initialGatedContent {
+                                                    viewModel.router.showLockedContent(
+                                                        gatedContent: fallbackGated,
+                                                        courseID: courseID,
+                                                        chapters: viewModel.chapters
+                                                    )
+                                                }
+                                            } else if let fallbackGated = initialGatedContent {
+                                                viewModel.router.showLockedContent(
+                                                    gatedContent: fallbackGated,
+                                                    courseID: courseID,
+                                                    chapters: viewModel.chapters
+                                                )
+                                            }
+                                        }
                                         return
                                     }
                                     if let block = vertical.childs.first {
@@ -144,6 +198,11 @@ public struct CourseVerticalView: View {
                 }
             }
         }
+        .overlay {
+            if viewModel.isLoading {
+                DimmedLoadingOverlay()
+            }
+        }
         .navigationBarHidden(false)
         .navigationBarBackButtonHidden(false)
         .navigationTitle(title)
@@ -151,6 +210,17 @@ public struct CourseVerticalView: View {
             Theme.Colors.background
                 .ignoresSafeArea()
         )
+    }
+}
+
+struct DimmedLoadingOverlay: View {
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+            ProgressBar(size: 48, lineWidth: 6)
+        }
+        .transition(.opacity)
     }
 }
 
@@ -192,20 +262,38 @@ struct CourseVerticalView_Previews: PreviewProvider {
                 ])
         ]
         
+        let courseStructure = CourseStructure(
+            id: "course-id",
+            graded: false,
+            completion: 0,
+            viewYouTubeUrl: "",
+            encodedVideo: "",
+            displayName: "CourseName",
+            topicID: nil,
+            childs: chapters,
+            media: CourseMedia(image: CourseImage(raw: "", small: "", large: "")),
+            certificate: nil,
+            org: "",
+            isSelfPaced: true,
+            courseProgress: nil
+        )
+        
         let viewModel = CourseVerticalViewModel(
             chapters: chapters,
             chapterIndex: 0,
             sequentialIndex: 0,
+            courseID: courseStructure.id,
             router: CourseRouterMock(),
             analytics: CourseAnalyticsMock(),
-            connectivity: Connectivity()
+            connectivity: Connectivity(),
+            interactor: PreviewCourseInteractor(structure: courseStructure)
         )
         
         return Group {
             CourseVerticalView(
                 title: "Course title",
-                courseName: "CourseName",
-                courseID: "1",
+                courseName: courseStructure.displayName,
+                courseID: courseStructure.id,
                 viewModel: viewModel
             )
             .preferredColorScheme(.light)
@@ -213,14 +301,72 @@ struct CourseVerticalView_Previews: PreviewProvider {
             
             CourseVerticalView(
                 title: "Course title",
-                courseName: "CourseName",
-                courseID: "1",
+                courseName: courseStructure.displayName,
+                courseID: courseStructure.id,
                 viewModel: viewModel
             )
             .preferredColorScheme(.dark)
             .previewDisplayName("CourseVerticalView Dark")
         }
+    }
+    
+    private enum PreviewError: Error {
+        case notSupported
+    }
+    
+    private final class PreviewCourseInteractor: CourseInteractorProtocol {
+        private let structure: CourseStructure
         
+        init(structure: CourseStructure) {
+            self.structure = structure
+        }
+        
+        func getCourseBlocks(courseID: String) async throws -> CourseStructure {
+            structure
+        }
+        
+        func getCourseVideoBlocks(fullStructure: CourseStructure) async -> CourseStructure {
+            fullStructure
+        }
+        
+        func getLoadedCourseBlocks(courseID: String) async throws -> CourseStructure {
+            structure
+        }
+        
+        func getSequentialsContainsBlocks(blockIds: [String], courseID: String) async throws -> [CourseSequential] {
+            structure.childs.flatMap { $0.childs }
+        }
+        
+        func blockCompletionRequest(courseID: String, blockID: String) async throws {}
+        
+        func getHandouts(courseID: String) async throws -> String? {
+            nil
+        }
+        
+        func getUpdates(courseID: String) async throws -> [CourseUpdate] {
+            []
+        }
+        
+        func resumeBlock(courseID: String) async throws -> ResumeBlock {
+            throw PreviewError.notSupported
+        }
+        
+        func getSubtitles(url: String, selectedLanguage: String) async throws -> [Subtitle] {
+            []
+        }
+        
+        func getCourseDates(courseID: String) async throws -> CourseDates {
+            throw PreviewError.notSupported
+        }
+        
+        func getCourseDeadlineInfo(courseID: String) async throws -> CourseDateBanner {
+            throw PreviewError.notSupported
+        }
+        
+        func shiftDueDates(courseID: String) async throws {
+            throw PreviewError.notSupported
+        }
     }
 }
+
 #endif

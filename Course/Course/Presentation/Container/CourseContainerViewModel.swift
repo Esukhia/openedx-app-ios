@@ -981,6 +981,19 @@ public final class CourseContainerViewModel: BaseCourseViewModel {
                 updateCourseProgress = true
             }
             .store(in: &cancellables)
+        
+        NotificationCenter.default.publisher(for: .courseStructureUpdated)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notification in
+                guard let self = self,
+                      let userInfo = notification.userInfo,
+                      let updatedCourseID = userInfo["courseID"] as? String,
+                      let chapters = userInfo["chapters"] as? [CourseChapter],
+                      updatedCourseID == self.courseStructure?.id else { return }
+                
+                self.courseStructure?.childs = chapters
+            }
+            .store(in: &cancellables)
     }
     
     deinit {

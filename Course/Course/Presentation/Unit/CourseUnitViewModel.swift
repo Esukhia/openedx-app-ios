@@ -155,6 +155,7 @@ public final class CourseUnitViewModel: ObservableObject {
     let chapters: [CourseChapter]
     let chapterIndex: Int
     let sequentialIndex: Int
+    @Published var isLoading: Bool = false
 
     var streamingQuality: StreamingQuality {
         storage.userSettings?.streamingQuality ?? .auto
@@ -392,5 +393,36 @@ public final class CourseUnitViewModel: ObservableObject {
     
     public var currentCourseId: String {
         courseID
+    }
+    
+    @MainActor
+    func refreshAndCheckVertical(
+        for data: VerticalData
+    ) async -> (vertical: CourseVertical, sequential: CourseSequential)? {
+        guard connectivity.isInternetAvaliable else { return nil }
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let freshStructure = try await interactor.getCourseBlocks(courseID: courseID)
+            
+            // Notify that course structure has been updated
+            NotificationCenter.default.post(
+                name: .courseStructureUpdated,
+                object: nil,
+                userInfo: ["courseID": courseID, "chapters": freshStructure.childs]
+            )
+            
+            guard data.chapterIndex < freshStructure.childs.count else { return nil }
+            let freshChapter = freshStructure.childs[data.chapterIndex]
+            
+            guard data.sequentialIndex < freshChapter.childs.count else { return nil }
+            let freshSequential = freshChapter.childs[data.sequentialIndex]
+            
+            guard data.verticalIndex < freshSequential.childs.count else { return nil }
+            return (freshSequential.childs[data.verticalIndex], freshSequential)
+        } catch {
+            return nil
+        }
     }
 }
