@@ -146,11 +146,6 @@ public struct CourseUnitView: View {
             Theme.Colors.background
                 .ignoresSafeArea()
         )
-        .overlay {
-            if viewModel.isLoading {
-                DimmedLoadingOverlay()
-            }
-        }
         .dropdownAnimation(isActive: isDropdownActive, value: showDropdown)
     }
 

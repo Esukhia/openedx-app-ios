@@ -355,8 +355,7 @@ public class Router: AuthorizationRouter,
             CourseVerticalViewModel.self,
             arguments: chapters,
             chapterIndex,
-            sequentialIndex,
-            courseID
+            sequentialIndex
         )!
         
         let view = CourseVerticalView(

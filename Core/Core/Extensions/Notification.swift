@@ -23,5 +23,4 @@ public extension Notification.Name {
     static let showDownloadFailed = Notification.Name("showDownloadFailed")
     static let tryDownloadAgain = Notification.Name("tryDownloadAgain")
     static let refreshEnrollments = Notification.Name("refreshEnrollments")
-    static let courseStructureUpdated = Notification.Name("courseStructureUpdated")
 }
