@@ -403,13 +403,13 @@ public final class CourseUnitViewModel: ObservableObject {
         }
     }
     
-    func courseHasGatedContent() -> Bool {
+    func hasGatedContent() -> Bool {
         for chapter in chapters {
-            for sequential in chapter.childs where sequential.gatedContent?.gated == true {
+            for sequential in chapter.childs where sequential.gatedContent != nil {
                 return true
             }
             for sequential in chapter.childs {
-                for vertical in sequential.childs where vertical.gatedContent?.gated == true {
+                for vertical in sequential.childs where vertical.gatedContent != nil {
                     return true
                 }
             }

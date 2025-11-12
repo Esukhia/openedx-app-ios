@@ -122,9 +122,8 @@ struct CourseNavigationView: View {
                         
                         guard let data = viewModel.nextData else { return }
                         
-                        // Check if course has any gated content
-                        if viewModel.courseHasGatedContent() {
-                            // Refresh course structure to get latest gated state
+                        // Always refresh if course has gated content
+                        if viewModel.hasGatedContent() {
                             Task {
                                 if let refreshedChapters = await viewModel.refreshCourseStructure(),
                                    data.chapterIndex < refreshedChapters.count,
@@ -136,11 +135,7 @@ struct CourseNavigationView: View {
                                         .childs[data.sequentialIndex]
                                         .childs[data.verticalIndex]
                                     
-                                    let gatedInfo = refreshedVertical.gatedContent
-                                    print("🔍 Refreshed gatedContent: \(String(describing: gatedInfo))")
-                                    print("🔍 Is gated: \(gatedInfo?.gated ?? false)")
-                                    
-                                    // Check if next vertical is locked with fresh data
+                                    // Check if next vertical is locked
                                     if let refreshedGatedContent = refreshedVertical.gatedContent,
                                        refreshedGatedContent.gated {
                                         // Locked, show locked content view
@@ -149,48 +144,37 @@ struct CourseNavigationView: View {
                                             courseID: viewModel.courseID,
                                             chapters: refreshedChapters
                                         )
-                                    } else if refreshedVertical.childs.first != nil {
-                                        // Unlocked and has blocks, navigate to unit
-                                        let block = refreshedVertical.childs.first!
-                                        viewModel.router.replaceCourseUnit(
-                                            courseName: viewModel.courseName,
-                                            blockId: block.id,
-                                            courseID: viewModel.courseID,
-                                            verticalIndex: data.verticalIndex,
-                                            chapters: refreshedChapters,
-                                            chapterIndex: data.chapterIndex,
-                                            sequentialIndex: data.sequentialIndex,
-                                            animated: true
-                                        )
+                                    } else {
+                                        // Unlocked, navigate to unit
+                                        if let block = refreshedVertical.childs.first {
+                                            viewModel.router.replaceCourseUnit(
+                                                courseName: viewModel.courseName,
+                                                blockId: block.id,
+                                                courseID: viewModel.courseID,
+                                                verticalIndex: data.verticalIndex,
+                                                chapters: refreshedChapters,
+                                                chapterIndex: data.chapterIndex,
+                                                sequentialIndex: data.sequentialIndex,
+                                                animated: true
+                                            )
+                                        }
                                     }
                                 } else {
-                                    // Refresh failed, check cached data for lock state
-                                    if let nextVertical = viewModel.vertical(for: data),
-                                       let gatedContent = nextVertical.gatedContent,
-                                       gatedContent.gated {
-                                        // Show locked view with cached data
-                                        viewModel.router.showLockedContent(
-                                            gatedContent: gatedContent,
-                                            courseID: viewModel.courseID,
-                                            chapters: viewModel.chapters
-                                        )
-                                    } else {
-                                        // Navigate to unit with cached data
-                                        viewModel.router.replaceCourseUnit(
-                                            courseName: viewModel.courseName,
-                                            blockId: viewModel.lessonID,
-                                            courseID: viewModel.courseID,
-                                            verticalIndex: data.verticalIndex,
-                                            chapters: viewModel.chapters,
-                                            chapterIndex: data.chapterIndex,
-                                            sequentialIndex: data.sequentialIndex,
-                                            animated: true
-                                        )
-                                    }
+                                    // Refresh failed, use cached data
+                                    viewModel.router.replaceCourseUnit(
+                                        courseName: viewModel.courseName,
+                                        blockId: viewModel.lessonID,
+                                        courseID: viewModel.courseID,
+                                        verticalIndex: data.verticalIndex,
+                                        chapters: viewModel.chapters,
+                                        chapterIndex: data.chapterIndex,
+                                        sequentialIndex: data.sequentialIndex,
+                                        animated: true
+                                    )
                                 }
                             }
                         } else {
-                            // No gated content in course, navigate directly
+                            // No gated content, navigate immediately
                             viewModel.router.replaceCourseUnit(
                                 courseName: viewModel.courseName,
                                 blockId: viewModel.lessonID,
