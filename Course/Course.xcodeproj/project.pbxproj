@@ -184,7 +184,6 @@
 		02B6B3C828E1E68100232911 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		02BB20172BFCE7B200364948 /* CustomDisclosureGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDisclosureGroup.swift; sourceTree = "<group>"; };
 		02C355382C08DCD700501342 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		02C3553A2C08DCE000501342 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		02C7B1D72C271A7000D2A7BB /* OfflineContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineContentView.swift; sourceTree = "<group>"; };
 		02D4FC2D2BBD7C9C00C47748 /* MessageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSectionView.swift; sourceTree = "<group>"; };
 		02E3803D2BFF9F0A00815AFA /* CourseProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressView.swift; sourceTree = "<group>"; };
@@ -232,6 +231,7 @@
 		51A3A7BA0FC6386531BE678A /* Pods-App-CourseDetails.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-CourseDetails.debugdev.xcconfig"; path = "Target Support Files/Pods-App-CourseDetails/Pods-App-CourseDetails.debugdev.xcconfig"; sourceTree = "<group>"; };
 		600A464AEDA7BEFEC1A7FE99 /* Pods-App-Course-CourseTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course-CourseTests.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Course-CourseTests/Pods-App-Course-CourseTests.debugdev.xcconfig"; sourceTree = "<group>"; };
 		69A261790A0B4C724CCFA4F2 /* Pods-App-CourseDetails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-CourseDetails.release.xcconfig"; path = "Target Support Files/Pods-App-CourseDetails/Pods-App-CourseDetails.release.xcconfig"; sourceTree = "<group>"; };
+		6E8B43B6A7599838A0DB9A24 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		831B08139890634968EDD44D /* Pods-App-Course-CourseTests.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course-CourseTests.debugstage.xcconfig"; path = "Target Support Files/Pods-App-Course-CourseTests/Pods-App-Course-CourseTests.debugstage.xcconfig"; sourceTree = "<group>"; };
 		975F475D2B6151FD00E5B031 /* CourseDatesMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDatesMock.swift; sourceTree = "<group>"; };
 		975F475F2B615DA700E5B031 /* CourseStructureMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStructureMock.swift; sourceTree = "<group>"; };
@@ -809,11 +809,18 @@
 				en,
 				Base,
 				uk,
+				ar,
+				fa,
+				"zh-HK",
+				bo,
+				vi,
+				lv,
+				uz,
 			);
 			mainGroup = 0289F8E428E1C3510064F8F3;
 			packageReferences = (
 				CEBCA4322CC13CDE00076589 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
-				CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 0289F8EF28E1C3510064F8F3 /* Products */;
 			projectDirPath = "";
@@ -1058,6 +1065,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				02B6B3B328E1C49400232911 /* en */,
+				6E8B43B6A7599838A0DB9A24 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1066,7 +1074,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				02C355382C08DCD700501342 /* en */,
-				02C3553A2C08DCE000501342 /* uk */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -2097,7 +2104,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -2118,12 +2125,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE7CAF402CC1563500E0AC9D /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB1E2722CC14EC400921517 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEBCA4332CC13CDE00076589 /* YouTubePlayerKit */ = {

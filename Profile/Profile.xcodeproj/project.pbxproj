@@ -58,6 +58,7 @@
 		0796C8C929B7905300444B05 /* ProfileBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0796C8C829B7905300444B05 /* ProfileBottomSheet.swift */; };
 		25B36FF48C1307888A3890DA /* Pods_App_Profile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA369C38362C1A91A012F70 /* Pods_App_Profile.framework */; };
 		BAD9CA3F2B29BF5C00DE790A /* ProfileSupportInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD9CA3E2B29BF5C00DE790A /* ProfileSupportInfoView.swift */; };
+		BB2233CC44DD55EE66FF77AA /* LanguageSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2233CC44DD55EE66FF77BB /* LanguageSelectionView.swift */; };
 		CE1735042CD23D7A00F9606A /* DatesAndCalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1735032CD23D7A00F9606A /* DatesAndCalendarViewModelTests.swift */; };
 		CE7CAF3D2CC1562C00E0AC9D /* OEXFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CE7CAF3C2CC1562C00E0AC9D /* OEXFoundation */; };
 		CE961F032CD163FD00799B9F /* CalendarManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE961F022CD163FD00799B9F /* CalendarManagerTests.swift */; };
@@ -155,11 +156,13 @@
 		A9F98CD65D1F657EB8F9EA59 /* Pods-App-Profile.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.releasedev.xcconfig"; sourceTree = "<group>"; };
 		B3F05DC21379BD4FE1AFCCF1 /* Pods-App-Profile.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.debugprod.xcconfig"; sourceTree = "<group>"; };
 		BAD9CA3E2B29BF5C00DE790A /* ProfileSupportInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSupportInfoView.swift; sourceTree = "<group>"; };
+		BB2233CC44DD55EE66FF77BB /* LanguageSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelectionView.swift; sourceTree = "<group>"; };
 		BEA369C38362C1A91A012F70 /* Pods_App_Profile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Profile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85ADF87135E03275A980E07 /* Pods_App_Profile_ProfileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Profile_ProfileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1735032CD23D7A00F9606A /* DatesAndCalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesAndCalendarViewModelTests.swift; sourceTree = "<group>"; };
 		CE961F022CD163FD00799B9F /* CalendarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManagerTests.swift; sourceTree = "<group>"; };
 		F52EFE7DC07BE68B9A302DAF /* Pods-App-Profile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.debug.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.debug.xcconfig"; sourceTree = "<group>"; };
+		F8144BE7844F54E342F84CFD /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FB33709D5DBACDEA33BD016F /* Pods-App-Profile-ProfileTests.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile-ProfileTests.debugstage.xcconfig"; path = "Target Support Files/Pods-App-Profile-ProfileTests/Pods-App-Profile-ProfileTests.debugstage.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -338,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				0259104329C39C9E004B5A55 /* SettingsView.swift */,
+				BB2233CC44DD55EE66FF77BB /* LanguageSelectionView.swift */,
 				0288C4E92BC6AE2D009158B9 /* ManageAccountView.swift */,
 				0288C4EB2BC6AE82009158B9 /* ManageAccountViewModel.swift */,
 				020CBD8C2BC53E1B003D6B4E /* VideoSettingsView.swift */,
@@ -565,11 +569,16 @@
 				"es-419",
 				tr,
 				uk,
+				fa,
+				"zh-HK",
+				bo,
+				lv,
+				uz,
 			);
 			mainGroup = 020F834028DB4CCD0062FA70;
 			packageReferences = (
 				CEBCA42F2CC13CB900076589 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */,
-				CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 020F834B28DB4CCD0062FA70 /* Products */;
 			projectDirPath = "";
@@ -671,9 +680,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Profile-ProfileTests/Pods-App-Profile-ProfileTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Profile-ProfileTests/Pods-App-Profile-ProfileTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -710,6 +723,7 @@
 				029301DA2938948500E99AB8 /* ProfileType.swift in Sources */,
 				0294987A2C4E4332008FD0E7 /* RelativeDatesToggleView.swift in Sources */,
 				0259104429C39C9E004B5A55 /* SettingsView.swift in Sources */,
+				BB2233CC44DD55EE66FF77AA /* LanguageSelectionView.swift in Sources */,
 				02B089432A9F832200754BD4 /* ProfileStorage.swift in Sources */,
 				022213D72C0E18A300B917E6 /* CourseCalendarState.swift in Sources */,
 				0250C1AD2C231E2500B9E554 /* ProfileCoreModel.xcdatamodeld in Sources */,
@@ -761,6 +775,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				021D926028DDADE600ACC565 /* en */,
+				F8144BE7844F54E342F84CFD /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1743,7 +1758,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -1764,12 +1779,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE7CAF3C2CC1562C00E0AC9D /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB1E26F2CC14EB000921517 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E26E2CC14EB000921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEBCA4302CC13CB900076589 /* BranchSDK */ = {

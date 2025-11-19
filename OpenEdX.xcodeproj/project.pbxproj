@@ -112,10 +112,8 @@
 		0293A2082A6FCDE50090A336 /* DashboardPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPersistence.swift; sourceTree = "<group>"; };
 		0298DF2F2A4EF7230023A257 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		02B6B3C428E1E61400232911 /* CourseDetails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CourseDetails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		02ED50D529A6554E008341CD /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = uk; path = "uk.lproj/сountries.json"; sourceTree = "<group>"; };
 		02ED50D729A65554008341CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = "Base.lproj/сountries.json"; sourceTree = "<group>"; };
 		02ED50D929A66007008341CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/languages.json; sourceTree = "<group>"; };
-		02ED50DB29A6600B008341CD /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = uk; path = uk.lproj/languages.json; sourceTree = "<group>"; };
 		02F175302A4DA95B0019CD70 /* MainScreenAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAnalytics.swift; sourceTree = "<group>"; };
 		065275362BB1B4070093BCCA /* PipManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipManager.swift; sourceTree = "<group>"; };
 		071009C828D1DB3F00344290 /* ScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenAssembly.swift; sourceTree = "<group>"; };
@@ -152,6 +150,7 @@
 		CE3BD14D2CBEB0DA0026F4E3 /* PluginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginManager.swift; sourceTree = "<group>"; };
 		D70D30110012B7D52D05E876 /* Pods-App-OpenEdX.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-OpenEdX.debugprod.xcconfig"; path = "Target Support Files/Pods-App-OpenEdX/Pods-App-OpenEdX.debugprod.xcconfig"; sourceTree = "<group>"; };
 		E0D6E6A22B1626B10089F9C9 /* Theme.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Theme.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3A5443E99180B8320650CA2 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FD0CE8D22B755B4003A113BB /* Pods-App-OpenEdX.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-OpenEdX.releasestage.xcconfig"; path = "Target Support Files/Pods-App-OpenEdX/Pods-App-OpenEdX.releasestage.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -433,11 +432,18 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				fa,
 				uk,
+				"zh-HK",
+				bo,
+				vi,
+				lv,
+				uz,
 			);
 			mainGroup = 07D5DA2828D075AA00752FD9;
 			packageReferences = (
-				CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "" */,
 				CE924BE52CD8FAB3000137CA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CE0BF0B82CD9203A00D10289 /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
 				CEBA52752CEBB69100619E2B /* XCRemoteSwiftPackageReference "openedx-app-firebase-analytics-ios" */,
@@ -596,7 +602,6 @@
 		02ED50D629A6554E008341CD /* сountries.json */ = {
 			isa = PBXVariantGroup;
 			children = (
-				02ED50D529A6554E008341CD /* uk */,
 				02ED50D729A65554008341CD /* Base */,
 			);
 			name = "сountries.json";
@@ -606,7 +611,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				02ED50D929A66007008341CD /* Base */,
-				02ED50DB29A6600B008341CD /* uk */,
 			);
 			name = languages.json;
 			sourceTree = "<group>";
@@ -615,6 +619,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0770DE6528D0BCC7006D8A5D /* en */,
+				F3A5443E99180B8320650CA2 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1255,7 +1260,7 @@
 				version = 11.3.0;
 			};
 		};
-		CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -1286,7 +1291,7 @@
 		};
 		CE9C07D72CD104E5009C44D1 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CE9C07D62CD104E5009C44D1 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEBA52762CEBB69100619E2B /* OEXFirebaseAnalytics */ = {
