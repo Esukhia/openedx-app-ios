@@ -115,19 +115,22 @@ public class CSSInjector {
             }
             switch colorScheme {
             case .light:
-                return "black"
+                return "#000000"
             case .dark:
-                return "white"
+                return "#FFFFFF"
             @unknown default:
-                return "black"
+                return "#000000"
             }
         }
         
         let style = """
         <style>
+        * {
+          color: \(currentColor()) !important;
+        }
         a {
             text-decoration: none;
-            color: \(Theme.UIColors.accentXColor.cgColor.hexString ?? "");
+            color: \(Theme.UIColors.accentXColor.cgColor.hexString ?? "") !important;
         }
         @font-face {
         font-family: "San Francisco";
@@ -137,9 +140,16 @@ public class CSSInjector {
         .header {
         font-size: \(fontSize)%;
         font-family: -apple-system, system-ui, BlinkMacSystemFont;
-          background-color: clear;
-          color: \(currentColor());
+          background-color: transparent !important;
+          color: \(currentColor()) !important;
         \(maxWidth)
+        }
+        body {
+          background-color: transparent !important;
+          color: \(currentColor()) !important;
+        }
+        p, div, span, h1, h2, h3, h4, h5, h6, li, td, th, ul, ol {
+          color: \(currentColor()) !important;
         }
         img {\
         \(maxWidth)

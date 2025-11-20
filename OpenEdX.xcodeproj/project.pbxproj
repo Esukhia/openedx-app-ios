@@ -93,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		005246F1B27A442615AE2DD7 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		005D1F4D92679D24B3BAA8FE /* Pods-App-OpenEdX.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-OpenEdX.releasedev.xcconfig"; path = "Target Support Files/Pods-App-OpenEdX/Pods-App-OpenEdX.releasedev.xcconfig"; sourceTree = "<group>"; };
 		020CA5D82AA0A25300970AAF /* AppStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorage.swift; sourceTree = "<group>"; };
 		0218196328F734FA00202564 /* Discussion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Discussion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -622,6 +623,7 @@
 				0770DE6528D0BCC7006D8A5D /* en */,
 				F3A5443E99180B8320650CA2 /* zh-HK */,
 				73744D1A8BF72F7405128502 /* zh-HK */,
+				005246F1B27A442615AE2DD7 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

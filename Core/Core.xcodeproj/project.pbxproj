@@ -387,6 +387,7 @@
 		F7ED6F0C276DBD2F1BA38987 /* Pods-CoreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.release.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.release.xcconfig"; sourceTree = "<group>"; };
 		FB6C49AC95A27A1222AD0F06 /* Pods-App-Core-CoreTests.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Core-CoreTests.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Core-CoreTests/Pods-App-Core-CoreTests.releasestage.xcconfig"; sourceTree = "<group>"; };
 		FD97820E148E423964AC0CAB /* Pods-CoreTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.releasedev.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.releasedev.xcconfig"; sourceTree = "<group>"; };
+		FFFF43A5BF68006CB4B3088A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1307,6 +1308,7 @@
 				0770DE5C28D0B209006D8A5D /* en */,
 				F11546E3A8729A3F26715E13 /* zh-HK */,
 				65CD4AAD990813059862E322 /* zh-HK */,
+				FFFF43A5BF68006CB4B3088A /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

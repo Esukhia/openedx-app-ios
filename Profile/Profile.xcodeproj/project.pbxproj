@@ -163,6 +163,7 @@
 		C85ADF87135E03275A980E07 /* Pods_App_Profile_ProfileTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Profile_ProfileTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1735032CD23D7A00F9606A /* DatesAndCalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesAndCalendarViewModelTests.swift; sourceTree = "<group>"; };
 		CE961F022CD163FD00799B9F /* CalendarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManagerTests.swift; sourceTree = "<group>"; };
+		CF674EA491269AB4E584A175 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DD3344EE55FF66AA77BB88DD /* ThemeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectionView.swift; sourceTree = "<group>"; };
 		F52EFE7DC07BE68B9A302DAF /* Pods-App-Profile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.debug.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.debug.xcconfig"; sourceTree = "<group>"; };
 		F8144BE7844F54E342F84CFD /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -782,6 +783,7 @@
 				021D926028DDADE600ACC565 /* en */,
 				F8144BE7844F54E342F84CFD /* zh-HK */,
 				C0F8440DA1003600C3F26D4F /* zh-HK */,
+				CF674EA491269AB4E584A175 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

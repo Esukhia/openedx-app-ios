@@ -84,6 +84,7 @@
 		4CB92C9DBA730A1B06B076BA /* Pods-App-WhatsNew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.release.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.release.xcconfig"; sourceTree = "<group>"; };
 		58DF8140E3B3436F58C4C8B9 /* Pods-App-WhatsNew-WhatsNewTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew-WhatsNewTests.releasedev.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew-WhatsNewTests/Pods-App-WhatsNew-WhatsNewTests.releasedev.xcconfig"; sourceTree = "<group>"; };
 		6F50A409FBCCC7C08712A25E /* Pods-App-WhatsNew.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.debugdev.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.debugdev.xcconfig"; sourceTree = "<group>"; };
+		85DC43E18E68C94918E837A3 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		9176CDC000731B73D2F10372 /* Pods-App-WhatsNew.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.debugstage.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.debugstage.xcconfig"; sourceTree = "<group>"; };
 		9844714991FA40ECDC228CC9 /* Pods-App-WhatsNew.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.releasedev.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.releasedev.xcconfig"; sourceTree = "<group>"; };
 		A2CABA11F5E7F89EFD9A05AC /* Pods-App-WhatsNew-WhatsNewTests.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew-WhatsNewTests.debugstage.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew-WhatsNewTests/Pods-App-WhatsNew-WhatsNewTests.debugstage.xcconfig"; sourceTree = "<group>"; };
@@ -508,6 +509,7 @@
 				02E6407D2ADFF6250079AEDA /* en */,
 				E57943D788E2D3B47DEE947D /* zh-HK */,
 				19B7494CB4A632496F8C4323 /* zh-HK */,
+				85DC43E18E68C94918E837A3 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

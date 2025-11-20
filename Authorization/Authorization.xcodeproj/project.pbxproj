@@ -118,6 +118,7 @@
 		CEB259FE2CC13A36007FC792 /* FacebookAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookAuthProvider.swift; sourceTree = "<group>"; };
 		CEB259FF2CC13A36007FC792 /* MicrosoftAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrosoftAuthProvider.swift; sourceTree = "<group>"; };
 		CEB25A002CC13A36007FC792 /* SocialAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthResponse.swift; sourceTree = "<group>"; };
+		D02C45F19BDDB8DF8C740629 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E03261632AE64676002CA7EB /* StartupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupViewModel.swift; sourceTree = "<group>"; };
 		E03261652AE64AF4002CA7EB /* StartupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupView.swift; sourceTree = "<group>"; };
 		E78971D8E6ED2116BBF9FD66 /* Pods-App-Authorization.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.release.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.release.xcconfig"; sourceTree = "<group>"; };
@@ -633,6 +634,7 @@
 				0770DE6C28D0C035006D8A5D /* en */,
 				48F0490B86383DB231871140 /* zh-HK */,
 				EAE24A95955FEE63176F48A5 /* zh-HK */,
+				D02C45F19BDDB8DF8C740629 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

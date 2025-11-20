@@ -83,6 +83,7 @@
 		0A3758CAD3382F75F1C3B9F8 /* Pods-App-Dashboard.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		0B008B2F0762EF35CADE3DD4 /* Pods_App_Dashboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Dashboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12666B22F6865BE7B637DFBB /* Pods-App-Dashboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.debug.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.debug.xcconfig"; sourceTree = "<group>"; };
+		18764DFCB73BB1547625AFDB /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		22905947A936093AD23D4CF8 /* Pods_App_Dashboard_DashboardTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Dashboard_DashboardTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		297F389E40E7DA7B54822022 /* Pods-App-Dashboard-DashboardTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard-DashboardTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Dashboard-DashboardTests/Pods-App-Dashboard-DashboardTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		2AC36B6C48F0512E8ECEC9BC /* Pods-App-Dashboard-DashboardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard-DashboardTests.debug.xcconfig"; path = "Target Support Files/Pods-App-Dashboard-DashboardTests/Pods-App-Dashboard-DashboardTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -559,6 +560,7 @@
 				02F6EF4428D9ECC500835477 /* en */,
 				C5E949598B90DC63BBBA649B /* zh-HK */,
 				95244227A515A7A5A9BE5EF3 /* zh-HK */,
+				18764DFCB73BB1547625AFDB /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
