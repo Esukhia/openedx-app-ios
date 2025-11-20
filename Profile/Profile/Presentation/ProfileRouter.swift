@@ -33,6 +33,8 @@ public protocol ProfileRouter: BaseRouter {
     
     func showLanguageSelection()
     
+    func showThemeSelection()
+    
     func showVideoQualityView(viewModel: SettingsViewModel)
 
     func showVideoDownloadQualityView(
@@ -68,6 +70,8 @@ public class ProfileRouterMock: BaseRouterMock, ProfileRouter {
     public func showCoursesToSync() {}
     
     public func showLanguageSelection() {}
+    
+    public func showThemeSelection() {}
     
     public func showManageAccount() {}
     

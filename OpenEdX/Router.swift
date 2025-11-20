@@ -797,6 +797,12 @@ public class Router: AuthorizationRouter,
         navigationController.pushViewController(controller, animated: true)
     }
     
+    public func showThemeSelection() {
+        let view = ThemeSelectionView(router: self)
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
     public func showManageAccount() {
         let viewModel = Container.shared.resolve(ManageAccountViewModel.self)!
         let view = ManageAccountView(viewModel: viewModel)

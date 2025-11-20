@@ -69,6 +69,7 @@ public struct SettingsView: View {
                                 manageAccount
                                 settings
                                 datesAndCalendar
+                                themeSelector
                                 languageSelector
                                 ProfileSupportInfoView(viewModel: viewModel)
                                 logOutButton
@@ -135,6 +136,34 @@ public struct SettingsView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(ProfileLocalization.datesAndCalendar)
+        .cardStyle(
+            bgColor: Theme.Colors.textInputUnfocusedBackground,
+            strokeColor: .clear
+        )
+    }
+    
+    // MARK: - Theme Selector
+    
+    @ViewBuilder
+    private var themeSelector: some View {
+        VStack(alignment: .leading, spacing: 27) {
+            Button(action: {
+                viewModel.router.showThemeSelection()
+            }, label: {
+                HStack {
+                    Image(systemName: "paintbrush")
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    Text("Theme")
+                        .font(Theme.Fonts.titleMedium)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .flipsForRightToLeftLayoutDirection(true)
+                }
+            })
+            .accessibilityIdentifier("theme_selector_button")
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Theme")
         .cardStyle(
             bgColor: Theme.Colors.textInputUnfocusedBackground,
             strokeColor: .clear

@@ -77,6 +77,7 @@
 		05AC45C7050E30F8394E0C76 /* Pods_App_WhatsNew.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_WhatsNew.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C01007F0E8CEDCD293E0A68 /* Pods-App-WhatsNew.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.debug.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.debug.xcconfig"; sourceTree = "<group>"; };
 		14769D3D2B99713800AB36D4 /* WhatsNewAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewAnalytics.swift; sourceTree = "<group>"; };
+		19B7494CB4A632496F8C4323 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1E3F4487E7D3A48F5FD12DDA /* Pods-App-WhatsNew-WhatsNewTests.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew-WhatsNewTests.releasestage.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew-WhatsNewTests/Pods-App-WhatsNew-WhatsNewTests.releasestage.xcconfig"; sourceTree = "<group>"; };
 		34C1F2BEAF7F0DCB8E630F33 /* Pods-App-WhatsNew.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew.releasestage.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew/Pods-App-WhatsNew.releasestage.xcconfig"; sourceTree = "<group>"; };
 		365FD817D70DFBCBDE2EAE5F /* Pods-App-WhatsNew-WhatsNewTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-WhatsNew-WhatsNewTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-WhatsNew-WhatsNewTests/Pods-App-WhatsNew-WhatsNewTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
@@ -506,6 +507,7 @@
 			children = (
 				02E6407D2ADFF6250079AEDA /* en */,
 				E57943D788E2D3B47DEE947D /* zh-HK */,
+				19B7494CB4A632496F8C4323 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -75,6 +75,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = RouteController()
         window?.makeKeyAndVisible()
         window?.tintColor = Theme.UIColors.accentColor
+        
+        // Apply initial theme
+        applyTheme()
+        
+        // Listen for theme changes
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(themeDidChange),
+            name: .themeChanged,
+            object: nil
+        )
           
         NotificationCenter.default.addObserver(
             self,
@@ -160,6 +171,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc private func didUserAuthorize() {
         Container.shared.resolve(PushNotificationsManager.self)?.synchronizeToken()
+    }
+    
+    @objc private func themeDidChange() {
+        applyTheme()
+    }
+    
+    private func applyTheme() {
+        Task { @MainActor in
+            window?.overrideUserInterfaceStyle = ThemeManager.shared.resolvedInterfaceStyle
+        }
     }
     
     @objc func didUserLogout(_ notification: Notification) {
