@@ -17,6 +17,7 @@ struct FieldsView: View {
     let cssInjector: CSSInjector
     let proxy: GeometryProxy
     @Environment(\.colorScheme) var colorScheme
+    @StateObject private var themeManager = ThemeManager.shared
     @State private var text: String = ""
     @State private var sendMarketing: Bool = true
 
@@ -104,7 +105,7 @@ struct FieldsView: View {
         } else {
             HTMLFormattedText(
                 cssInjector.injectCSS(
-                    colorScheme: colorScheme,
+                    colorScheme: themeManager.resolvedColorScheme ?? colorScheme,
                     html: fieldConfig.field.label,
                     type: .discovery,
                     fontSize: 90, screenWidth: proxy.size.width)

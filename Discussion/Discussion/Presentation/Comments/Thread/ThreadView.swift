@@ -254,7 +254,7 @@ public struct ThreadView: View {
                         BackNavigationButton(color: Theme.Colors.accentColor) {
                             viewModel.router.back()
                         }
-                        .offset(x: -8, y: -1.5)
+                        .offset(x: 5)
                     }
                 )
             }

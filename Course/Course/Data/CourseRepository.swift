@@ -184,7 +184,16 @@ public actor CourseRepository: CourseRepositoryProtocol {
                 numPointsEarned: Int(sequential.assignmentProgress?.numPointsEarned ?? 0),
                 numPointsPossible: Int(sequential.assignmentProgress?.numPointsPossible ?? 0)
             ),
-            due: sequential.due == nil ? nil : Date(iso8601: sequential.due!)
+            due: sequential.due == nil ? nil : Date(iso8601: sequential.due!),
+            gatedContent: sequential.gatedContent.map {
+                GatedContent(
+                    prereqId: $0.prereqId,
+                    prereqSectionName: $0.prereqSectionName,
+                    gated: $0.gated,
+                    gatedSectionName: $0.gatedSectionName,
+                    prereqUrl: $0.prereqUrl
+                )
+            }
         )
     }
     
@@ -204,7 +213,16 @@ public actor CourseRepository: CourseRepositoryProtocol {
             type: BlockType(rawValue: sequential.type) ?? .unknown,
             completion: sequential.completion ?? 0,
             childs: childs,
-            webUrl: sequential.webUrl
+            webUrl: sequential.webUrl,
+            gatedContent: sequential.gatedContent.map {
+                GatedContent(
+                    prereqId: $0.prereqId,
+                    prereqSectionName: $0.prereqSectionName,
+                    gated: $0.gated,
+                    gatedSectionName: $0.gatedSectionName,
+                    prereqUrl: $0.prereqUrl
+                )
+            }
         )
     }
     
@@ -446,7 +464,16 @@ And there are various ways of describing it-- call it oral poetry or
                 numPointsEarned: Int(sequential.assignmentProgress?.numPointsEarned ?? 0),
                 numPointsPossible: Int(sequential.assignmentProgress?.numPointsPossible ?? 0)
             ),
-            due: sequential.due == nil ? nil : Date(iso8601: sequential.due!)
+            due: sequential.due == nil ? nil : Date(iso8601: sequential.due!),
+            gatedContent: sequential.gatedContent.map {
+                GatedContent(
+                    prereqId: $0.prereqId,
+                    prereqSectionName: $0.prereqSectionName,
+                    gated: $0.gated,
+                    gatedSectionName: $0.gatedSectionName,
+                    prereqUrl: $0.prereqUrl
+                )
+            }
         )
     }
     
@@ -466,7 +493,16 @@ And there are various ways of describing it-- call it oral poetry or
             type: BlockType(rawValue: sequential.type) ?? .unknown,
             completion: sequential.completion ?? 0,
             childs: childs,
-            webUrl: sequential.webUrl
+            webUrl: sequential.webUrl,
+            gatedContent: sequential.gatedContent.map {
+                GatedContent(
+                    prereqId: $0.prereqId,
+                    prereqSectionName: $0.prereqSectionName,
+                    gated: $0.gated,
+                    gatedSectionName: $0.gatedSectionName,
+                    prereqUrl: $0.prereqUrl
+                )
+            }
         )
     }
     

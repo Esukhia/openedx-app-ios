@@ -569,6 +569,22 @@ public class Router: AuthorizationRouter,
         navigationController.pushViewController(controller, animated: true)
     }
     
+    public func showLockedContent(
+        gatedContent: GatedContent,
+        courseID: String,
+        chapters: [CourseChapter]
+    ) {
+        let view = LockedContentView(
+            gatedContent: gatedContent,
+            courseID: courseID,
+            chapters: chapters,
+            router: self
+        )
+        
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
     private func openBlockInBrowser(blockURL: URL) {
         presentAlert(
             alertTitle: "",
@@ -771,6 +787,18 @@ public class Router: AuthorizationRouter,
     public func showCoursesToSync() {
         let viewModel = Container.shared.resolve(DatesAndCalendarViewModel.self)!
         let view = CoursesToSyncView(viewModel: viewModel)
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
+    public func showLanguageSelection() {
+        let view = LanguageSelectionView(router: self)
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
+    }
+    
+    public func showThemeSelection() {
+        let view = ThemeSelectionView(router: self)
         let controller = UIHostingController(rootView: view)
         navigationController.pushViewController(controller, animated: true)
     }

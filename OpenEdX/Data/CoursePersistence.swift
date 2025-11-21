@@ -135,7 +135,8 @@ public final class CoursePersistence: CoursePersistenceProtocol {
                         fileUrl: $0.fileUrl,
                         lastModified: $0.lastModified,
                         fileSize: Int($0.fileSize)
-                    )
+                    ),
+                    gatedContent: nil
                 )
             }
             

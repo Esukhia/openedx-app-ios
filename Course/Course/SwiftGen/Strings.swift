@@ -330,6 +330,16 @@ public enum CourseLocalization {
     /// Handouts
     public static let title = CourseLocalization.tr("Localizable", "HANDOUTS_CELL_HANDOUTS.TITLE", fallback: "Handouts")
   }
+  public enum LockedContent {
+    /// You must complete the prerequisite: "%@" to access this content.
+    public static func description(_ p1: Any) -> String {
+      return CourseLocalization.tr("Localizable", "LOCKED_CONTENT.DESCRIPTION", String(describing: p1), fallback: "You must complete the prerequisite: \"%@\" to access this content.")
+    }
+    /// Go To Prerequisite Section
+    public static let goToPrerequisite = CourseLocalization.tr("Localizable", "LOCKED_CONTENT.GO_TO_PREREQUISITE", fallback: "Go To Prerequisite Section")
+    /// Content Locked
+    public static let title = CourseLocalization.tr("Localizable", "LOCKED_CONTENT.TITLE", fallback: "Content Locked")
+  }
   public enum NotAvaliable {
     /// Open in browser
     public static let button = CourseLocalization.tr("Localizable", "NOT_AVALIABLE.BUTTON", fallback: "Open in browser")

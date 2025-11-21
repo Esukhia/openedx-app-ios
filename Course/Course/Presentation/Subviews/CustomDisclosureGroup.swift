@@ -16,6 +16,14 @@ struct CustomDisclosureGroup: View {
     private let course: CourseStructure
     private let viewModel: CourseContainerViewModel
     private var idiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+
+private func isSequentialLocked(_ sequential: CourseSequential) -> Bool {
+    sequential.gatedContent?.gated ?? false
+}
+
+private func hasLockedVertical(_ sequential: CourseSequential) -> Bool {
+    sequential.childs.contains { $0.gatedContent?.gated ?? false }
+}
     
     init(course: CourseStructure, proxy: GeometryProxy, viewModel: CourseContainerViewModel) {
         self.course = course
@@ -72,52 +80,45 @@ struct CustomDisclosureGroup: View {
                         VStack(alignment: .leading) {
                             ForEach(chapter.childs) { sequential in
                                 let sequentialIndex = chapter.childs.firstIndex(where: { $0.id == sequential.id })
+                                let sequentialLocked = isSequentialLocked(sequential)
+                                let verticalLocked = hasLockedVertical(sequential)
                                 VStack(alignment: .leading) {
                                     HStack {
                                         Button(
                                             action: {
                                                 guard let chapterIndex = chapterIndex else { return }
                                                 guard let sequentialIndex else { return }
-                                                guard let courseVertical = sequential.childs.first else { return }
-                                                guard let block = courseVertical.childs.first else {
-                                                    viewModel.router.showGatedContentError(url: courseVertical.webUrl)
-                                                    return
-                                                }
                                                 
                                                 viewModel.trackSequentialClicked(sequential)
-                                                if viewModel.config.uiComponents.courseDropDownNavigationEnabled {
-                                                    viewModel.router.showCourseUnit(
-                                                        courseName: viewModel.courseStructure?.displayName ?? "",
-                                                        blockId: block.id,
-                                                        courseID: viewModel.courseStructure?.id ?? "",
-                                                        verticalIndex: 0,
-                                                        chapters: course.childs,
-                                                        chapterIndex: chapterIndex,
-                                                        sequentialIndex: sequentialIndex
-                                                    )
-                                                } else {
-                                                    viewModel.router.showCourseVerticalView(
-                                                        courseID: viewModel.courseStructure?.id ?? "",
-                                                        courseName: viewModel.courseStructure?.displayName ?? "",
-                                                        title: sequential.displayName,
-                                                        chapters: course.childs,
-                                                        chapterIndex: chapterIndex,
-                                                        sequentialIndex: sequentialIndex
-                                                    )
-                                                }
+                                                viewModel.router.showCourseVerticalView(
+                                                    courseID: viewModel.courseStructure?.id ?? "",
+                                                    courseName: viewModel.courseStructure?.displayName ?? "",
+                                                    title: sequential.displayName,
+                                                    chapters: course.childs,
+                                                    chapterIndex: chapterIndex,
+                                                    sequentialIndex: sequentialIndex
+                                                )
                                             },
                                             label: {
                                                 VStack(alignment: .leading) {
-                                                    HStack {
-                                                        if sequential.completion == 1 {
-                                                            CoreAssets.finishedSequence.swiftUIImage
-                                                                .renderingMode(.template)
-                                                                .resizable()
-                                                                .foregroundColor(Theme.Colors.success)
-                                                                .frame(width: 20, height: 20)
-                                                        } else {
-                                                            sequential.type.image
+                                                    HStack(alignment: .top, spacing: 12) {
+                                                        Group {
+                                                            if sequentialLocked || verticalLocked {
+                                                                Image(systemName: "lock.fill")
+                                                                    .resizable()
+                                                                    .scaledToFit()
+                                                                    .foregroundColor(Theme.Colors.textSecondary)
+                                                            } else if sequential.completion == 1 {
+                                                                CoreAssets.finishedSequence.swiftUIImage
+                                                                    .renderingMode(.template)
+                                                                    .resizable()
+                                                                    .foregroundColor(Theme.Colors.success)
+                                                            } else {
+                                                                sequential.type.image
+                                                            }
                                                         }
+                                                        .frame(width: 20, height: 20, alignment: .top)
+                                                        .offset(y: -4)
                                                         Text(sequential.displayName)
                                                             .font(Theme.Fonts.titleSmall)
                                                             .multilineTextAlignment(.leading)
@@ -144,7 +145,8 @@ struct CustomDisclosureGroup: View {
                                             }
                                         )
                                         Spacer()
-                                        if sequential.due != nil {
+                                        if !sequentialLocked && !verticalLocked,
+                                           sequential.due != nil {
                                             CoreAssets.chevronRight.swiftUIImage
                                                 .foregroundColor(Theme.Colors.textPrimary)
                                         }

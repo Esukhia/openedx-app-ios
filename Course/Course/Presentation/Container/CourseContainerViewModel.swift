@@ -84,6 +84,10 @@ public final class CourseContainerViewModel: BaseCourseViewModel {
     @Published var downloadAllButtonState: OfflineView.DownloadAllState = .start
     
     let completionPublisher = NotificationCenter.default.publisher(for: .onblockCompletionRequested)
+    let blockCompletionPublisher = NotificationCenter.default.publisher(for: .onBlockCompletion)
+    
+    private var lastRefreshTime: Date?
+    private let refreshDebounceInterval: TimeInterval = 2.0
     
     var errorMessage: String? {
         didSet {
@@ -163,6 +167,37 @@ public final class CourseContainerViewModel: BaseCourseViewModel {
             await getCourseBlocks(courseID: courseID, withProgress: false)
             updateCourseProgress = false
         }
+    }
+    
+    private func refreshCourseStructureIfNeeded(courseID: String) async {
+        // Only refresh if course has gated content
+        guard hasGatedContent() else { return }
+        
+        // Debounce: only refresh if enough time has passed since last refresh
+        let now = Date()
+        if let lastRefresh = lastRefreshTime,
+           now.timeIntervalSince(lastRefresh) < refreshDebounceInterval {
+            return
+        }
+        
+        lastRefreshTime = now
+        await getCourseBlocks(courseID: courseID, withProgress: false)
+    }
+    
+    private func hasGatedContent() -> Bool {
+        guard let courseStructure = courseStructure else { return false }
+        
+        for chapter in courseStructure.childs {
+            for sequential in chapter.childs where sequential.gatedContent?.gated == true {
+                return true
+            }
+            for sequential in chapter.childs {
+                for vertical in sequential.childs where vertical.gatedContent?.gated == true {
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     func openLastVisitedBlock() {
@@ -979,6 +1014,17 @@ public final class CourseContainerViewModel: BaseCourseViewModel {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 updateCourseProgress = true
+            }
+            .store(in: &cancellables)
+        
+        blockCompletionPublisher
+            .debounce(for: .seconds(refreshDebounceInterval), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self = self,
+                      let courseID = self.courseStructure?.id else { return }
+                Task {
+                    await self.refreshCourseStructureIfNeeded(courseID: courseID)
+                }
             }
             .store(in: &cancellables)
     }

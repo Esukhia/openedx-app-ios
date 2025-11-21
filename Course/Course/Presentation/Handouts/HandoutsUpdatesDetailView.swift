@@ -12,6 +12,7 @@ import Theme
 public struct HandoutsUpdatesDetailView: View {
     
     @Environment(\.colorScheme) var colorSchemeNative
+    @StateObject private var themeManager = ThemeManager.shared
     private var idiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @State var colorScheme: ColorScheme = UITraitCollection.current.userInterfaceStyle == .light ? .light : .dark
     
@@ -43,7 +44,7 @@ public struct HandoutsUpdatesDetailView: View {
     }
     
     private func updateColorScheme() {
-        colorScheme = UITraitCollection.current.userInterfaceStyle == .light ? .light : .dark
+        colorScheme = themeManager.resolvedColorScheme ?? colorSchemeNative
     }
     
     private func fixBrokenLinks(in htmlString: String) -> String {

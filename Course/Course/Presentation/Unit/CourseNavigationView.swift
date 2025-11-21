@@ -121,16 +121,71 @@ struct CourseNavigationView: View {
                             )
                         
                         guard let data = viewModel.nextData else { return }
-                        viewModel.router.replaceCourseUnit(
-                            courseName: viewModel.courseName,
-                            blockId: viewModel.lessonID,
-                            courseID: viewModel.courseID,
-                            verticalIndex: data.verticalIndex,
-                            chapters: viewModel.chapters,
-                            chapterIndex: data.chapterIndex,
-                            sequentialIndex: data.sequentialIndex,
-                            animated: true
-                        )
+                        
+                        // Always refresh if course has gated content
+                        if viewModel.hasGatedContent() {
+                            Task {
+                                if let refreshedChapters = await viewModel.refreshCourseStructure(),
+                                   data.chapterIndex < refreshedChapters.count,
+                                   data.sequentialIndex < refreshedChapters[data.chapterIndex].childs.count,
+                                   data.verticalIndex < refreshedChapters[data.chapterIndex]
+                                    .childs[data.sequentialIndex].childs.count {
+                                    
+                                    let refreshedVertical = refreshedChapters[data.chapterIndex]
+                                        .childs[data.sequentialIndex]
+                                        .childs[data.verticalIndex]
+                                    
+                                    // Check if next vertical is locked
+                                    if let refreshedGatedContent = refreshedVertical.gatedContent,
+                                       refreshedGatedContent.gated {
+                                        // Locked, show locked content view
+                                        viewModel.router.showLockedContent(
+                                            gatedContent: refreshedGatedContent,
+                                            courseID: viewModel.courseID,
+                                            chapters: refreshedChapters
+                                        )
+                                    } else {
+                                        // Unlocked, navigate to unit
+                                        if let block = refreshedVertical.childs.first {
+                                            viewModel.router.replaceCourseUnit(
+                                                courseName: viewModel.courseName,
+                                                blockId: block.id,
+                                                courseID: viewModel.courseID,
+                                                verticalIndex: data.verticalIndex,
+                                                chapters: refreshedChapters,
+                                                chapterIndex: data.chapterIndex,
+                                                sequentialIndex: data.sequentialIndex,
+                                                animated: true
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    // Refresh failed, use cached data
+                                    viewModel.router.replaceCourseUnit(
+                                        courseName: viewModel.courseName,
+                                        blockId: viewModel.lessonID,
+                                        courseID: viewModel.courseID,
+                                        verticalIndex: data.verticalIndex,
+                                        chapters: viewModel.chapters,
+                                        chapterIndex: data.chapterIndex,
+                                        sequentialIndex: data.sequentialIndex,
+                                        animated: true
+                                    )
+                                }
+                            }
+                        } else {
+                            // No gated content, navigate immediately
+                            viewModel.router.replaceCourseUnit(
+                                courseName: viewModel.courseName,
+                                blockId: viewModel.lessonID,
+                                courseID: viewModel.courseID,
+                                verticalIndex: data.verticalIndex,
+                                chapters: viewModel.chapters,
+                                chapterIndex: data.chapterIndex,
+                                sequentialIndex: data.sequentialIndex,
+                                animated: true
+                            )
+                        }
                     }
                 )
                 playerStateSubject.send(VideoPlayerState.pause)

@@ -302,7 +302,7 @@ public final class CourseUnitViewModel: ObservableObject {
         return chapters[data.chapterIndex]
     }
     
-    private func sequential(for data: VerticalData) -> CourseSequential? {
+    func sequential(for data: VerticalData) -> CourseSequential? {
         guard let chapter = chapter(for: data),
               data.sequentialIndex >= 0 && data.sequentialIndex < chapter.childs.count
         else { return nil }
@@ -392,5 +392,28 @@ public final class CourseUnitViewModel: ObservableObject {
     
     public var currentCourseId: String {
         courseID
+    }
+    
+    func refreshCourseStructure() async -> [CourseChapter]? {
+        do {
+            let courseStructure = try await interactor.getCourseBlocks(courseID: courseID)
+            return courseStructure.childs
+        } catch {
+            return nil
+        }
+    }
+    
+    func hasGatedContent() -> Bool {
+        for chapter in chapters {
+            for sequential in chapter.childs where sequential.gatedContent != nil {
+                return true
+            }
+            for sequential in chapter.childs {
+                for vertical in sequential.childs where vertical.gatedContent != nil {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

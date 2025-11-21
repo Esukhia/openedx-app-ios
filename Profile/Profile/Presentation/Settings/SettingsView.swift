@@ -69,6 +69,8 @@ public struct SettingsView: View {
                                 manageAccount
                                 settings
                                 datesAndCalendar
+                                themeSelector
+                                languageSelector
                                 ProfileSupportInfoView(viewModel: viewModel)
                                 logOutButton
                             }
@@ -121,6 +123,8 @@ public struct SettingsView: View {
                 viewModel.router.showDatesAndCalendar()
             }, label: {
                 HStack {
+                    Image(systemName: "calendar")
+                        .foregroundColor(Theme.Colors.textPrimary)
                     Text(ProfileLocalization.datesAndCalendar)
                         .font(Theme.Fonts.titleMedium)
                     Spacer()
@@ -132,6 +136,62 @@ public struct SettingsView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(ProfileLocalization.datesAndCalendar)
+        .cardStyle(
+            bgColor: Theme.Colors.textInputUnfocusedBackground,
+            strokeColor: .clear
+        )
+    }
+    
+    // MARK: - Theme Selector
+    
+    @ViewBuilder
+    private var themeSelector: some View {
+        VStack(alignment: .leading, spacing: 27) {
+            Button(action: {
+                viewModel.router.showThemeSelection()
+            }, label: {
+                HStack {
+                    Image(systemName: "paintbrush")
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    Text("Theme")
+                        .font(Theme.Fonts.titleMedium)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .flipsForRightToLeftLayoutDirection(true)
+                }
+            })
+            .accessibilityIdentifier("theme_selector_button")
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Theme")
+        .cardStyle(
+            bgColor: Theme.Colors.textInputUnfocusedBackground,
+            strokeColor: .clear
+        )
+    }
+    
+    // MARK: - Language Selector
+    
+    @ViewBuilder
+    private var languageSelector: some View {
+        VStack(alignment: .leading, spacing: 27) {
+            Button(action: {
+                viewModel.router.showLanguageSelection()
+            }, label: {
+                HStack {
+                    Image(systemName: "globe")
+                        .foregroundColor(Theme.Colors.textPrimary)
+                    Text("Language")
+                        .font(Theme.Fonts.titleMedium)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .flipsForRightToLeftLayoutDirection(true)
+                }
+            })
+            .accessibilityIdentifier("language_selector_button")
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Language")
         .cardStyle(
             bgColor: Theme.Colors.textInputUnfocusedBackground,
             strokeColor: .clear
@@ -181,6 +241,8 @@ public struct SettingsView: View {
                 viewModel.router.showVideoSettings()
             }, label: {
                 HStack {
+                    Image(systemName: "play.rectangle")
+                        .foregroundColor(Theme.Colors.textPrimary)
                     Text(ProfileLocalization.settingsVideo)
                         .font(Theme.Fonts.titleMedium)
                     Spacer()

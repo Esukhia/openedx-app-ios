@@ -16,6 +16,7 @@ public struct CourseDetailsView: View {
 
     @ObservedObject private var viewModel: CourseDetailsViewModel
     @Environment(\.colorScheme) var colorScheme
+    @StateObject private var themeManager = ThemeManager.shared
     @Environment(\.isHorizontal) var isHorizontal
     @State private var isOverviewRendering = true
     private var title: String
@@ -171,12 +172,11 @@ public struct CourseDetailsView: View {
                                             ZStack(alignment: .topLeading) {
                                                 HTMLFormattedText(
                                                     viewModel.cssInjector.injectCSS(
-                                                        colorScheme: colorScheme,
+                                                        colorScheme: themeManager.resolvedColorScheme ?? colorScheme,
                                                         html: courseDetails.overviewHTML,
                                                         type: .discovery,
                                                         fontSize: 120,
-                                                        screenWidth: proxy.size.width - 48,
-                                                        textColor: Theme.UIColors.textPrimary.cgColor.hexString
+                                                        screenWidth: proxy.size.width - 48
                                                     ),
                                                     processing: { rendering in
                                                         isOverviewRendering = rendering
