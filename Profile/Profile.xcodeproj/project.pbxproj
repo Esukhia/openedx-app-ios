@@ -154,6 +154,7 @@
 		99E3D23305C745FE0FF57A62 /* Pods-App-Profile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.release.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.release.xcconfig"; sourceTree = "<group>"; };
 		9AC2F1A5AE5AC7F0CFCB9FE3 /* Pods-App-Profile-ProfileTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile-ProfileTests.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Profile-ProfileTests/Pods-App-Profile-ProfileTests.releasedev.xcconfig"; sourceTree = "<group>"; };
 		9D125F82E0EAC4B6C0CE280F /* Pods-App-Profile-ProfileTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile-ProfileTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Profile-ProfileTests/Pods-App-Profile-ProfileTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
+		9FDE48C296235B621F832F14 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A9F98CD65D1F657EB8F9EA59 /* Pods-App-Profile.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.releasedev.xcconfig"; sourceTree = "<group>"; };
 		B3F05DC21379BD4FE1AFCCF1 /* Pods-App-Profile.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Profile.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Profile/Pods-App-Profile.debugprod.xcconfig"; sourceTree = "<group>"; };
 		BAD9CA3E2B29BF5C00DE790A /* ProfileSupportInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSupportInfoView.swift; sourceTree = "<group>"; };
@@ -784,6 +785,7 @@
 				F8144BE7844F54E342F84CFD /* zh-HK */,
 				C0F8440DA1003600C3F26D4F /* zh-HK */,
 				CF674EA491269AB4E584A175 /* zh-HK */,
+				9FDE48C296235B621F832F14 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

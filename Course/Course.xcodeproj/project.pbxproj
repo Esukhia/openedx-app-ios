@@ -271,6 +271,7 @@
 		EDCFD7A1BFD2200B14F10F71 /* Pods-App-Course.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Course/Pods-App-Course.debugdev.xcconfig"; sourceTree = "<group>"; };
 		F4640D6B8065C404E0BC30D5 /* Pods-App-Course.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course.release.xcconfig"; path = "Target Support Files/Pods-App-Course/Pods-App-Course.release.xcconfig"; sourceTree = "<group>"; };
 		F496B47B12CFD866EA6845CC /* Pods-App-Course.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Course.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Course/Pods-App-Course.releaseprod.xcconfig"; sourceTree = "<group>"; };
+		FE174376BE172DBA23AFCB6D /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1070,6 +1071,7 @@
 				6E8B43B6A7599838A0DB9A24 /* zh-HK */,
 				1FC1493F9CA5C683822C06EA /* zh-HK */,
 				720845038E05EBF943311506 /* zh-HK */,
+				FE174376BE172DBA23AFCB6D /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

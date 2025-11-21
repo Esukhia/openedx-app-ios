@@ -89,6 +89,7 @@
 		02EF39DB28D86BEF0058F6BD /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		02F1752E2A4DA3B60019CD70 /* DiscoveryAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryAnalytics.swift; sourceTree = "<group>"; };
 		02F3BFDE29252F2F0051930C /* DiscoveryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryRouter.swift; sourceTree = "<group>"; };
+		066B4FDFBFC4D59BF1BDC599 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		0692409931272CDA39B10321 /* Pods-App-Discovery.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Discovery/Pods-App-Discovery.releasestage.xcconfig"; sourceTree = "<group>"; };
 		0727879928D34C03002E9142 /* Discovery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Discovery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		072787AC28D34D15002E9142 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -637,6 +638,7 @@
 				411C4DD0B05301B27B663F67 /* zh-HK */,
 				432349FD8C4A8FA238A82DF5 /* zh-HK */,
 				4FCE44CF9D3C98D93880CBF1 /* zh-HK */,
+				066B4FDFBFC4D59BF1BDC599 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

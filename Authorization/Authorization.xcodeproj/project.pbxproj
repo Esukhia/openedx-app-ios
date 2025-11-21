@@ -110,6 +110,7 @@
 		99C165502C0C4F7B00DC384D /* SSOWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSOWebViewModel.swift; sourceTree = "<group>"; };
 		9BF6A1004A955E24527FCF0F /* Pods-App-Authorization-AuthorizationTests.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization-AuthorizationTests.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		A99D45203C981893C104053A /* Pods-App-Authorization-AuthorizationTests.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization-AuthorizationTests.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests.releasestage.xcconfig"; sourceTree = "<group>"; };
+		B4764FCF91F0355588EF98D2 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BA8B3A312AD5487300D25EF5 /* SocialAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthView.swift; sourceTree = "<group>"; };
 		BADB3F542AD6DFC3004D5CFA /* SocialAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthViewModel.swift; sourceTree = "<group>"; };
 		CEB259FA2CC13A36007FC792 /* SocialAuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthError.swift; sourceTree = "<group>"; };
@@ -635,6 +636,7 @@
 				48F0490B86383DB231871140 /* zh-HK */,
 				EAE24A95955FEE63176F48A5 /* zh-HK */,
 				D02C45F19BDDB8DF8C740629 /* zh-HK */,
+				B4764FCF91F0355588EF98D2 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

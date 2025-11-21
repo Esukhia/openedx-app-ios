@@ -108,13 +108,6 @@ public struct LanguageSelectionView: View {
         )
         .ignoresSafeArea(.all, edges: .horizontal)
         .alert("Language updated", isPresented: $showRestartAlert) {
-            Button("Later", role: .cancel) {
-                if let languageCode = selectedLanguageCode {
-                    languageManager.setLanguage(languageCode)
-                }
-                selectedLanguageCode = nil
-                router.back()
-            }
             Button("Close app") {
                 if let languageCode = selectedLanguageCode {
                     languageManager.setLanguage(languageCode)
@@ -123,8 +116,7 @@ public struct LanguageSelectionView: View {
                 exit(0)
             }
         } message: {
-            Text("The new language will be applied after you close and reopen the app. "
-                 + "You can close the app now or do it later.")
+            Text("Please close and reopen the app to apply the new language.")
         }
     }
 }
