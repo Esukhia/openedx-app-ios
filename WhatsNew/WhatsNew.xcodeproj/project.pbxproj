@@ -347,7 +347,7 @@
 			);
 			mainGroup = 028A37132ADFF3F7008CA604;
 			packageReferences = (
-				CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 028A371E2ADFF3F7008CA604 /* Products */;
 			projectDirPath = "";
@@ -1542,7 +1542,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -1555,12 +1555,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE7CAF342CC1560900E0AC9D /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB1E2662CC14E6400921517 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2652CC14E6400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */

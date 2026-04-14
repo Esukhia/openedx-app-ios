@@ -4,6 +4,7 @@ import yaml
 from pathlib import Path
 import sys
 import json
+import shutil
 
 class PlistManager:
     def __init__(self, config_dir, config_files):
@@ -228,14 +229,36 @@ class ConfigurationManager:
             scheme = ["fb" + key]
             self.add_url_scheme(scheme, plist, False)
 
+    def replace_placeholders_in_plist(self, plist_path, config):
+        """Replace placeholder strings in Info.plist with actual values from config."""
+        try:
+            with open(plist_path, 'r', encoding='utf-8') as file:
+                content = file.read()
+
+            google = config.get('GOOGLE', {})
+            client_id = google.get('CLIENT_ID', '')
+            url_scheme = google.get('URL_SCHEME', '')
+
+            if client_id:
+                content = content.replace('YOUR_GOOGLE_CLIENT_ID_HERE', client_id)
+            if url_scheme:
+                content = content.replace('YOUR_GOOGLE_URL_SCHEME_HERE', url_scheme)
+
+            with open(plist_path, 'w', encoding='utf-8') as file:
+                file.write(content)
+
+            print(f"Replaced placeholders in {plist_path}")
+        except Exception as e:
+            print(f"Warning: Could not replace placeholders in plist: {e}")
+
     def add_google_config(self, config, plist):
         google = config.get('GOOGLE', {})
-        key = google.get('GOOGLE_PLUS_KEY')
         client_id = google.get('CLIENT_ID')
+        url_scheme = google.get('URL_SCHEME')
 
-        if key and client_id:
+        if client_id and url_scheme:
             plist["GIDClientID"] = client_id
-            scheme = ['.'.join(reversed(key.split('.')))]
+            scheme = [url_scheme]
             self.add_url_scheme(scheme, plist, False)
 
     def add_microsoft_config(self, config, plist):
@@ -296,6 +319,16 @@ def get_current_config(configuration, scheme_mappings):
 def process_plist_files(configuration_manager, plist_manager, config):
     firebase_info_plist_path = plist_manager.get_firebase_config_path()
     info_plist_path = plist_manager.get_app_info_plist_path()
+
+    # Copy from template and replace placeholders to ensure idempotent builds
+    srcroot = os.getenv('SRCROOT', '.')
+    source_info_plist = os.path.join(srcroot, 'OpenEdX', 'Info.plist')
+    template_plist = os.path.join(srcroot, 'OpenEdX', 'Info.template.plist')
+    if os.path.exists(template_plist):
+        shutil.copy(template_plist, source_info_plist)
+        configuration_manager.replace_placeholders_in_plist(source_info_plist, config)
+        print(f"Generated Info.plist from template with config values")
+
     info_plist_content = plist_manager.get_info_plist_contents(info_plist_path)
 
     configuration_manager.add_firebase_config(config, firebase_info_plist_path)
