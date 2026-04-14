@@ -186,6 +186,7 @@
 		CE517F562D9C17D40012EF71 /* HTMLContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLContentView.swift; sourceTree = "<group>"; };
 		CE517F582D9C17F60012EF71 /* HTMLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLImageView.swift; sourceTree = "<group>"; };
 		ED561A5DE961B1E12B42F4E0 /* Pods-App-Discussion.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.releasedev.xcconfig"; sourceTree = "<group>"; };
+		F00A47CEA5203EF4CF852793 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F57B9404423B3E624DD25D81 /* Pods-App-Discussion.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.releasestage.xcconfig"; sourceTree = "<group>"; };
 		FE1509B856949D2742A10836 /* Pods-App-Discussion-DiscussionTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion-DiscussionTests.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Discussion-DiscussionTests/Pods-App-Discussion-DiscussionTests.releasedev.xcconfig"; sourceTree = "<group>"; };
 		FE354404965EB60EEAECD1D7 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -677,13 +678,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Discussion-DiscussionTests/Pods-App-Discussion-DiscussionTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Discussion-DiscussionTests/Pods-App-Discussion-DiscussionTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -822,9 +819,9 @@
 			children = (
 				0218196128F734CD00202564 /* en */,
 				FE354404965EB60EEAECD1D7 /* zh-HK */,
-				C5174B5C8699731538357293 /* zh-HK */,
 				139A4A26B7B559798D0E44F9 /* zh-HK */,
 				30614CCFB3B438BF89011C9E /* zh-HK */,
+				F00A47CEA5203EF4CF852793 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

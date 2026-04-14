@@ -280,3 +280,7 @@
 
 "VIDEO_NAVIGATION.NO_VIDEO_TITLE" = "No Video Title";
 
+"LOCKED_CONTENT.TITLE" = "Content Locked";
+"LOCKED_CONTENT.DESCRIPTION" = "You must complete \"%@\" before accessing this section.";
+"LOCKED_CONTENT.GO_TO_PREREQUISITE" = "Go To Prerequisite Section";
+

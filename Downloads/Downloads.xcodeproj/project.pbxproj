@@ -372,7 +372,7 @@
 			);
 			mainGroup = CEB36DFF2D6A0D0B00907A89;
 			packageReferences = (
-				CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = CEB36E0A2D6A0D0B00907A89 /* Products */;
 			projectDirPath = "";
@@ -434,13 +434,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Downloads-DownloadsTests/Pods-App-Downloads-DownloadsTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Downloads-DownloadsTests/Pods-App-Downloads-DownloadsTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1589,7 +1585,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -1602,12 +1598,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CEB36E272D6A0D6C00907A89 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB36E592D6A2B9900907A89 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB36E262D6A0D6C00907A89 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */

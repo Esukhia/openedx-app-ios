@@ -91,6 +91,7 @@
 		4BC4CB3BD3F2BC4E453AC9B8 /* Pods-App-Dashboard.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.debugprod.xcconfig"; sourceTree = "<group>"; };
 		65CD5AB152F3DEC88D48AE2D /* Pods-App-Dashboard.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.debugdev.xcconfig"; sourceTree = "<group>"; };
 		6BA3D1943CAB859ECDC95C76 /* Pods-App-Dashboard.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.releasedev.xcconfig"; sourceTree = "<group>"; };
+		7D264CCE91E35202F8D21317 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		89D6F05AC9854DBBAB091D9C /* Pods-App-Dashboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Dashboard.release.xcconfig"; path = "Target Support Files/Pods-App-Dashboard/Pods-App-Dashboard.release.xcconfig"; sourceTree = "<group>"; };
 		95244227A515A7A5A9BE5EF3 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		97E7DF0A2B7A3EAF00A2A09B /* CourseEnrollmentsMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseEnrollmentsMock.swift; sourceTree = "<group>"; };
@@ -488,13 +489,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Dashboard-DashboardTests/Pods-App-Dashboard-DashboardTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Dashboard-DashboardTests/Pods-App-Dashboard-DashboardTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -563,6 +560,7 @@
 				95244227A515A7A5A9BE5EF3 /* zh-HK */,
 				18764DFCB73BB1547625AFDB /* zh-HK */,
 				C9114F388B8559A2ECA33E31 /* zh-HK */,
+				7D264CCE91E35202F8D21317 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -430,4 +430,56 @@ public final class CourseUnitViewModel: ObservableObject {
         }
         return false
     }
+
+    @MainActor
+    func getCourseVideoBlocks() async {
+        isVideosForNavigationLoading = true
+        do {
+            let structure: CourseStructure
+            if let existing = courseVideosStructure {
+                structure = existing
+            } else {
+                structure = try await interactor.getCourseBlocks(courseID: courseID)
+                courseVideosStructure = structure
+            }
+            allVideosForNavigation = try await interactor.getAllVideosForNavigation(structure: structure)
+            if let current = allVideosForNavigation.first(where: {
+                verticals[verticalIndex].childs.contains($0)
+            }) {
+                currentVideoIndex = allVideosForNavigation.firstIndex(of: current)
+            }
+            allVideosFetched = true
+        } catch {
+            errorMessage = CoreLocalization.Error.unknownError
+        }
+        isVideosForNavigationLoading = false
+    }
+
+    func handleVideoTap(video: CourseBlock) {
+        currentVideoIndex = allVideosForNavigation.firstIndex(of: video)
+        guard let data = VerticalData.dataFor(blockId: video.id, in: chapters) else { return }
+        router.replaceCourseUnit(
+            courseName: courseName,
+            blockId: video.id,
+            courseID: courseID,
+            verticalIndex: data.verticalIndex,
+            chapters: chapters,
+            chapterIndex: data.chapterIndex,
+            sequentialIndex: data.sequentialIndex,
+            animated: false,
+            showVideoNavigation: true,
+            courseVideoStructure: courseVideosStructure
+        )
+    }
+
+    func createBreadCrumpsForVideoNavigation(video: CourseBlock) -> String {
+        for chapter in chapters {
+            for sequential in chapter.childs {
+                for vertical in sequential.childs where vertical.childs.contains(where: { $0.id == video.id }) {
+                    return "\(chapter.displayName) / \(sequential.displayName)"
+                }
+            }
+        }
+        return ""
+    }
 }

@@ -99,6 +99,7 @@
 		47BCFB7C19382EECF15131B6 /* Pods_App_Authorization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Authorization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F0490B86383DB231871140 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		49A74E7AC5109DFA06BDAF3A /* Pods-App-Authorization-AuthorizationTests.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization-AuthorizationTests.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests.releasedev.xcconfig"; sourceTree = "<group>"; };
+		4C2446C48CC05F53072E3E7A /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4FAE9B7FD61FF88C9C4FE1E8 /* Pods_App_Authorization_AuthorizationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Authorization_AuthorizationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68795EBDC3000C1B12F9432C /* Pods-App-Authorization.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.debugprod.xcconfig"; sourceTree = "<group>"; };
 		7A84BB166492D4E46FBCF01C /* Pods-App-Authorization-AuthorizationTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization-AuthorizationTests.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests.debugdev.xcconfig"; sourceTree = "<group>"; };
@@ -537,13 +538,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Authorization-AuthorizationTests/Pods-App-Authorization-AuthorizationTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -637,6 +634,7 @@
 				EAE24A95955FEE63176F48A5 /* zh-HK */,
 				D02C45F19BDDB8DF8C740629 /* zh-HK */,
 				B4764FCF91F0355588EF98D2 /* zh-HK */,
+				4C2446C48CC05F53072E3E7A /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

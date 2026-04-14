@@ -113,6 +113,7 @@
 		9F968F74AD7F4B5F6E5A6084 /* Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig"; sourceTree = "<group>"; };
 		AAC0D83F5D34491E9FABCABC /* Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerFilterSheet.swift; sourceTree = "<group>"; };
+		C5D34B0F8D624CD27A761BFE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CFC8494D299A66080055E497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		CFC8494F299BE52C0055E497 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		E08D12E22B482D720096311A /* Course.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Course.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -536,13 +537,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -639,6 +636,7 @@
 				432349FD8C4A8FA238A82DF5 /* zh-HK */,
 				4FCE44CF9D3C98D93880CBF1 /* zh-HK */,
 				066B4FDFBFC4D59BF1BDC599 /* zh-HK */,
+				C5D34B0F8D624CD27A761BFE /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
