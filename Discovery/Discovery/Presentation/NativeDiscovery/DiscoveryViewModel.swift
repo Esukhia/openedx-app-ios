@@ -15,8 +15,6 @@ public final class DiscoveryViewModel: ObservableObject {
     var nextPage = 1
     var totalPages = 1
     private(set) var fetchInProgress = false
-    private var cancellables = Set<AnyCancellable>()
-    private var updateShowedOnce: Bool = false
     
     @Published var courses: [CourseItem] = []
     @Published var partners: [Partner] = []
@@ -42,7 +40,7 @@ public final class DiscoveryViewModel: ObservableObject {
     let connectivity: ConnectivityProtocol
     private let interactor: DiscoveryInteractorProtocol
     private let analytics: DiscoveryAnalytics
-    let storage: CoreStorage
+    var storage: CoreStorage
     
     public init(
         router: DiscoveryRouter,
@@ -73,29 +71,6 @@ public final class DiscoveryViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    func setupNotifications() {
-        NotificationCenter.default.publisher(for: .onActualVersionReceived)
-            .sink { [weak self] notification in
-                if let latestVersion = notification.object as? String {
-                    if let info = Bundle.main.infoDictionary {
-                        guard let currentVersion = info["CFBundleShortVersionString"] as? String,
-                                let self else { return }
-                        switch self.compareVersions(currentVersion, latestVersion) {
-                        case .orderedAscending:
-                            if self.updateShowedOnce == false {
-                                DispatchQueue.main.async {
-                                    self.router.showUpdateRecomendedView()
-                                }
-                                self.updateShowedOnce = true
-                            }
-                        default:
-                            return
-                        }
-                    }
-                }
-            }.store(in: &cancellables)
     }
     
     @MainActor
@@ -184,6 +159,7 @@ public final class DiscoveryViewModel: ObservableObject {
             } else if error.isInternetError || error is NoCachedDataError {
                 errorMessage = CoreLocalization.Error.slowOrNoInternetConnection
             } else if error.isUpdateRequeiredError {
+                storage.updateAppRequired = true
                 self.router.showUpdateRequiredView(showAccountLink: true)
             } else {
                 errorMessage = CoreLocalization.Error.unknownError

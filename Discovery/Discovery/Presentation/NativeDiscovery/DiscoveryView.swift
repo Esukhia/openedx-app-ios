@@ -262,7 +262,6 @@ public struct DiscoveryView: View {
                     viewModel.router.showCourseDetais(courseID: courseID, title: courseTitle)
                 }
             }
-            viewModel.setupNotifications()
         }
         .sheet(isPresented: $viewModel.showPartnerFilter) {
             PartnerFilterSheet(

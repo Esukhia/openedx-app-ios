@@ -278,7 +278,7 @@ public struct SettingsView: View {
                         onCloseTapped: {
                             viewModel.router.dismiss(animated: true)
                         },
-                        okTapped: {
+                        firstButtonTapped: {
                             viewModel.router.dismiss(animated: true)
                             Task {
                                 await viewModel.logOut()
@@ -316,7 +316,8 @@ public struct SettingsView: View {
         coreAnalytics: CoreAnalyticsMock(),
         config: ConfigMock(),
         corePersistence: CorePersistenceMock(),
-        connectivity: Connectivity()
+        connectivity: Connectivity(),
+        coreStorage: CoreStorageMock()
     )
     
     SettingsView(viewModel: vm)

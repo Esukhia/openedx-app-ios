@@ -130,7 +130,8 @@ public final class CourseUnitViewModel: ObservableObject {
     var verticals: [CourseVertical]
     var verticalIndex: Int
     var courseName: String
-    
+
+    @Published var courseVideosStructure: CourseStructure?
     @Published var index: Int = 0
     var previousLesson: String = ""
     var nextLesson: String = ""
@@ -140,7 +141,12 @@ public final class CourseUnitViewModel: ObservableObject {
             showError = errorMessage != nil
         }
     }
-    
+
+    @Published public var allVideosForNavigation: [CourseBlock] = []
+    @Published public var allVideosFetched = false
+    @Published public var isVideosForNavigationLoading: Bool = false
+    @Published var currentVideoIndex: Int?
+
     var lessonID: String
     var courseID: String
     
@@ -155,6 +161,8 @@ public final class CourseUnitViewModel: ObservableObject {
     let chapters: [CourseChapter]
     let chapterIndex: Int
     let sequentialIndex: Int
+    
+    var showVideoNavigation: Bool = false
 
     var streamingQuality: StreamingQuality {
         storage.userSettings?.streamingQuality ?? .auto
@@ -182,7 +190,9 @@ public final class CourseUnitViewModel: ObservableObject {
         analytics: CourseAnalytics,
         connectivity: ConnectivityProtocol,
         storage: CourseStorage,
-        manager: DownloadManagerProtocol
+        manager: DownloadManagerProtocol,
+        showVideoNavigation: Bool = false,
+        courseVideosStructure: CourseStructure? = nil
     ) {
         self.lessonID = lessonID
         self.courseID = courseID
@@ -199,6 +209,8 @@ public final class CourseUnitViewModel: ObservableObject {
         self.connectivity = connectivity
         self.manager = manager
         self.storage = storage
+        self.showVideoNavigation = showVideoNavigation
+        self.courseVideosStructure = courseVideosStructure
     }
     
     private func selectLesson() -> Int {
@@ -380,7 +392,9 @@ public final class CourseUnitViewModel: ObservableObject {
                 chapters: chapters,
                 chapterIndex: data.chapterIndex,
                 sequentialIndex: data.sequentialIndex,
-                animated: animated
+                animated: animated,
+                showVideoNavigation: false,
+                courseVideoStructure: nil
             )
         }
     }
