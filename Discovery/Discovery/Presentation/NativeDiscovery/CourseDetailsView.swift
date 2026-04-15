@@ -433,62 +433,6 @@ private struct CourseStateView: View {
                     .padding(.bottom, 16)
                     .accessibilityIdentifier("course_duration_text")
             }
-            Group {
-            if viewModel.connectivity.isInternetAvaliable {
-                    StyledButton(DiscoveryLocalization.Details.enrollNow, action: {
-                        if !viewModel.userloggedIn {
-                            viewModel.router.presentView(
-                                transitionStyle: .crossDissolve,
-                                animated: true
-                            ) {
-                                AlertView(
-                                    alertTitle: DiscoveryLocalization.Alert.authorization,
-                                    alertMessage: DiscoveryLocalization.Alert.pleaseEnterTheSystem,
-                                    positiveAction: CoreLocalization.Alert.signIn,
-                                    onCloseTapped: {
-                                        self.viewModel.router.dismiss(animated: true)
-                                    },
-                                    firstButtonTapped: {
-                                        self.viewModel.router.dismiss(animated: false)
-                                        viewModel.router.showLoginScreen(
-                                            sourceScreen: .courseDetail(
-                                                courseDetails.courseID,
-                                                viewModel.courseDetails?.courseTitle ?? ""
-                                            )
-                                        )
-                                    },
-                                    secondButtonTapped: {
-                                        self.viewModel.router.dismiss(animated: false)
-                                        viewModel.router.showRegisterScreen(
-                                            sourceScreen: .courseDetail(
-                                                courseDetails.courseID,
-                                                courseDetails.courseTitle)
-                                        )
-
-                                    },
-                                    type: .authorization
-                                )
-                            }
-                        } else {
-                            Task {
-                                await viewModel.enrollToCourse(id: courseDetails.courseID)
-                            }
-                        }
-                    })
-                    .padding(16)
-                } else {
-                    HStack(alignment: .center, spacing: 10) {
-                        CoreAssets.noWifiMini.swiftUIImage
-                            .renderingMode(.template)
-                            .foregroundStyle(Theme.Colors.warning)
-                        Text(DiscoveryLocalization.Details.enrollmentNoInternet)
-                            .multilineTextAlignment(.leading)
-                            .font(Theme.Fonts.titleSmall)
-                        Spacer()
-                    }.cardStyle(paddingAll: 12, bgColor: Theme.Colors.textInputUnfocusedBackground, strokeColor: .clear)
-                }
-            }
-            .accessibilityIdentifier("enroll_button")
         case .enrollClose:
             VStack(spacing: 8) {
                 Text(DiscoveryLocalization.Details.enrollmentDateIsOver)

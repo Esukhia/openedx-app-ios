@@ -12,7 +12,7 @@ import Core
 public struct CourseProgressDetails: Sendable {
     public let verifiedMode: String?
     public let accessExpiration: String?
-    public let certificateData: CourseProgressCertificateData
+    public let certificateData: CourseProgressCertificateData?
     public let completionSummary: CourseProgressCompletionSummary
     public let courseGrade: CourseProgressGrade
     public let creditCourseRequirements: String?
@@ -26,7 +26,7 @@ public struct CourseProgressDetails: Sendable {
     public init(
         verifiedMode: String?,
         accessExpiration: String?,
-        certificateData: CourseProgressCertificateData,
+        certificateData: CourseProgressCertificateData?,
         completionSummary: CourseProgressCompletionSummary,
         courseGrade: CourseProgressGrade,
         creditCourseRequirements: String?,

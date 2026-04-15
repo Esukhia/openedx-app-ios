@@ -127,6 +127,7 @@
 		EAE24A95955FEE63176F48A5 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F52826C68AEA1CF4769389EA /* Pods-App-Authorization.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.releasestage.xcconfig"; sourceTree = "<group>"; };
 		F5802BBA113276950ABCD9B3 /* Pods-App-Authorization.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Authorization.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Authorization/Pods-App-Authorization.releaseprod.xcconfig"; sourceTree = "<group>"; };
+		FEE040078C0C90F0D876B540 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,6 +636,7 @@
 				D02C45F19BDDB8DF8C740629 /* zh-HK */,
 				B4764FCF91F0355588EF98D2 /* zh-HK */,
 				4C2446C48CC05F53072E3E7A /* zh-HK */,
+				FEE040078C0C90F0D876B540 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

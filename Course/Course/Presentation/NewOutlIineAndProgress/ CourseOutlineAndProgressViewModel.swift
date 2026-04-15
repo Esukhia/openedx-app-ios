@@ -145,12 +145,12 @@ public class CourseOutlineAndProgressViewModel: ObservableObject {
     }
     
     public var hasCertificate: Bool {
-        guard let certStatus = courseProgress?.certificateData.certStatus else { return false }
+        guard let certStatus = courseProgress?.certificateData?.certStatus else { return false }
         return certStatus.contains("passing") || certStatus.contains("downloadable")
     }
     
     public var certificateUrl: String? {
-        courseProgress?.certificateData.downloadUrl
+        courseProgress?.certificateData?.downloadUrl
     }
     
     public var requiredGradePercentage: Double {

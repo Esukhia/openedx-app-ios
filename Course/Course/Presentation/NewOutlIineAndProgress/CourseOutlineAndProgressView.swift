@@ -9,8 +9,8 @@ import WhatsNew
 public struct CourseOutlineAndProgressView: View {
     
     // MARK: - Variables
-    @StateObject private var viewModelContainer: CourseContainerViewModel
-    @StateObject private var viewModelProgress: CourseProgressViewModel
+    @ObservedObject private var viewModelContainer: CourseContainerViewModel
+    @ObservedObject private var viewModelProgress: CourseProgressViewModel
     private let title: String
     private let courseID: String
     private let isVideo: Bool
@@ -93,8 +93,8 @@ public struct CourseOutlineAndProgressView: View {
         connectivity: ConnectivityProtocol
     ) {
         self.title = title
-        self._viewModelContainer = StateObject(wrappedValue: { viewModelContainer }())
-        self._viewModelProgress = StateObject(wrappedValue: { viewModelProgress}())
+        self.viewModelContainer = viewModelContainer
+        self.viewModelProgress = viewModelProgress
         self.courseID = courseID
         self.isVideo = isVideo
         self._selection = selection

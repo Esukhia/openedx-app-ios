@@ -17,7 +17,7 @@ struct CourseProgressScreenView: View {
     @Binding private var collapsed: Bool
     @Binding private var viewHeight: CGFloat
     
-    @StateObject
+    @ObservedObject
     private var viewModel: CourseProgressViewModel
     
     private let connectivity: ConnectivityProtocol
@@ -35,9 +35,11 @@ struct CourseProgressScreenView: View {
         self._coordinate = coordinate
         self._collapsed = collapsed
         self._viewHeight = viewHeight
-        self._viewModel = StateObject(wrappedValue: { viewModel }())
+        self.viewModel = viewModel
         self.connectivity = connectivity
-        self.viewModel.courseStructure = courseStructure
+        if let courseStructure = courseStructure {
+            viewModel.courseStructure = courseStructure
+        }
     }
     
     public var body: some View {

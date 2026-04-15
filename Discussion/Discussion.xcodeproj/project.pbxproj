@@ -167,6 +167,7 @@
 		59F3BBE6ACFA3C87C2294DA0 /* Pods-App-Discussion-DiscussionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion-DiscussionTests.release.xcconfig"; path = "Target Support Files/Pods-App-Discussion-DiscussionTests/Pods-App-Discussion-DiscussionTests.release.xcconfig"; sourceTree = "<group>"; };
 		5F59EC4433FF0AE0743D284D /* Pods-App-Discussion.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		66A7A0375EDDEB8948165EAD /* Pods_App_Discussion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Discussion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98A142EAAA4E852080BA3B2B /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A55CEBCC51BDC30B8354E258 /* Pods-App-Discussion.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.debugprod.xcconfig"; sourceTree = "<group>"; };
 		ACA8EF2DEDDB7695162C381A /* Pods-App-Discussion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.debug.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.debug.xcconfig"; sourceTree = "<group>"; };
 		ACDA8EE733B97BCD8689A0B4 /* Pods-App-Discussion.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.debugstage.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.debugstage.xcconfig"; sourceTree = "<group>"; };
@@ -822,6 +823,7 @@
 				139A4A26B7B559798D0E44F9 /* zh-HK */,
 				30614CCFB3B438BF89011C9E /* zh-HK */,
 				F00A47CEA5203EF4CF852793 /* zh-HK */,
+				98A142EAAA4E852080BA3B2B /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

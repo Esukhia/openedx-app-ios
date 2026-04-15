@@ -13,7 +13,7 @@ public extension DataLayer {
     struct CourseProgressResponse: Codable, Sendable {
         public let verifiedMode: String?
         public let accessExpiration: String?
-        public let certificateData: CertificateData
+        public let certificateData: CertificateData?
         public let completionSummary: CompletionSummary
         public let courseGrade: CourseGrade
         public let creditCourseRequirements: String?
@@ -50,7 +50,7 @@ public extension DataLayer {
         public init(
             verifiedMode: String?,
             accessExpiration: String?,
-            certificateData: CertificateData,
+            certificateData: CertificateData?,
             completionSummary: CompletionSummary,
             courseGrade: CourseGrade,
             creditCourseRequirements: String?,
@@ -300,7 +300,7 @@ public extension DataLayer.CourseProgressResponse {
         CourseProgressDetails(
             verifiedMode: verifiedMode,
             accessExpiration: accessExpiration,
-            certificateData: certificateData.domain,
+            certificateData: certificateData?.domain,
             completionSummary: completionSummary.domain,
             courseGrade: courseGrade.domain,
             creditCourseRequirements: creditCourseRequirements,

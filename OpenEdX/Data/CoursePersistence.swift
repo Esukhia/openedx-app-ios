@@ -397,12 +397,14 @@ public final class CoursePersistence: CoursePersistenceProtocol {
             newProgress.hasScheduledContent = courseProgress.hasScheduledContent
             newProgress.assignmentColors = courseProgress.gradingPolicy.assignmentColors
             
-            let certificateData = CDCertificateData(context: context)
-            certificateData.certStatus = courseProgress.certificateData.certStatus
-            certificateData.certWebViewUrl = courseProgress.certificateData.certWebViewUrl
-            certificateData.downloadUrl = courseProgress.certificateData.downloadUrl
-            certificateData.certificateAvailableDate = courseProgress.certificateData.certificateAvailableDate
-            newProgress.certificateData = certificateData
+            if let progressCertificateData = courseProgress.certificateData {
+                let certificateData = CDCertificateData(context: context)
+                certificateData.certStatus = progressCertificateData.certStatus
+                certificateData.certWebViewUrl = progressCertificateData.certWebViewUrl
+                certificateData.downloadUrl = progressCertificateData.downloadUrl
+                certificateData.certificateAvailableDate = progressCertificateData.certificateAvailableDate
+                newProgress.certificateData = certificateData
+            }
             
             let completionSummary = CDCompletionSummary(context: context)
             completionSummary.completeCount = Int32(courseProgress.completionSummary.completeCount)
