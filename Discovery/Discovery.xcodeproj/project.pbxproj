@@ -107,6 +107,7 @@
 		57E62A3FCA858F5A1FF77347 /* Pods-App-Discovery.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery.releaseprod.xcconfig"; path = "Target Support Files/Pods-App-Discovery/Pods-App-Discovery.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		617697245CE8F67AF2BBE250 /* Pods-App-Discovery.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Discovery/Pods-App-Discovery.debugprod.xcconfig"; sourceTree = "<group>"; };
 		69F97EEB323CA56E818CD6C4 /* Pods-App-Discovery-DiscoveryUnitTests.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.debugprod.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.debugprod.xcconfig"; sourceTree = "<group>"; };
+		768549E29F76430AE049F524 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		780FC373E1D479E58870BD85 /* Pods_App_Discovery_DiscoveryUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Discovery_DiscoveryUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		836BEF3BBFF8FD02C62D862C /* Pods-App-Discovery.debugstage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery.debugstage.xcconfig"; path = "Target Support Files/Pods-App-Discovery/Pods-App-Discovery.debugstage.xcconfig"; sourceTree = "<group>"; };
 		83FB998DD9C5B57B61B88170 /* Pods-App-Discovery-DiscoveryUnitTests.releasestage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.releasestage.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.releasestage.xcconfig"; sourceTree = "<group>"; };
@@ -639,6 +640,7 @@
 				066B4FDFBFC4D59BF1BDC599 /* zh-HK */,
 				C5D34B0F8D624CD27A761BFE /* zh-HK */,
 				3AED433A90A90640BAA00C49 /* zh-HK */,
+				768549E29F76430AE049F524 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

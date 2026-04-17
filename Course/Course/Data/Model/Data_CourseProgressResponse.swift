@@ -22,7 +22,7 @@ public extension DataLayer {
         public let gradingPolicy: GradingPolicy
         public let hasScheduledContent: Bool?
         public let sectionScores: [SectionScore]
-        public let studioUrl: String
+        public let studioUrl: String?
         public let username: String
         public let userHasPassingGrade: Bool
         public let verificationData: VerificationData
@@ -59,7 +59,7 @@ public extension DataLayer {
             gradingPolicy: GradingPolicy,
             hasScheduledContent: Bool?,
             sectionScores: [SectionScore],
-            studioUrl: String,
+            studioUrl: String?,
             username: String,
             userHasPassingGrade: Bool,
             verificationData: VerificationData,

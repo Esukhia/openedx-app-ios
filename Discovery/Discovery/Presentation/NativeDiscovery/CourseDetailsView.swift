@@ -158,37 +158,41 @@ public struct CourseDetailsView: View {
                                         }
 
                                         // Course Overview (HTML)
-                                        VStack(alignment: .leading, spacing: 12) {
-                                            HStack {
-                                                Image(systemName: "list.bullet.clipboard.fill")
-                                                    .foregroundColor(Theme.Colors.accentColor)
-                                                    .font(.system(size: 16))
-                                                Text("Course Overview")
-                                                    .font(Theme.Fonts.titleSmall)
-                                                    .foregroundColor(Theme.Colors.textSecondary)
-                                            }
-                                            .padding(.horizontal, 16)
-
-                                            ZStack(alignment: .topLeading) {
-                                                HTMLFormattedText(
-                                                    viewModel.cssInjector.injectCSS(
-                                                        colorScheme: themeManager.resolvedColorScheme ?? colorScheme,
-                                                        html: courseDetails.overviewHTML,
-                                                        type: .discovery,
-                                                        fontSize: 120,
-                                                        screenWidth: proxy.size.width - 48
-                                                    ),
-                                                    processing: { rendering in
-                                                        isOverviewRendering = rendering
-                                                    }
-                                                )
+                                        if !courseDetails.overviewHTML
+                                            .trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                            VStack(alignment: .leading, spacing: 12) {
+                                                HStack {
+                                                    Image(systemName: "list.bullet.clipboard.fill")
+                                                        .foregroundColor(Theme.Colors.accentColor)
+                                                        .font(.system(size: 16))
+                                                    Text("Course Overview")
+                                                        .font(Theme.Fonts.titleSmall)
+                                                        .foregroundColor(Theme.Colors.textSecondary)
+                                                }
                                                 .padding(.horizontal, 16)
 
-                                                if isOverviewRendering {
-                                                    ProgressBar(size: 40, lineWidth: 8)
-                                                        .padding(.top, 20)
-                                                        .frame(maxWidth: .infinity)
-                                                        .accessibilityIdentifier("progress_bar")
+                                                ZStack(alignment: .topLeading) {
+                                                    HTMLFormattedText(
+                                                        viewModel.cssInjector.injectCSS(
+                                                            colorScheme: themeManager.resolvedColorScheme
+                                                                ?? colorScheme,
+                                                            html: courseDetails.overviewHTML,
+                                                            type: .discovery,
+                                                            fontSize: 120,
+                                                            screenWidth: proxy.size.width - 48
+                                                        ),
+                                                        processing: { rendering in
+                                                            isOverviewRendering = rendering
+                                                        }
+                                                    )
+                                                    .padding(.horizontal, 16)
+
+                                                    if isOverviewRendering {
+                                                        ProgressBar(size: 40, lineWidth: 8)
+                                                            .padding(.top, 20)
+                                                            .frame(maxWidth: .infinity)
+                                                            .accessibilityIdentifier("progress_bar")
+                                                    }
                                                 }
                                             }
                                         }
