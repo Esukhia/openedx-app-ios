@@ -207,7 +207,7 @@ public extension DataLayer.PrimaryEnrollment {
             hasAccess: primary.course?.coursewareAccess.hasAccess ?? true,
             courseStart: primary.course?.start.flatMap { Date(iso8601: $0) },
             courseEnd: primary.course?.end.flatMap { Date(iso8601: $0) },
-            courseBanner: baseURL + (primary.course?.media.courseImage?.url ?? ""),
+            courseBanner: (primary.course?.media.courseImage?.url ?? "").prependingBaseURL(baseURL),
             futureAssignments: futureAssignments.map { createAssignment(from: $0) },
             pastAssignments: pastAssignments.map { createAssignment(from: $0) },
             progressEarned: primary.progress?.assignmentsCompleted ?? 0,
@@ -246,8 +246,8 @@ public extension DataLayer.PrimaryEnrollment {
         count: Int
     ) -> CourseItem {
         let imageUrl = enrollment.course.media.courseImage?.url ?? ""
-        let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let fullImageURL = baseURL + encodedUrl
+        let fullImageURL = (imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? imageUrl)
+            .prependingBaseURL(baseURL)
         
         return CourseItem(
             name: enrollment.course.name,

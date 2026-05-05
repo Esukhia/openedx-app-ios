@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		"'CE1AC41BFAF7140618645'" = {isa = PBXBuildFile; fileRef = CE1AC41AFAF7140618645; };
+		"'CE1AC45F0EDBBF0618645'" = {isa = PBXBuildFile; fileRef = CE1AC45E0EDBBF0618645; };
 		02197DC52C1AFC0600CC8FF2 /* CalendarSyncStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EBC7542C19CFCF00BE182C /* CalendarSyncStatusView.swift */; };
 		02228B2F2C221412009A5F28 /* LargestDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02228B2E2C221412009A5F28 /* LargestDownloadsView.swift */; };
 		02280F5E294B4FDA0032823A /* CourseCoreModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02280F5C294B4FDA0032823A /* CourseCoreModel.xcdatamodeld */; };
@@ -116,8 +118,6 @@
 		CE1AC40C2E06DCC900618645 /* OverallGradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AC40A2E06DCC900618645 /* OverallGradeView.swift */; };
 		CE1AC40D2E06DCC900618645 /* GradeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AC4092E06DCC900618645 /* GradeItemView.swift */; };
 		CE1AC40E2E06DCC900618645 /* GradeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AC4082E06DCC900618645 /* GradeDetailsView.swift */; };
-		'CE1AC41BFAF7140618645' = {isa = PBXBuildFile; fileRef = CE1AC41AFAF7140618645; };
-		'CE1AC45F0EDBBF0618645' = {isa = PBXBuildFile; fileRef = CE1AC45E0EDBBF0618645; };
 		CE4BA8832E0806380050F2C7 /* CourseProgressViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BA8822E0806380050F2C7 /* CourseProgressViewModelTests.swift */; };
 		CE4BA9162E0AC3790050F2C7 /* CourseContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BA9142E0AC3790050F2C7 /* CourseContentView.swift */; };
 		CE4BA9192E0AC99A0050F2C7 /* ContentSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BA9172E0AC99A0050F2C7 /* ContentSegmentedControl.swift */; };
@@ -177,6 +177,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		"'CE1AC41AFAF7140618645'" = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressCircleView.swift; sourceTree = "<group>"; };
+		"'CE1AC45E0EDBBF0618645'" = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressView.swift; sourceTree = "<group>"; };
 		02228B2E2C221412009A5F28 /* LargestDownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargestDownloadsView.swift; sourceTree = "<group>"; };
 		02280F5D294B4FDA0032823A /* CourseCoreModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CourseCoreModel.xcdatamodel; sourceTree = "<group>"; };
 		02280F5F294B50030032823A /* CoursePersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePersistenceProtocol.swift; sourceTree = "<group>"; };
@@ -307,8 +309,6 @@
 		CE1AC4082E06DCC900618645 /* GradeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeDetailsView.swift; sourceTree = "<group>"; };
 		CE1AC4092E06DCC900618645 /* GradeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeItemView.swift; sourceTree = "<group>"; };
 		CE1AC40A2E06DCC900618645 /* OverallGradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallGradeView.swift; sourceTree = "<group>"; };
-		'CE1AC41AFAF7140618645' = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressCircleView.swift; sourceTree = "<group>"; };
-		'CE1AC45E0EDBBF0618645' = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressView.swift; sourceTree = "<group>"; };
 		CE4BA8822E0806380050F2C7 /* CourseProgressViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressViewModelTests.swift; sourceTree = "<group>"; };
 		CE4BA9142E0AC3790050F2C7 /* CourseContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseContentView.swift; sourceTree = "<group>"; };
 		CE4BA9172E0AC99A0050F2C7 /* ContentSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSegmentedControl.swift; sourceTree = "<group>"; };

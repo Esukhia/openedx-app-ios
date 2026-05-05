@@ -8,6 +8,21 @@
 import Foundation
 
 public extension String {
+    /// Prepends `baseURL` only when the receiver is a relative path.
+    /// Returns the receiver unchanged if it is empty or already an absolute http(s) URL.
+    /// Handles trailing-slash / leading-slash mismatches to avoid double or missing slashes.
+    func prependingBaseURL(_ baseURL: String) -> String {
+        if isEmpty { return "" }
+        if hasPrefix("http://") || hasPrefix("https://") { return self }
+        if baseURL.hasSuffix("/") && hasPrefix("/") {
+            return String(baseURL.dropLast()) + self
+        }
+        if !baseURL.hasSuffix("/") && !hasPrefix("/") {
+            return baseURL + "/" + self
+        }
+        return baseURL + self
+    }
+
     func isAppVersionGreater(than otherVersion: String) -> Bool {
         let v1 = self.split(separator: ".").compactMap { Int($0) }
         let v2 = otherVersion.split(separator: ".").compactMap { Int($0) }

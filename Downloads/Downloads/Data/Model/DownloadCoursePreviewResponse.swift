@@ -30,7 +30,8 @@ public extension DataLayer.DownloadCoursePreviewResponse {
         return DownloadCoursePreview(
             id: id,
             name: name ?? "",
-            image: baseURL + (image?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""),
+            image: (image?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? image ?? "")
+                .prependingBaseURL(baseURL),
             totalSize: totalSize ?? 0
         )
     }
