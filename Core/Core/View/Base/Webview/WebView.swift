@@ -83,6 +83,7 @@ public struct WebView: UIViewRepresentable {
         var cancellables: [AnyCancellable] = []
         var parent: WebView
         var url: URL?
+        var hasRetried: Bool = false
 
         init(_ parent: WebView) {
             self.parent = parent
@@ -97,6 +98,7 @@ public struct WebView: UIViewRepresentable {
         
         public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
             webView.isHidden = false
+            hasRetried = false
             DispatchQueue.main.async {
                 self.parent.isLoading = false
                 self.parent.webViewNavDelegate?.showWebViewError()
@@ -109,6 +111,7 @@ public struct WebView: UIViewRepresentable {
             withError error: Error
         ) {
             webView.isHidden = false
+            hasRetried = false
             DispatchQueue.main.async {
                 self.parent.isLoading = false
                 self.parent.webViewNavDelegate?.showWebViewError()
@@ -117,6 +120,7 @@ public struct WebView: UIViewRepresentable {
         
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             webView.isHidden = false
+            hasRetried = false
             DispatchQueue.main.async {
                 self.parent.isLoading = false
             }
@@ -216,13 +220,36 @@ public struct WebView: UIViewRepresentable {
                 let baseURL = parent.viewModel.baseURL
                 
                 if (401...404).contains(response.statusCode) || url.absoluteString.hasPrefix(baseURL + "/login") {
+                    if self.hasRetried {
+                        return .allow
+                    }
+                    self.hasRetried = true
+                    
                     await parent.refreshCookies()
+                    
+                    let cookies = HTTPCookieStorage.shared.cookies ?? []
+                    let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+                    for cookie in cookies {
+                        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+                            cookieStore.setCookie(cookie) {
+                                continuation.resume()
+                            }
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
-                        if let url = webView.url {
-                            let request = URLRequest(url: url)
+                        self.parent.isLoading = true
+                        if let originalUrl = URL(string: self.parent.viewModel.url) {
+                            var request = URLRequest(url: originalUrl)
+                            let requestCookies = HTTPCookieStorage.shared.cookies(for: originalUrl) ?? []
+                            let headers = HTTPCookie.requestHeaderFields(with: requestCookies)
+                            for (key, value) in headers {
+                                request.addValue(value, forHTTPHeaderField: key)
+                            }
                             webView.load(request)
                         }
                     }
+                    return .cancel
                 }
             }
             return .allow
@@ -251,7 +278,12 @@ public struct WebView: UIViewRepresentable {
             }
             if webview?.url?.absoluteString.isEmpty ?? true,
                let url = URL(string: parent.viewModel.url) {
-                let request = URLRequest(url: url)
+                var request = URLRequest(url: url)
+                let requestCookies = HTTPCookieStorage.shared.cookies(for: url) ?? []
+                let headers = HTTPCookie.requestHeaderFields(with: requestCookies)
+                for (key, value) in headers {
+                    request.addValue(value, forHTTPHeaderField: key)
+                }
                 webview?.load(request)
             } else {
                 webview?.reload()
@@ -327,7 +359,12 @@ public struct WebView: UIViewRepresentable {
                     isLoading = true
                 }
                 context.coordinator.url = url
-                let request = URLRequest(url: url)
+                var request = URLRequest(url: url)
+                let requestCookies = HTTPCookieStorage.shared.cookies(for: url) ?? []
+                let headers = HTTPCookie.requestHeaderFields(with: requestCookies)
+                for (key, value) in headers {
+                    request.addValue(value, forHTTPHeaderField: key)
+                }
                 webview.load(request)
             }
         }

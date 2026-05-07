@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WebKit
 
 //sourcery: AutoMockable
 
@@ -25,6 +26,17 @@ public extension WebviewCookiesUpdateProtocol {
         do {
             updatingCookies = true
             try await authInteractor.getCookies(force: force)
+            
+            let cookies = HTTPCookieStorage.shared.cookies ?? []
+            let cookieStore = WKWebsiteDataStore.default().httpCookieStore
+            for cookie in cookies {
+                await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+                    cookieStore.setCookie(cookie) {
+                        continuation.resume()
+                    }
+                }
+            }
+            
             cookiesReady = true
             updatingCookies = false
             errorMessage = nil
