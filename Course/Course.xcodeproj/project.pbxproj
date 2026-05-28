@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		"'CE1AC41BFAF7140618645'" = {isa = PBXBuildFile; fileRef = CE1AC41AFAF7140618645; };
-		"'CE1AC45F0EDBBF0618645'" = {isa = PBXBuildFile; fileRef = CE1AC45E0EDBBF0618645; };
+		CE1AC41BFAF7140618645 /* CourseProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AC41AFAF7140618645 /* CourseProgressCircleView.swift */; };
+		CE1AC45F0EDBBF0618645 /* SegmentedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AC45E0EDBBF0618645 /* SegmentedProgressView.swift */; };
 		02197DC52C1AFC0600CC8FF2 /* CalendarSyncStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EBC7542C19CFCF00BE182C /* CalendarSyncStatusView.swift */; };
 		02228B2F2C221412009A5F28 /* LargestDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02228B2E2C221412009A5F28 /* LargestDownloadsView.swift */; };
 		02280F5E294B4FDA0032823A /* CourseCoreModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02280F5C294B4FDA0032823A /* CourseCoreModel.xcdatamodeld */; };
@@ -177,8 +177,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		"'CE1AC41AFAF7140618645'" = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressCircleView.swift; sourceTree = "<group>"; };
-		"'CE1AC45E0EDBBF0618645'" = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressView.swift; sourceTree = "<group>"; };
+		CE1AC41AFAF7140618645 /* CourseProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseProgressCircleView.swift; sourceTree = "<group>"; };
+		CE1AC45E0EDBBF0618645 /* SegmentedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedProgressView.swift; sourceTree = "<group>"; };
 		02228B2E2C221412009A5F28 /* LargestDownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargestDownloadsView.swift; sourceTree = "<group>"; };
 		02280F5D294B4FDA0032823A /* CourseCoreModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CourseCoreModel.xcdatamodel; sourceTree = "<group>"; };
 		02280F5F294B50030032823A /* CoursePersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursePersistenceProtocol.swift; sourceTree = "<group>"; };
@@ -1236,8 +1236,8 @@
 				CE1AC40C2E06DCC900618645 /* OverallGradeView.swift in Sources */,
 				CE1AC40D2E06DCC900618645 /* GradeItemView.swift in Sources */,
 				CE1AC40E2E06DCC900618645 /* GradeDetailsView.swift in Sources */,
-				CE1AC41BFAF7140618645,
-				CE1AC45F0EDBBF0618645,
+				CE1AC41BFAF7140618645 /* CourseProgressCircleView.swift in Sources */,
+				CE1AC45F0EDBBF0618645 /* SegmentedProgressView.swift in Sources */,
 				02454CA82A2619890043052A /* DiscussionView.swift in Sources */,
 				0265B4B728E2141D00E6EAFD /* Strings.swift in Sources */,
 				97C99C362B9A08FE004EEDE2 /* CalendarSyncProgressView.swift in Sources */,
