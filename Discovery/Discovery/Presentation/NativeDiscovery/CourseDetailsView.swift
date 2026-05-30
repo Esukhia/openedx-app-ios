@@ -19,6 +19,7 @@ public struct CourseDetailsView: View {
     @StateObject private var themeManager = ThemeManager.shared
     @Environment(\.isHorizontal) var isHorizontal
     @State private var isOverviewRendering = true
+    @State private var showPurchaseConfirmation = false
     private var title: String
     private var idiom: UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     private var courseID: String
@@ -68,7 +69,8 @@ public struct CourseDetailsView: View {
                                                 // MARK: - Course state button
                                                 CourseStateView(title: title,
                                                                 courseDetails: courseDetails,
-                                                                viewModel: viewModel)
+                                                                viewModel: viewModel,
+                                                                showPurchaseConfirmation: $showPurchaseConfirmation)
                                             }
                                             VStack {
                                                 // MARK: - Course Banner
@@ -111,7 +113,8 @@ public struct CourseDetailsView: View {
                                         // MARK: - Course state button
                                         CourseStateView(title: title,
                                                         courseDetails: courseDetails,
-                                                        viewModel: viewModel)
+                                                        viewModel: viewModel,
+                                                        showPurchaseConfirmation: $showPurchaseConfirmation)
                                         .padding(.top, 4)
                                     }
                                 
@@ -366,6 +369,24 @@ public struct CourseDetailsView: View {
             Theme.Colors.background
                 .ignoresSafeArea()
         )
+        .overlay(
+            Group {
+                if showPurchaseConfirmation,
+                   let purchaseURL = viewModel.courseDetails?.purchaseURL,
+                   !purchaseURL.isEmpty {
+                    PurchaseConfirmationView(
+                        purchaseURL: purchaseURL,
+                        onDismiss: {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                showPurchaseConfirmation = false
+                            }
+                        }
+                    )
+                    .transition(.opacity)
+                }
+            }
+            .animation(.easeInOut(duration: 0.25), value: showPurchaseConfirmation)
+        )
     }
 }
 
@@ -374,13 +395,16 @@ private struct CourseStateView: View {
     let title: String
     let courseDetails: CourseDetails
     let viewModel: CourseDetailsViewModel
+    @Binding var showPurchaseConfirmation: Bool
 
     init(title: String,
          courseDetails: CourseDetails,
-         viewModel: CourseDetailsViewModel) {
+         viewModel: CourseDetailsViewModel,
+         showPurchaseConfirmation: Binding<Bool>) {
         self.title = title
         self.courseDetails = courseDetails
         self.viewModel = viewModel
+        self._showPurchaseConfirmation = showPurchaseConfirmation
     }
 
     var body: some View {
@@ -393,6 +417,29 @@ private struct CourseStateView: View {
             VStack(spacing: 8) {
                 Group {
                 if viewModel.connectivity.isInternetAvaliable {
+                    if let purchaseURL = courseDetails.purchaseURL,
+                       !purchaseURL.isEmpty {
+                        StyledButton(
+                            DiscoveryLocalization.Details.buyCourse,
+                            action: {
+                                if !viewModel.userloggedIn {
+                                    viewModel.router.showLoginScreen(
+                                        sourceScreen: .courseDetail(
+                                            courseDetails.courseID,
+                                            courseDetails.courseTitle)
+                                    )
+                                } else {
+                                    withAnimation(.easeInOut(duration: 0.25)) {
+                                        showPurchaseConfirmation = true
+                                    }
+                                }
+                            },
+                            iconImage: Image(systemName: "cart.fill"),
+                            iconPosition: .left
+                        )
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                    } else {
                         StyledButton(DiscoveryLocalization.Details.enrollNow, action: {
                             if !viewModel.userloggedIn {
                                 viewModel.router.showLoginScreen(
@@ -408,6 +455,7 @@ private struct CourseStateView: View {
                         })
                         .padding(.horizontal, 16)
                         .padding(.top, 16)
+                    }
                     } else {
                         HStack(alignment: .center, spacing: 10) {
                             CoreAssets.noWifiMini.swiftUIImage

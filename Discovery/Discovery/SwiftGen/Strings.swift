@@ -52,12 +52,20 @@ public enum DiscoveryLocalization {
     public static let pleaseEnterTheSystem = DiscoveryLocalization.tr("Localizable", "ALERT.PLEASE_ENTER_THE_SYSTEM", fallback: "Please enter the system to continue with course enrollment.")
   }
   public enum Details {
+    /// Buy Course
+    public static let buyCourse = DiscoveryLocalization.tr("Localizable", "DETAILS.BUY_COURSE", fallback: "Buy Course")
+    /// Complete Purchase
+    public static let completePurchase = DiscoveryLocalization.tr("Localizable", "DETAILS.COMPLETE_PURCHASE", fallback: "Complete Purchase")
+    /// Continue
+    public static let `continue` = DiscoveryLocalization.tr("Localizable", "DETAILS.CONTINUE", fallback: "Continue")
     /// Enroll now
     public static let enrollNow = DiscoveryLocalization.tr("Localizable", "DETAILS.ENROLL_NOW", fallback: "Enroll now")
     /// You cannot enroll in this course because the enrollment date is over.
     public static let enrollmentDateIsOver = DiscoveryLocalization.tr("Localizable", "DETAILS.ENROLLMENT_DATE_IS_OVER", fallback: "You cannot enroll in this course because the enrollment date is over.")
     /// To enroll in this course, please make sure you are connected to the internet.
     public static let enrollmentNoInternet = DiscoveryLocalization.tr("Localizable", "DETAILS.ENROLLMENT_NO_INTERNET", fallback: "To enroll in this course, please make sure you are connected to the internet.")
+    /// You'll be redirected to your browser to complete the purchase.
+    public static let purchaseRedirectMessage = DiscoveryLocalization.tr("Localizable", "DETAILS.PURCHASE_REDIRECT_MESSAGE", fallback: "You'll be redirected to your browser to complete the purchase.")
     /// Course details
     public static let title = DiscoveryLocalization.tr("Localizable", "DETAILS.TITLE", fallback: "Course details")
     /// View course

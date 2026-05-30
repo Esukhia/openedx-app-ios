@@ -37,6 +37,7 @@ public extension DataLayer {
         public let invitationOnly: Bool
         public let courseID: String
         public let overview: String
+        public let purchaseLink: String?
         
         enum CodingKeys: String, CodingKey {
             case blocksURL = "blocks_url"
@@ -65,6 +66,7 @@ public extension DataLayer {
             case invitationOnly = "invitation_only"
             case courseID = "course_id"
             case overview
+            case purchaseLink = "purchase_link"
         }
     }
     
@@ -107,7 +109,8 @@ public extension DataLayer.CourseDetailsResponse {
             courseBannerURL: imageURL,
             courseVideoURL: media.courseVideo?.url,
             courseRawImage: media.image?.raw,
-            duration: duration
+            duration: duration,
+            purchaseURL: purchaseLink
         )
     }
 }

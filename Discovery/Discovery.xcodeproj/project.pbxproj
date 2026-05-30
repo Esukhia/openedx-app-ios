@@ -29,6 +29,7 @@
 		63C6E9CBBF5E33B8B9B4DFEC /* Pods_App_Discovery_DiscoveryUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780FC373E1D479E58870BD85 /* Pods_App_Discovery_DiscoveryUnitTests.framework */; };
 		9F47BCC672941A9854404EC7 /* Pods_App_Discovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 919E55130969D91EF03C4C0B /* Pods_App_Discovery.framework */; };
 		B5515297F1173056A455D24F /* PartnerFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */; };
+		B55152A8F1173056A455D250 /* PurchaseConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */; };
 		CE7CAF312CC155FD00E0AC9D /* OEXFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CE7CAF302CC155FD00E0AC9D /* OEXFoundation */; };
 		CEB1E26A2CC14E7900921517 /* OEXFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CEB1E2692CC14E7900921517 /* OEXFoundation */; };
 		CFC8494C299A66080055E497 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = CFC8494E299A66080055E497 /* Localizable.stringsdict */; };
@@ -148,6 +149,7 @@
 		AE72448AA54784691ED281AC /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B1704187800EC88CD76055BE /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerFilterSheet.swift; sourceTree = "<group>"; };
+		B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseConfirmationView.swift; sourceTree = "<group>"; };
 		B8474F00B9B53C2031701892 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BE564D9F8E9A7994ADF7351B /* af-ZA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "af-ZA"; path = "af-ZA.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C5D34B0F8D624CD27A761BFE /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				E0B9F69A2B4D57F800168366 /* DiscoveryView.swift */,
 				E0B9F69B2B4D57F800168366 /* CourseDetailsViewModel.swift */,
 				B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */,
+				B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */,
 			);
 			path = NativeDiscovery;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				E0B9F6A42B4D59E000168366 /* CourseDetails.swift in Sources */,
 				E5289297D13E4F6FBB4C3FA6 /* Partner.swift in Sources */,
 				B5515297F1173056A455D24F /* PartnerFilterSheet.swift in Sources */,
+				B55152A8F1173056A455D250 /* PurchaseConfirmationView.swift in Sources */,
 				0284DBFC28D4856A00830893 /* DiscoveryEndpoint.swift in Sources */,
 				029737402949FB070051696B /* DiscoveryCoreModel.xcdatamodeld in Sources */,
 				029242E72AE6978400A940EC /* UpdateRequiredView.swift in Sources */,
