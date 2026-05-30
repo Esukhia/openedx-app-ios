@@ -92,7 +92,8 @@ public final class DiscoveryPersistence: DiscoveryPersistenceProtocol {
                 overviewHTML: courseDetails.overviewHTML ?? "",
                 courseBannerURL: courseDetails.courseBannerURL ?? "",
                 courseVideoURL: nil,
-                courseRawImage: courseDetails.courseRawImage
+                courseRawImage: courseDetails.courseRawImage,
+                purchaseURL: courseDetails.purchaseURL
             )
         }
     }
@@ -113,6 +114,7 @@ public final class DiscoveryPersistence: DiscoveryPersistenceProtocol {
             newCourseDetails.overviewHTML = course.overviewHTML
             newCourseDetails.courseBannerURL = course.courseBannerURL
             newCourseDetails.courseRawImage = course.courseRawImage
+            newCourseDetails.purchaseURL = course.purchaseURL
             
             do {
                 try context.save()

@@ -13,6 +13,7 @@
         <attribute name="isEnrolled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="org" attributeType="String"/>
         <attribute name="overviewHTML" attributeType="String"/>
+        <attribute name="purchaseURL" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="courseID"/>
