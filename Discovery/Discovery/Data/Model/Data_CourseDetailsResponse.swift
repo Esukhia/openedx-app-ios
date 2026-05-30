@@ -79,8 +79,8 @@ public extension DataLayer {
 
 public extension DataLayer.CourseDetailsResponse {
     func domain(baseURL: String) -> CourseDetails {
-        let imageURL = (media.courseImage?.url?.addingPercentEncoding(
-            withAllowedCharacters: .urlQueryAllowed) ?? "").prependingBaseURL(baseURL)
+        let imageURL = baseURL.removingTrailingSlash + (media.courseImage?.url?.addingPercentEncoding(
+            withAllowedCharacters: .urlQueryAllowed) ?? "")
         return CourseDetails(
             courseID: id,
             org: org,

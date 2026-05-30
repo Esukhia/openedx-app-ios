@@ -99,6 +99,7 @@ public final class DiscoveryPersistence: DiscoveryPersistenceProtocol {
     
     public func saveCourseDetails(course: CourseDetails) async {
         await container.performBackgroundTask { context in
+            context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
             let newCourseDetails = CDCourseDetails(context: context)
             newCourseDetails.courseID = course.courseID
             newCourseDetails.org = course.org
