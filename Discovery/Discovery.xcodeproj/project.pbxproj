@@ -29,6 +29,7 @@
 		63C6E9CBBF5E33B8B9B4DFEC /* Pods_App_Discovery_DiscoveryUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780FC373E1D479E58870BD85 /* Pods_App_Discovery_DiscoveryUnitTests.framework */; };
 		9F47BCC672941A9854404EC7 /* Pods_App_Discovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 919E55130969D91EF03C4C0B /* Pods_App_Discovery.framework */; };
 		B5515297F1173056A455D24F /* PartnerFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */; };
+		B55152A8F1173056A455D250 /* PurchaseConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */; };
 		CE7CAF312CC155FD00E0AC9D /* OEXFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CE7CAF302CC155FD00E0AC9D /* OEXFoundation */; };
 		CEB1E26A2CC14E7900921517 /* OEXFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CEB1E2692CC14E7900921517 /* OEXFoundation */; };
 		CFC8494C299A66080055E497 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = CFC8494E299A66080055E497 /* Localizable.stringsdict */; };
@@ -113,6 +114,7 @@
 		9F968F74AD7F4B5F6E5A6084 /* Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.debugdev.xcconfig"; sourceTree = "<group>"; };
 		AAC0D83F5D34491E9FABCABC /* Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig"; path = "Target Support Files/Pods-App-Discovery-DiscoveryUnitTests/Pods-App-Discovery-DiscoveryUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartnerFilterSheet.swift; sourceTree = "<group>"; };
+		B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseConfirmationView.swift; sourceTree = "<group>"; };
 		CFC8494D299A66080055E497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		CFC8494F299BE52C0055E497 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		E08D12E22B482D720096311A /* Course.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Course.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,6 +339,7 @@
 				E0B9F69A2B4D57F800168366 /* DiscoveryView.swift */,
 				E0B9F69B2B4D57F800168366 /* CourseDetailsViewModel.swift */,
 				B55152979549FDFAA8778292 /* PartnerFilterSheet.swift */,
+				B55152A89549FDFAA8778293 /* PurchaseConfirmationView.swift */,
 			);
 			path = NativeDiscovery;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				E0B9F6A42B4D59E000168366 /* CourseDetails.swift in Sources */,
 				E5289297D13E4F6FBB4C3FA6 /* Partner.swift in Sources */,
 				B5515297F1173056A455D24F /* PartnerFilterSheet.swift in Sources */,
+				B55152A8F1173056A455D250 /* PurchaseConfirmationView.swift in Sources */,
 				0284DBFC28D4856A00830893 /* DiscoveryEndpoint.swift in Sources */,
 				029737402949FB070051696B /* DiscoveryCoreModel.xcdatamodeld in Sources */,
 				029242E72AE6978400A940EC /* UpdateRequiredView.swift in Sources */,
