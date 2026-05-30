@@ -44,6 +44,7 @@ public enum BlockType: String, Sendable {
     case dragAndDropV2 = "drag-and-drop-v2"
     case openassessment
     case peerInstructionTool = "ubcpi"
+    case libraryContent = "library_content"
     
     public var image: Image {
         switch self {
