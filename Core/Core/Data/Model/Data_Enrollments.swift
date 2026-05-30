@@ -241,7 +241,7 @@ public extension DataLayer.CourseEnrollments {
             
             let imageUrl = course.media.courseImage?.url ?? ""
             let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            let fullImageURL = baseURL + encodedUrl
+            let fullImageURL = baseURL.removingTrailingSlash + encodedUrl
             
             return CourseItem(
                 name: course.name,

@@ -207,7 +207,7 @@ public extension DataLayer.PrimaryEnrollment {
             hasAccess: primary.course?.coursewareAccess.hasAccess ?? true,
             courseStart: primary.course?.start.flatMap { Date(iso8601: $0) },
             courseEnd: primary.course?.end.flatMap { Date(iso8601: $0) },
-            courseBanner: baseURL + (primary.course?.media.courseImage?.url ?? ""),
+            courseBanner: baseURL.removingTrailingSlash + (primary.course?.media.courseImage?.url ?? ""),
             futureAssignments: futureAssignments.map { createAssignment(from: $0) },
             pastAssignments: pastAssignments.map { createAssignment(from: $0) },
             progressEarned: primary.progress?.assignmentsCompleted ?? 0,
@@ -247,7 +247,7 @@ public extension DataLayer.PrimaryEnrollment {
     ) -> CourseItem {
         let imageUrl = enrollment.course.media.courseImage?.url ?? ""
         let encodedUrl = imageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let fullImageURL = baseURL + encodedUrl
+        let fullImageURL = baseURL.removingTrailingSlash + encodedUrl
         
         return CourseItem(
             name: enrollment.course.name,
@@ -266,5 +266,11 @@ public extension DataLayer.PrimaryEnrollment {
             progressEarned: enrollment.progress?.assignmentsCompleted ?? 0,
             progressPossible: enrollment.progress?.totalAssignmentsCount ?? 0
         )
+    }
+}
+
+public extension String {
+    var removingTrailingSlash: String {
+        hasSuffix("/") ? String(dropLast()) : self
     }
 }
