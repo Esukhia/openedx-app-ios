@@ -30,18 +30,21 @@ public struct WebView: UIViewRepresentable {
         @Published var url: String
         let baseURL: String
         let injections: [WebviewInjection]?
+        let blockID: String
         var openFile: (String) -> Void
         
         public init(
             url: String,
             baseURL: String,
             openFile: @escaping (String) -> Void,
-            injections: [WebviewInjection]? = nil
+            injections: [WebviewInjection]? = nil,
+            blockID: String = ""
         ) {
             self.url = url
             self.baseURL = baseURL
             self.openFile = openFile
             self.injections = injections
+            self.blockID = blockID
         }
     }
     
@@ -287,6 +290,27 @@ public struct WebView: UIViewRepresentable {
                     self?.webview?.evaluateSizeNotification()
                 }
                 .store(in: &cancellables)
+
+            NotificationCenter.default.publisher(for: NSNotification.libraryMCQNextQuestion, object: nil)
+                .sink { [weak self] notification in
+                    guard let self else { return }
+                    self.handleLibraryMCQNextQuestion(notification: notification)
+                }
+                .store(in: &cancellables)
+        }
+
+        private func handleLibraryMCQNextQuestion(notification: Notification) {
+            guard let requestedBlockID = notification.userInfo?["block_id"] as? String,
+                  !requestedBlockID.isEmpty,
+                  requestedBlockID == parent.viewModel.blockID
+            else { return }
+            let escapedBlockId = requestedBlockID
+                .replacingOccurrences(of: "\\", with: "\\\\")
+                .replacingOccurrences(of: "\"", with: "\\\"")
+            let script = """
+            window.__iosLibraryMCQNextQuestion && window.__iosLibraryMCQNextQuestion("\(escapedBlockId)");
+            """
+            webview?.evaluateJavaScript(script)
         }
 
         fileprivate var webview: WKWebView?

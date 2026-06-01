@@ -236,6 +236,21 @@ public struct CourseUnitView: View {
                 await viewModel.blockCompletionRequest(blockID: blockID)
             }
         }
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: NSNotification.libraryMCQProgress
+            )
+        ) { notification in
+            guard let blockId = notification.userInfo?["block_id"] as? String,
+                  let currentQuestion = notification.userInfo?["current_question"] as? Int,
+                  let totalQuestions = notification.userInfo?["total_questions"] as? Int
+            else { return }
+            viewModel.updateLibraryQuestionState(
+                blockId: blockId,
+                currentQuestion: currentQuestion,
+                totalQuestions: totalQuestions
+            )
+        }
     }
 
     @ViewBuilder
