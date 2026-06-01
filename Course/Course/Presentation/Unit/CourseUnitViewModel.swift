@@ -75,6 +75,13 @@ public enum LessonType: Equatable {
                 blockId: block.id,
                 isDownloadable: block.isDownloadable
             )
+        case .libraryContent:
+            return .web(
+                url: block.studentUrl,
+                injections: mandatoryInjections,
+                blockId: block.id,
+                isDownloadable: block.isDownloadable
+            )
         case .openassessment, .peerInstructionTool:
             return .web(
                 url: block.studentUrl,

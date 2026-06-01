@@ -124,6 +124,38 @@ public struct WebView: UIViewRepresentable {
 
         public func webView(
             _ webView: WKWebView,
+            runJavaScriptAlertPanelWithMessage message: String,
+            initiatedByFrame frame: WKFrameInfo,
+            completionHandler: @escaping () -> Void
+        ) {
+            guard let topVC = UIApplication.topViewController() else {
+                completionHandler()
+                return
+            }
+
+            let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(
+                title: CoreLocalization.Webview.Alert.ok,
+                style: .default,
+                handler: { _ in
+                    completionHandler()
+                }))
+
+            if let presenter = alertController.popoverPresentationController {
+                presenter.sourceView = topVC.view
+                presenter.sourceRect = CGRect(
+                    x: topVC.view.bounds.midX,
+                    y: topVC.view.bounds.midY,
+                    width: 0,
+                    height: 0
+                )
+            }
+
+            topVC.present(alertController, animated: true, completion: nil)
+        }
+
+        public func webView(
+            _ webView: WKWebView,
             runJavaScriptConfirmPanelWithMessage message: String,
             initiatedByFrame frame: WKFrameInfo,
             completionHandler: @escaping (Bool) -> Void
@@ -236,6 +268,20 @@ public struct WebView: UIViewRepresentable {
                 }
                 .store(in: &cancellables)
 
+            NotificationCenter.default.publisher(for: NSNotification.problemCheckUnauthorized, object: nil)
+                .sink { [weak self] notification in
+                    guard let self,
+                          let webView = notification.object as? WKWebView,
+                          webView == self.webview else { return }
+                    Task {
+                        await self.parent.refreshCookies()
+                        await MainActor.run {
+                            self.reload()
+                        }
+                    }
+                }
+                .store(in: &cancellables)
+
             NotificationCenter.default.publisher(for: UIContentSizeCategory.didChangeNotification, object: nil)
                 .sink { [weak self] _ in
                     self?.webview?.evaluateSizeNotification()
@@ -293,9 +339,7 @@ public struct WebView: UIViewRepresentable {
         webViewConfig.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         
         let webView = WKWebView(frame: .zero, configuration: webViewConfig)
-        #if DEBUG
         webView.isInspectable = true
-        #endif
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
         

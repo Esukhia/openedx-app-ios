@@ -47,10 +47,19 @@ struct AjaxInjection: WebViewScriptInjectionProtocol {
 
     var messages: [WebviewMessage]? {
         [
-            WebviewMessage(name: AJAXCallBackHandler) { result, _ in
+            WebviewMessage(name: AJAXCallBackHandler) { result, webView in
                 guard let data = result as? [AnyHashable: Any] else { return }
                 let callback = AJAXCallbackData(data: data)
                 let requestURL = callback.url
+
+                if callback.statusCode == 403,
+                   isBlockOf(type: .problem, with: requestURL) {
+                    NotificationCenter.default.post(
+                        name: NSNotification.problemCheckUnauthorized,
+                        object: webView
+                    )
+                    return
+                }
 
                 if callback.statusCode != 200 {
                     return
@@ -84,4 +93,5 @@ struct AjaxInjection: WebViewScriptInjectionProtocol {
 
 public extension NSNotification {
     static let blockCompletion = Notification.Name.init("block_completion")
+    static let problemCheckUnauthorized = Notification.Name.init("problem_check_unauthorized")
 }

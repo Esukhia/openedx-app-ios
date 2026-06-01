@@ -8,6 +8,14 @@ $(document).ajaxSuccess(function(event, request, settings)  {
     });
 });
 
+$(document).ajaxError(function(event, request, settings)  {
+    callNativeApp({
+        "status": request.status,
+        "url":settings.url,
+        "response_text": request.responseText
+    });
+});
+
 function callNativeApp(data) {
     try {
         webkit.messageHandlers.ajaxCallbackHandler.postMessage(data);
