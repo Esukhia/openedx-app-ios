@@ -268,6 +268,20 @@ public struct WebView: UIViewRepresentable {
                 }
                 .store(in: &cancellables)
 
+            NotificationCenter.default.publisher(for: NSNotification.problemCheckUnauthorized, object: nil)
+                .sink { [weak self] notification in
+                    guard let self,
+                          let webView = notification.object as? WKWebView,
+                          webView == self.webview else { return }
+                    Task {
+                        await self.parent.refreshCookies()
+                        await MainActor.run {
+                            self.reload()
+                        }
+                    }
+                }
+                .store(in: &cancellables)
+
             NotificationCenter.default.publisher(for: UIContentSizeCategory.didChangeNotification, object: nil)
                 .sink { [weak self] _ in
                     self?.webview?.evaluateSizeNotification()
