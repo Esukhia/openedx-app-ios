@@ -200,10 +200,33 @@ public actor CourseRepository: CourseRepositoryProtocol {
     private func parseVerticals(id: String, courseId: String, blocks: [DataLayer.CourseBlock]) -> CourseVertical {
         let sequential = blocks.first(where: {$0.id == id })!
         let descendants = sequential.descendants ?? []
-        var childs: [CourseBlock] = []
-        for descend in descendants {
-            let block = parseBlock(id: descend, courseId: courseId, blocks: blocks)
-            childs.append(block)
+        let rawDescendants = descendants.compactMap { descendant in
+            blocks.first(where: { $0.id == descendant })
+        }
+        let hasLibraryContent = rawDescendants.contains {
+            (BlockType(rawValue: $0.type) ?? .unknown) == .libraryContent
+        }
+        let filteredRawDescendants: [DataLayer.CourseBlock]
+        if hasLibraryContent {
+            let nonLibraryDescendants = rawDescendants.filter {
+                (BlockType(rawValue: $0.type) ?? .unknown) != .libraryContent
+            }
+            if nonLibraryDescendants.isEmpty {
+                let libraryChildIds = rawDescendants
+                    .filter { (BlockType(rawValue: $0.type) ?? .unknown) == .libraryContent }
+                    .flatMap { $0.descendants ?? [] }
+                filteredRawDescendants = libraryChildIds.compactMap { id in
+                    blocks.first(where: { $0.id == id })
+                }
+            } else {
+                filteredRawDescendants = nonLibraryDescendants
+            }
+        } else {
+            let childIdsOfDescendants = Set(rawDescendants.flatMap { $0.descendants ?? [] })
+            filteredRawDescendants = rawDescendants.filter { !childIdsOfDescendants.contains($0.id) }
+        }
+        let childs = filteredRawDescendants.map {
+            parseBlock(id: $0.id, courseId: courseId, blocks: blocks)
         }
         return CourseVertical(
             blockId: sequential.blockId,
@@ -480,10 +503,33 @@ And there are various ways of describing it-- call it oral poetry or
     private func parseVerticals(id: String, courseId: String, blocks: [DataLayer.CourseBlock]) -> CourseVertical {
         let sequential = blocks.first(where: {$0.id == id })!
         let descendants = sequential.descendants ?? []
-        var childs: [CourseBlock] = []
-        for descend in descendants {
-            let block = parseBlock(id: descend, courseId: courseId, blocks: blocks)
-            childs.append(block)
+        let rawDescendants = descendants.compactMap { descendant in
+            blocks.first(where: { $0.id == descendant })
+        }
+        let hasLibraryContent = rawDescendants.contains {
+            (BlockType(rawValue: $0.type) ?? .unknown) == .libraryContent
+        }
+        let filteredRawDescendants: [DataLayer.CourseBlock]
+        if hasLibraryContent {
+            let nonLibraryDescendants = rawDescendants.filter {
+                (BlockType(rawValue: $0.type) ?? .unknown) != .libraryContent
+            }
+            if nonLibraryDescendants.isEmpty {
+                let libraryChildIds = rawDescendants
+                    .filter { (BlockType(rawValue: $0.type) ?? .unknown) == .libraryContent }
+                    .flatMap { $0.descendants ?? [] }
+                filteredRawDescendants = libraryChildIds.compactMap { id in
+                    blocks.first(where: { $0.id == id })
+                }
+            } else {
+                filteredRawDescendants = nonLibraryDescendants
+            }
+        } else {
+            let childIdsOfDescendants = Set(rawDescendants.flatMap { $0.descendants ?? [] })
+            filteredRawDescendants = rawDescendants.filter { !childIdsOfDescendants.contains($0.id) }
+        }
+        let childs = filteredRawDescendants.map {
+            parseBlock(id: $0.id, courseId: courseId, blocks: blocks)
         }
         return CourseVertical(
             blockId: sequential.blockId,
