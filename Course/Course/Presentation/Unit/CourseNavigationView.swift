@@ -25,14 +25,7 @@ struct CourseNavigationView: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 7) {
-            if viewModel.hasLibraryMultipleQuestions {
-                if viewModel.isLastLibraryQuestion {
-                    lastButton
-                } else {
-                    libraryQuestionNextButton
-                        .frame(width: 215)
-                }
-            } else if viewModel.selectedLesson() == viewModel.verticals[viewModel.verticalIndex].childs.first
+            if viewModel.selectedLesson() == viewModel.verticals[viewModel.verticalIndex].childs.first
                 && viewModel.verticals[viewModel.verticalIndex].childs.count != 1 {
                 nextBigButton
                     .frame(width: 215)
@@ -51,17 +44,6 @@ struct CourseNavigationView: View {
                 }
             }
         }.padding(.horizontal, 24)
-    }
-
-    private var libraryQuestionNextButton: some View {
-        UnitButtonView(
-            type: .nextBig,
-            isVerticalNavigation: !viewModel.courseUnitProgressEnabled,
-            action: {
-                playerStateSubject.send(VideoPlayerState.pause)
-                viewModel.moveToNextLibraryQuestion()
-            }
-        )
     }
     
     private var nextBigButton: some View {

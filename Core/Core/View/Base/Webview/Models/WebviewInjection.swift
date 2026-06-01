@@ -67,11 +67,6 @@ public extension WebviewInjection {
             .webviewInjection()
     }
 
-    static func libraryMCQ(blockId: String) -> WebviewInjection {
-        LibraryMCQInjection(blockId: blockId)
-            .webviewInjection()
-    }
-
     // Hide common headers/footers in external pages (e.g., policy pages)
     static var hideHeaderFooter: WebviewInjection {
         let css = """

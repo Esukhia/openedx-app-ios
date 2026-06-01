@@ -76,10 +76,9 @@ public enum LessonType: Equatable {
                 isDownloadable: block.isDownloadable
             )
         case .libraryContent:
-            let libraryInjections = mandatoryInjections + [.libraryMCQ(blockId: block.id)]
             return .web(
                 url: block.studentUrl,
-                injections: libraryInjections,
+                injections: mandatoryInjections,
                 blockId: block.id,
                 isDownloadable: block.isDownloadable
             )
@@ -140,8 +139,6 @@ public final class CourseUnitViewModel: ObservableObject {
     var courseName: String
     
     @Published var index: Int = 0
-    @Published var libraryCurrentQuestion: Int = 1
-    @Published var libraryTotalQuestions: Int = 1
     var previousLesson: String = ""
     var nextLesson: String = ""
     @Published var showError: Bool = false
@@ -221,53 +218,11 @@ public final class CourseUnitViewModel: ObservableObject {
     func selectedLesson() -> CourseBlock {
         return verticals[verticalIndex].childs[index]
     }
-
-    var isLibraryContentSelected: Bool {
-        selectedLesson().type == .libraryContent
-    }
-
-    var hasLibraryMultipleQuestions: Bool {
-        isLibraryContentSelected && libraryTotalQuestions > 1
-    }
-
-    var isLastLibraryQuestion: Bool {
-        !hasLibraryMultipleQuestions || libraryCurrentQuestion >= libraryTotalQuestions
-    }
-
-    func resetLibraryQuestionState() {
-        libraryCurrentQuestion = 1
-        libraryTotalQuestions = 1
-    }
-
-    func updateLibraryQuestionState(blockId: String, currentQuestion: Int, totalQuestions: Int) {
-        guard isLibraryContentSelected,
-              selectedLesson().id == blockId,
-              totalQuestions > 1
-        else {
-            return
-        }
-        libraryCurrentQuestion = max(1, min(currentQuestion, totalQuestions))
-        libraryTotalQuestions = totalQuestions
-    }
-
-    func moveToNextLibraryQuestion() {
-        guard hasLibraryMultipleQuestions,
-              !isLastLibraryQuestion
-        else {
-            return
-        }
-        NotificationCenter.default.post(
-            name: NSNotification.libraryMCQNextQuestion,
-            object: nil,
-            userInfo: ["block_id": selectedLesson().id]
-        )
-    }
     
     func select(move: LessonAction) {
         switch move {
         case .next:
             if index != verticals[verticalIndex].childs.count - 1 { index += 1 }
-            resetLibraryQuestionState()
             let nextBlock = verticals[verticalIndex].childs[index]
             nextTitles()
             analytics.nextBlockClicked(
@@ -278,7 +233,6 @@ public final class CourseUnitViewModel: ObservableObject {
             )
         case .previous:
             if index != 0 { index -= 1 }
-            resetLibraryQuestionState()
             nextTitles()
             let prevBlock = verticals[verticalIndex].childs[index]
             analytics.prevBlockClicked(
