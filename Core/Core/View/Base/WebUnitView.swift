@@ -85,7 +85,8 @@ public struct WebUnitView: View {
                                     openFile: { file in
                                         self.fileUrl = file
                                     },
-                                    injections: injections
+                                    injections: injections,
+                                    blockID: blockID
                                 ),
                                 isLoading: $isWebViewLoading,
                                 refreshCookies: {
