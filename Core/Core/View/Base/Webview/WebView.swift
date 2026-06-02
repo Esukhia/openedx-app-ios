@@ -116,9 +116,22 @@ public struct WebView: UIViewRepresentable {
         }
         
         public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            webView.isHidden = false
-            DispatchQueue.main.async {
-                self.parent.isLoading = false
+            let hasCertificateBannerInjection = self.parent.viewModel.injections?.contains(
+                where: { $0.id == "HideCertificatePrintBannerInjection" }
+            ) ?? false
+            if hasCertificateBannerInjection {
+                let script = "if(typeof window.__openedxHideCertBanner==='function'){window.__openedxHideCertBanner();}"
+                webView.evaluateJavaScript(script) { [weak webView, weak self] _, _ in
+                    DispatchQueue.main.async {
+                        webView?.isHidden = false
+                        self?.parent.isLoading = false
+                    }
+                }
+            } else {
+                webView.isHidden = false
+                DispatchQueue.main.async {
+                    self.parent.isLoading = false
+                }
             }
         }
 
