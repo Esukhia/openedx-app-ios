@@ -18,17 +18,20 @@ public struct WebBrowser: View {
     private var pageTitle: String
     private var showProgress: Bool
     private let connectivity: ConnectivityProtocol
+    private var additionalInjections: [WebviewInjection]
     
     public init(
         url: String,
         pageTitle: String,
         showProgress: Bool = false,
-        connectivity: ConnectivityProtocol
+        connectivity: ConnectivityProtocol,
+        additionalInjections: [WebviewInjection] = []
     ) {
         self.url = url
         self.pageTitle = pageTitle
         self.showProgress = showProgress
         self.connectivity = connectivity
+        self.additionalInjections = additionalInjections
     }
     
     public var body: some View {
@@ -70,7 +73,7 @@ public struct WebBrowser: View {
                         .readability,
                         .accessibility,
                         .hideHeaderFooter
-                    ]
+                    ] + additionalInjections
                 ),
                 isLoading: $isLoading,
                 refreshCookies: {

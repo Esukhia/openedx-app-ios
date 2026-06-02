@@ -290,6 +290,7 @@ public struct CourseOutlineView: View {
                     viewModel.trackViewCertificateClicked(courseID: courseID)
                 }
             )
+            .padding(.top, 12)
             .padding(.horizontal, 24)
             .fullScreenCover(
                 isPresented: $openCertificateView,
@@ -297,7 +298,8 @@ public struct CourseOutlineView: View {
                     WebBrowser(
                         url: url,
                         pageTitle: CourseLocalization.Outline.certificate,
-                        connectivity: viewModel.connectivity
+                        connectivity: viewModel.connectivity,
+                        additionalInjections: [.hideCertificatePrintBanner]
                     )
                 }
             )

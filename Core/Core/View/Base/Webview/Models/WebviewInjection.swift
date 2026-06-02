@@ -67,6 +67,67 @@ public extension WebviewInjection {
             .webviewInjection()
     }
 
+    static var hideCertificatePrintBanner: WebviewInjection {
+        let script = """
+        (function() {
+            window.__openedxHideCertBanner = function() {
+                try {
+                    var selectors = [
+                        ".accomplishment-action",
+                        ".wrapper-accomplishment-action",
+                        ".btn-print",
+                        ".certificate-introduction",
+                        ".print-certificate-banner",
+                        ".accomplishment-intro"
+                    ];
+                    var hasSelectorMatch = false;
+                    selectors.forEach(function(sel) {
+                        var elements = document.querySelectorAll(sel);
+                        if (elements.length > 0) {
+                            hasSelectorMatch = true;
+                        }
+                        elements.forEach(function(el) {
+                            el.style.setProperty("display", "none", "important");
+                        });
+                    });
+                    if (hasSelectorMatch) {
+                        return;
+                    }
+                    var blocks = document.querySelectorAll(
+                        "div, section, article, aside"
+                    );
+                    var banner = null;
+                    var bannerSize = 0;
+                    for (var i = 0; i < blocks.length; i++) {
+                        var html = blocks[i].outerHTML;
+                        var text = (blocks[i].textContent || "").trim();
+                        if (
+                            html.length < 3000 &&
+                            html.length > bannerSize &&
+                            /print/i.test(text) &&
+                            /certificate/i.test(text)
+                        ) {
+                            banner = blocks[i];
+                            bannerSize = html.length;
+                        }
+                    }
+                    if (banner) {
+                        banner.style.setProperty("display", "none", "important");
+                    }
+                } catch (e) {}
+            };
+            document.addEventListener("DOMContentLoaded", window.__openedxHideCertBanner);
+        })();
+        """
+        return WebviewInjection(
+            id: "HideCertificatePrintBannerInjection",
+            script: script,
+            messages: nil,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        )
+    }
+
     // Hide common headers/footers in external pages (e.g., policy pages)
     static var hideHeaderFooter: WebviewInjection {
         let css = """
