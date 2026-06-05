@@ -326,6 +326,7 @@
 		BA58CF5C2B3D804D005B102E /* CourseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseStorage.swift; sourceTree = "<group>"; };
 		BA58CF602B471041005B102E /* VideoDownloadQualityBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloadQualityBarView.swift; sourceTree = "<group>"; };
 		BA58CF632B471363005B102E /* VideoDownloadQualityContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDownloadQualityContainerView.swift; sourceTree = "<group>"; };
+		BA7140238B8BBD9EEEDF2727 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BAC0E0D72B32EF03006B68A9 /* DownloadsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsView.swift; sourceTree = "<group>"; };
 		BAC0E0DA2B32F0AE006B68A9 /* CourseVideoDownloadBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseVideoDownloadBarViewModel.swift; sourceTree = "<group>"; };
 		BAC0E0DD2B32F0F3006B68A9 /* DownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewModel.swift; sourceTree = "<group>"; };
@@ -1066,7 +1067,7 @@
 			mainGroup = 0289F8E428E1C3510064F8F3;
 			packageReferences = (
 				CEBCA4322CC13CDE00076589 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
-				CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 0289F8EF28E1C3510064F8F3 /* Products */;
 			projectDirPath = "";
@@ -1350,6 +1351,7 @@
 				FE044E199D26364AB9FF6E80 /* zh-HK */,
 				7FF04D769670636D34A887B5 /* zh-HK */,
 				48E94B7A9DAB0298926149CF /* zh-HK */,
+				BA7140238B8BBD9EEEDF2727 /* zh-HK */,
 				3C1C4EE1BF293BA3FFB7E1C7 /* he */,
 				23064C669EFC01E6E6EA17A8 /* ar */,
 				CB464E138134E4D6C923E621 /* el */,
@@ -2427,7 +2429,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -2448,12 +2450,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE7CAF402CC1563500E0AC9D /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB1E2722CC14EC400921517 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2712CC14EC400921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEBCA4332CC13CDE00076589 /* YouTubePlayerKit */ = {

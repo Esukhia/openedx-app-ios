@@ -223,6 +223,7 @@
 		DA004DD4B559E8743EE950CF /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E748411383A3DC83A01CE954 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EB3847E3A13D8E42F4C571F9 /* az */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = az; path = az.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C5174B5C8699731538357293 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ED561A5DE961B1E12B42F4E0 /* Pods-App-Discussion.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Discussion.releasedev.xcconfig"; path = "Target Support Files/Pods-App-Discussion/Pods-App-Discussion.releasedev.xcconfig"; sourceTree = "<group>"; };
 		ED984A78A05481D607289DAA /* de-DE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "de-DE"; path = "de-DE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		EF1F4007ADB393C635BAF2A3 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -692,7 +693,7 @@
 			);
 			mainGroup = 0218194328F7344A00202564;
 			packageReferences = (
-				CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 0218194E28F7344A00202564 /* Products */;
 			projectDirPath = "";
@@ -894,6 +895,7 @@
 				FE354404965EB60EEAECD1D7 /* zh-HK */,
 				139A4A26B7B559798D0E44F9 /* zh-HK */,
 				30614CCFB3B438BF89011C9E /* zh-HK */,
+				C5174B5C8699731538357293 /* zh-HK */,
 				F00A47CEA5203EF4CF852793 /* zh-HK */,
 				98A142EAAA4E852080BA3B2B /* zh-HK */,
 				D5DF4423ABE81939F5E0DAD4 /* zh-HK */,
@@ -1927,7 +1929,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
@@ -1940,12 +1942,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		CE7CAF462CC1566D00E0AC9D /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 		CEB1E2752CC14ED700921517 /* OEXFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */;
+			package = CEB1E2742CC14ED700921517 /* XCRemoteSwiftPackageReference "" */;
 			productName = OEXFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */

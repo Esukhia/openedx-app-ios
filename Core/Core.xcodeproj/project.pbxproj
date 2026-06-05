@@ -433,6 +433,7 @@
 		DD27D6BF5EB15C6C8B66969A /* Pods-App-Core-CoreTests.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-Core-CoreTests.debugdev.xcconfig"; path = "Target Support Files/Pods-App-Core-CoreTests/Pods-App-Core-CoreTests.debugdev.xcconfig"; sourceTree = "<group>"; };
 		E055A5382B18DC95008D9E5E /* Theme.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Theme.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E09179FC2B0F204D002AB695 /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		E0D443BC8E22679B8F9712C5 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E0D586192B2FF74C009B4BA7 /* DiscoveryConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryConfig.swift; sourceTree = "<group>"; };
 		E0D586352B314CD3009B4BA7 /* LogistrationBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogistrationBottomView.swift; sourceTree = "<group>"; };
 		E8D9725130C85DA55AD474A4 /* Pods-CoreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoreTests.debug.xcconfig"; path = "Target Support Files/Pods-CoreTests/Pods-CoreTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1112,7 +1113,7 @@
 			mainGroup = 0770DDFE28D07831006D8A5D;
 			packageReferences = (
 				02AA27922C2C1B61006F5B6A /* XCRemoteSwiftPackageReference "ZipArchive" */,
-				CE924BE42CD8F8E4000137CA /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */,
+				CE924BE42CD8F8E4000137CA /* XCRemoteSwiftPackageReference "" */,
 			);
 			productRefGroup = 0770DE0928D07831006D8A5D /* Products */;
 			projectDirPath = "";
@@ -1423,6 +1424,7 @@
 				3B99465487091D13CFEF33D7 /* zh-HK */,
 				F16F493B886EB32E4C493E86 /* zh-HK */,
 				8DDC48B4BC21070632539C10 /* zh-HK */,
+				E0D443BC8E22679B8F9712C5 /* zh-HK */,
 				ABC4444087D7D5A920570E42 /* he */,
 				911545DF87E0C64CDDDF51CB /* ar */,
 				0536472CA2A7EA9B990B2E74 /* el */,
@@ -2504,7 +2506,7 @@
 				minimumVersion = 2.5.5;
 			};
 		};
-		CE924BE42CD8F8E4000137CA /* XCRemoteSwiftPackageReference "openedx-app-foundation-ios" */ = {
+		CE924BE42CD8F8E4000137CA /* XCRemoteSwiftPackageReference "" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/openedx/openedx-app-foundation-ios/";
 			requirement = {
