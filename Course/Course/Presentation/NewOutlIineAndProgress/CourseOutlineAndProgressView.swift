@@ -127,12 +127,11 @@ public struct CourseOutlineAndProgressView: View {
                                     viewHeight: $viewHeight
                                 )
 
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 0) {
 
                                     Spacer()
 
                                     certificateView
-                                        .padding(.horizontal, 24)
 
                                     if let continueWith = viewModelContainer.continueWith,
                                        let courseStructure = viewModelContainer.courseStructure {
@@ -148,7 +147,7 @@ public struct CourseOutlineAndProgressView: View {
                                                 viewModelContainer.openLastVisitedBlock()
                                             })
                                         .padding(.horizontal, 24)
-                                        .padding(.top, 16)
+                                        .padding(.top, hasCertificate ? 0 : 16)
 
                                     }
 
@@ -445,6 +444,9 @@ public struct CourseOutlineAndProgressView: View {
                     )
                 }
             )
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
+            .padding(.bottom, 16)
             .fullScreenCover(
                 isPresented: $openCertificateView,
                 content: {
@@ -457,6 +459,15 @@ public struct CourseOutlineAndProgressView: View {
                 }
             )
         }
+    }
+
+    private var hasCertificate: Bool {
+        if let certificate = viewModelContainer.courseStructure?.certificate,
+           let url = certificate.url,
+           url.count > 0 {
+            return true
+        }
+        return false
     }
 
     // MARK: - Upgrade Now Banner
