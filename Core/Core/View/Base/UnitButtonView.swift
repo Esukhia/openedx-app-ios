@@ -207,7 +207,11 @@ public struct UnitButtonView: View {
                                         )
                                 )
                                 
-                        case .continueLesson, .nextSection, .reload, .finish, .custom, .customContinueLesson:
+                        case .customContinueLesson:
+                            Theme.Shapes.buttonShape
+                                .fill(Theme.Colors.accentButtonColor)
+                                .shadow(color: .clear, radius: 0, y: 0)
+                        case .continueLesson, .nextSection, .reload, .finish, .custom:
                             Theme.Shapes.buttonShape
                                 .fill(
                                     type == .continueLesson ? Theme.Colors.resumeButtonBG :
@@ -240,6 +244,7 @@ public struct UnitButtonView: View {
                 )
             
             }
+            .buttonStyle(.plain)
             .fixedSize(horizontal: (type == .first
                        || type == .next
                        || type == .previous

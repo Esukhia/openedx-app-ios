@@ -75,6 +75,7 @@ public struct CourseOutlineAndProgressView: View {
     @Binding private var viewHeight: CGFloat
 
     @State private var infoPath: Int = 0
+    @State private var openCertificateView: Bool = false
     
     @State private var expandedChapters: [String: Bool] = [:]
     
@@ -126,9 +127,11 @@ public struct CourseOutlineAndProgressView: View {
                                     viewHeight: $viewHeight
                                 )
 
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 0) {
 
                                     Spacer()
+
+                                    certificateView
 
                                     if let continueWith = viewModelContainer.continueWith,
                                        let courseStructure = viewModelContainer.courseStructure {
@@ -144,7 +147,7 @@ public struct CourseOutlineAndProgressView: View {
                                                 viewModelContainer.openLastVisitedBlock()
                                             })
                                         .padding(.horizontal, 24)
-                                        .padding(.top, 16)
+                                        .padding(.top, hasCertificate ? 0 : 16)
 
                                     }
 
@@ -421,6 +424,50 @@ public struct CourseOutlineAndProgressView: View {
                 viewModelProgress.errorMessage = nil
             }
         }
+    }
+
+    // MARK: - Certificate View
+    @ViewBuilder
+    private var certificateView: some View {
+        if let certificate = viewModelContainer.courseStructure?.certificate,
+           let url = certificate.url,
+           url.count > 0 {
+            MessageSectionView(
+                title: CourseLocalization.Outline.passedTheCourse(
+                    viewModelContainer.courseStructure?.displayName ?? ""
+                ),
+                actionTitle: CourseLocalization.Outline.viewCertificate,
+                action: {
+                    openCertificateView = true
+                    viewModelContainer.trackViewCertificateClicked(
+                        courseID: viewModelContainer.courseStructure?.id ?? ""
+                    )
+                }
+            )
+            .padding(.horizontal, 24)
+            .padding(.top, 16)
+            .padding(.bottom, 16)
+            .fullScreenCover(
+                isPresented: $openCertificateView,
+                content: {
+                    WebBrowser(
+                        url: url,
+                        pageTitle: CourseLocalization.Outline.certificate,
+                        connectivity: viewModelContainer.connectivity,
+                        additionalInjections: [.hideCertificatePrintBanner]
+                    )
+                }
+            )
+        }
+    }
+
+    private var hasCertificate: Bool {
+        if let certificate = viewModelContainer.courseStructure?.certificate,
+           let url = certificate.url,
+           url.count > 0 {
+            return true
+        }
+        return false
     }
 
     // MARK: - Upgrade Now Banner
