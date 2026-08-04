@@ -82,6 +82,7 @@ struct VideoThumbnailView: View {
     @State private var thumbnailImage: UIImage?
     @State private var isGeneratingThumbnail = false
     @State private var displayedWidth: CGFloat = 0
+    @State private var isVisible = false
 
     init(
         thumbnailData: VideoThumbnailData,
@@ -236,10 +237,22 @@ struct VideoThumbnailView: View {
         .padding(1)
         .accessibilityLabel(getAccessibilityLabel())
         .accessibilityHint(CourseLocalization.Accessibility.videoThumbnailHint)
-        .task {
-            // Generate video thumbnail if needed
-            if thumbnailURL == nil, let videoURL = getVideoURL() {
-                await generateVideoThumbnailIfNeeded(from: videoURL)
+        .onAppear {
+            isVisible = true
+        }
+        .onDisappear {
+            isVisible = false
+        }
+        .task(id: isVisible) {
+            // Only generate thumbnail from video file if visible AND no YouTube thumbnail
+            // Skip generation if it's taking too long - just show placeholder
+            if isVisible && thumbnailURL == nil && thumbnailImage == nil {
+                if let videoURL = getVideoURL() {
+                    // Generate in background with a short timeout
+                    Task {
+                        await generateVideoThumbnailIfNeeded(from: videoURL)
+                    }
+                }
             }
         }
     }
@@ -340,7 +353,7 @@ struct VideoThumbnailView: View {
     @ViewBuilder
     private func thumbnailImageView() -> some View {
         if let thumbnailURL = thumbnailURL {
-            // For YouTube thumbnails
+            // For YouTube thumbnails - load from CDN (fast)
             KFImage(thumbnailURL)
                 .placeholder {
                     Theme.Colors.commentCellBackground
@@ -350,29 +363,21 @@ struct VideoThumbnailView: View {
             // For generated video thumbnails
             Image(uiImage: thumbnailImage)
                 .resizable()
-        } else if isGeneratingThumbnail {
-            // Loading state
-            ZStack {
-                Theme.Colors.commentCellBackground
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: Theme.Colors.accentColor))
-            }
         } else {
-            // Default placeholder
+            // Default placeholder - show immediately without waiting for generation
             Theme.Colors.commentCellBackground
         }
     }
 
     private func generateVideoThumbnailIfNeeded(from url: URL) async {
-        await MainActor.run {
-            self.isGeneratingThumbnail = true
-        }
-
+        // Generate thumbnail in background without blocking UI
         let image = await thumbnailService.generateVideoThumbnailIfNeeded(from: url)
-
-        await MainActor.run {
-            self.thumbnailImage = image
-            self.isGeneratingThumbnail = false
+        
+        // Only update UI if we got an image and view is still visible
+        if let image = image, isVisible {
+            await MainActor.run {
+                self.thumbnailImage = image
+            }
         }
     }
 

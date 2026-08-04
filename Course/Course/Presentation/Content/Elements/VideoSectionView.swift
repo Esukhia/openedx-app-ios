@@ -102,7 +102,7 @@ struct VideoSectionView: View {
                 // MARK: - Video Thumbnails Scroll
                 ScrollViewReader { scrollProxy in
                     ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHStack(spacing: 0) {
+                        HStack(spacing: 0) {
                             ForEach(Array(visibleVideos.enumerated()), id: \.element.id) { index, video in
                                 VideoThumbnailView(thumbnailData: VideoThumbnailData(
                                     video: video,

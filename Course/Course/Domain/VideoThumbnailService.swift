@@ -11,14 +11,17 @@ import Kingfisher
 
 public protocol VideoThumbnailServiceProtocol: Sendable {
     func generateVideoThumbnailIfNeeded(from url: URL) async -> UIImage?
+    func preloadThumbnail(from url: URL) async
 }
 
 public actor VideoThumbnailService: VideoThumbnailServiceProtocol {
     
+    private var generatingURLs: Set<String> = []
+    
     public init() {}
     
     public func generateVideoThumbnailIfNeeded(from url: URL) async -> UIImage? {
-        let cacheKey = "video_thumbnail_\(url.absoluteString.hash)"
+        let cacheKey = generateCacheKey(for: url)
         
         // Check if thumbnail is already cached (both memory and disk)
         do {
@@ -30,6 +33,26 @@ public actor VideoThumbnailService: VideoThumbnailServiceProtocol {
             // Cache retrieval failed, continue to generate new thumbnail
         }
         
+        // Wait if already generating this thumbnail
+        while generatingURLs.contains(cacheKey) {
+            try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 second
+        }
+        
+        // Check cache again after waiting
+        do {
+            let cacheResult = try await ImageCache.default.retrieveImage(forKey: cacheKey)
+            if let cachedImage = cacheResult.image {
+                return cachedImage
+            }
+        } catch {
+            // Continue to generate
+        }
+        
+        // Mark as generating
+        generatingURLs.insert(cacheKey)
+        defer { generatingURLs.remove(cacheKey) }
+        
+        // Generate thumbnail
         do {
             let image = try await generateVideoThumbnail(from: url)
             
@@ -46,12 +69,32 @@ public actor VideoThumbnailService: VideoThumbnailServiceProtocol {
         }
     }
     
+    public func preloadThumbnail(from url: URL) async {
+        let cacheKey = generateCacheKey(for: url)
+        
+        // Check if already cached
+        do {
+            let cacheResult = try await ImageCache.default.retrieveImage(forKey: cacheKey)
+            if cacheResult.image != nil {
+                return
+            }
+        } catch {
+            // Continue to preload
+        }
+        
+        // Don't wait for preload to complete, just start it
+        Task.detached { [weak self] in
+            _ = await self?.generateVideoThumbnailIfNeeded(from: url)
+        }
+    }
+    
     private func generateVideoThumbnail(from url: URL) async throws -> UIImage {
         let asset = AVAsset(url: url)
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
-        imageGenerator.requestedTimeToleranceBefore = .zero
-        imageGenerator.requestedTimeToleranceAfter = .zero
+        // Increase tolerance for faster generation
+        imageGenerator.requestedTimeToleranceBefore = CMTime(seconds: 0.5, preferredTimescale: 600)
+        imageGenerator.requestedTimeToleranceAfter = CMTime(seconds: 0.5, preferredTimescale: 600)
         
         let time = CMTime(seconds: 1.0, preferredTimescale: 600)
         
@@ -77,5 +120,10 @@ public actor VideoThumbnailService: VideoThumbnailServiceProtocol {
                 continuation.resume(returning: image)
             }
         }
+    }
+    
+    private func generateCacheKey(for url: URL) -> String {
+        // Use the full URL string for better cache key uniqueness
+        return "video_thumbnail_\(url.absoluteString)"
     }
 }
